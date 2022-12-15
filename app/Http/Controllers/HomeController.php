@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     function index()
-    
+
     {
         if(\Auth::check())
         {
@@ -56,27 +56,27 @@ class HomeController extends Controller
                         ];
                     }
                 }
-            }  
+            }
 
-             //   Dashboard calendar 
+             //   Dashboard calendar
              $events    = Calendar::where('created_by', '=', \Auth::user()->getCreatedBy())->get();
              $now = date('m');
              $current_month_event = Calendar::select('id', 'start', 'end', 'title', 'created_at', 'className')->whereRaw('MONTH(start)=' . $now)->get();
- 
+
              $arrEvents = [];
              foreach ($events as $event) {
- 
+
                  $arr['id']    = $event['id'];
                  $arr['title'] = $event['title'];
                  $arr['start'] = $event['start'];
                  $arr['end']   = $event['end'];
                  $arr['className'] = $event['className'];
                  $arr['url']             = route('calendars.show', $event['id']);
- 
+
                  $arrEvents[] = $arr;
              }
              $arrEvents =  json_encode($arrEvents);
-             //   Dashboard calendar 
+             //   Dashboard calendar
 
             $notifications = Notification::getAllNotifications();
 
@@ -127,17 +127,17 @@ class HomeController extends Controller
             }
             else
             {
-                $settings = Utility::settings();
-                if($settings['display_landing_page'] == 'on')
-                {
-                    $get_section = LandingPageSection::orderBy('section_order', 'ASC')->get();
-
-                    return view('layouts.landing', compact('get_section'));
-                }
-                else
-                {
+//                $settings = Utility::settings();
+//                if($settings['display_landing_page'] == 'on')
+//                {
+//                    $get_section = LandingPageSection::orderBy('section_order', 'ASC')->get();
+//
+//                    return view('layouts.landing', compact('get_section'));
+//                }
+//                else
+//                {
                     return redirect('login');
-                }
+//                }
             }
 
         }

@@ -46,28 +46,28 @@
                             </li>
 
 
-                            @if (Gate::check('Manage User') || Gate::check('Manage Role') || Gate::check('Manage Permission'))
-                                <li class="">
-                                    <a href="#!" class="dash-link"><span class="dash-micon"><i class="ti ti-users"></i></span><span
-                                            class="dash-mtext">{{ __('Staff') }}</span><span class="dash-arrow"><i
-                                                data-feather="chevron-right"></i></span></a>
-                                    <ul class="dash-submenu">
+{{--                            @if (Gate::check('Manage User') || Gate::check('Manage Role') || Gate::check('Manage Permission'))--}}
+{{--                                <li class="">--}}
+{{--                                    <a href="#!" class="dash-link"><span class="dash-micon"><i class="ti ti-users"></i></span><span--}}
+{{--                                            class="dash-mtext">{{ __('Staff') }}</span><span class="dash-arrow"><i--}}
+{{--                                                data-feather="chevron-right"></i></span></a>--}}
+{{--                                    <ul class="dash-submenu">--}}
 
-                                        @can('Manage User')
-                                            <li class="">
-                                                <a class="dash-link" href="{{ route('users.index') }}">Users</a>
-                                            </li>
-                                        @endcan
+{{--                                        @can('Manage User')--}}
+{{--                                            <li class="">--}}
+{{--                                                <a class="dash-link" href="{{ route('users.index') }}">Users</a>--}}
+{{--                                            </li>--}}
+{{--                                        @endcan--}}
 
-                                        @can('Manage Role')
-                                            <li class="">
-                                                <a class="dash-link" href="{{ route('roles.index') }}">Roles</a>
-                                            </li>
-                                        @endcan
+{{--                                        @can('Manage Role')--}}
+{{--                                            <li class="">--}}
+{{--                                                <a class="dash-link" href="{{ route('roles.index') }}">Roles</a>--}}
+{{--                                            </li>--}}
+{{--                                        @endcan--}}
 
-                                    </ul>
-                                </li>
-                            @endif
+{{--                                    </ul>--}}
+{{--                                </li>--}}
+{{--                            @endif--}}
 
 
                             @can('Manage Customer')

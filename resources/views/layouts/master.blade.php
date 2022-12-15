@@ -9,7 +9,7 @@ $setting = App\Models\Utility::colorset();
 $color = 'theme-3';
 if (!empty($setting['color'])) {
     $color = $setting['color'];
-}  
+}
 // dd($setting);
 
 @endphp
@@ -25,9 +25,6 @@ if (!empty($setting['color'])) {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="Dashboard Template Description" />
-    <meta name="keywords" content="Dashboard Template" />
-    <meta name="author" content="Rajodiya Infotech" />
 
     <!-- Favicon icon -->
     <link rel="icon"
@@ -51,7 +48,7 @@ if (!empty($setting['color'])) {
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     @endif --}}
 
-    
+
     @if (Utility::getValByName('SITE_RTL') == 'on')
         <link rel="stylesheet" href="{{ asset('assets/css/style-rtl.css') }}">
     @endif
@@ -93,7 +90,7 @@ if (!empty($setting['color'])) {
                         <img src="{{ $logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png') }}"
                         alt="{{ config('app.name', 'Posgo') }}" class="logo logo-lg">
                     </a>
-                   
+
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false"
                         aria-label="Toggle navigation">
@@ -142,7 +139,7 @@ if (!empty($setting['color'])) {
                 </div>
             </nav>
             <div class="card">
-                <div class="row align-items-center"> 
+                <div class="row align-items-center">
                     @yield('content')
                     <div class="col-xl-6 img-card-side">
                         <div class="auth-img-content">

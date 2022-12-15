@@ -46,28 +46,28 @@
                             </li>
 
 
-                            <?php if(Gate::check('Manage User') || Gate::check('Manage Role') || Gate::check('Manage Permission')): ?>
-                                <li class="">
-                                    <a href="#!" class="dash-link"><span class="dash-micon"><i class="ti ti-users"></i></span><span
-                                            class="dash-mtext"><?php echo e(__('Staff')); ?></span><span class="dash-arrow"><i
-                                                data-feather="chevron-right"></i></span></a>
-                                    <ul class="dash-submenu">
 
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage User')): ?>
-                                            <li class="">
-                                                <a class="dash-link" href="<?php echo e(route('users.index')); ?>">Users</a>
-                                            </li>
-                                        <?php endif; ?>
 
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Role')): ?>
-                                            <li class="">
-                                                <a class="dash-link" href="<?php echo e(route('roles.index')); ?>">Roles</a>
-                                            </li>
-                                        <?php endif; ?>
 
-                                    </ul>
-                                </li>
-                            <?php endif; ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Customer')): ?>

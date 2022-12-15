@@ -43,7 +43,7 @@
                                         <th><?php echo e(__('Brand')); ?></th>
                                         <th><?php echo e(__('Category')); ?></th>
                                         <th><?php echo e(__('Quantity')); ?></th>
-                                        <th><?php echo e(__('Barcode')); ?></th>
+
                                         <th width="200px"><?php echo e(__('Action')); ?></th>
                                     </tr>
                                 </thead>
@@ -63,11 +63,11 @@
                                                         class="badge bg-danger p-2 px-3 rounded"><?php echo e($product->getTotalProductQuantity()); ?></span>
                                                 <?php endif; ?>
                                             </td>
-                                            <td>
-                                                <div id="<?php echo e($product->id); ?>"
-                                                    class="product_barcode product_barcode_hight_de"
-                                                    data-skucode="<?php echo e($product->sku); ?>"></div>
-                                            </td>
+
+
+
+
+
                                             <td class="Action">
                                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Edit Product')): ?>
                                                     <div class="action-btn btn-info ms-2">

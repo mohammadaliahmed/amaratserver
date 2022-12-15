@@ -45,7 +45,7 @@
                                         <th>{{ __('Brand') }}</th>
                                         <th>{{ __('Category') }}</th>
                                         <th>{{ __('Quantity') }}</th>
-                                        <th>{{ __('Barcode') }}</th>
+{{--                                        <th>{{ __('Barcode') }}</th>--}}
                                         <th width="200px">{{ __('Action') }}</th>
                                     </tr>
                                 </thead>
@@ -65,11 +65,11 @@
                                                         class="badge bg-danger p-2 px-3 rounded">{{ $product->getTotalProductQuantity() }}</span>
                                                 @endif
                                             </td>
-                                            <td>
-                                                <div id="{{ $product->id }}"
-                                                    class="product_barcode product_barcode_hight_de"
-                                                    data-skucode="{{ $product->sku }}"></div>
-                                            </td>
+{{--                                            <td>--}}
+{{--                                                <div id="{{ $product->id }}"--}}
+{{--                                                    class="product_barcode product_barcode_hight_de"--}}
+{{--                                                    data-skucode="{{ $product->sku }}"></div>--}}
+{{--                                            </td>--}}
                                             <td class="Action">
                                                 @can('Edit Product')
                                                     <div class="action-btn btn-info ms-2">
