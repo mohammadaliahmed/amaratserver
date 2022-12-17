@@ -101,13 +101,12 @@
                                     @foreach (session($lastsegment) as $id => $details)
                                         @php
                                             $product = \App\Models\Product::find($details['id']);
-                                            $image_url = !empty($product->image) && Storage::exists($product->image) ? $product->image : 'logo/placeholder.png';
                                             $total += $details['subtotal'];
                                         @endphp
                                         <div class="car-sub row mt-3 d-flex align-items-center"
                                             data-product-id="{{ $id }}" id="product-id-{{ $id }}">
                                             <div class="col-sm-2 cart-images">
-                                                <img alt="Image placeholder" src="{{ asset(Storage::url($image_url)) }}"
+                                                <img alt="Image placeholder"  src="storage/{{$product->image}} "
                                                     class="card-image avatar rounded-circle-purchase shadow hover-shadow-lg">
                                             </div>
                                             <div class="col-sm-10">
@@ -274,7 +273,7 @@
                                 success: function(data) {
 
                                     if (data.length == 0) {
-                                        // $('#branchModal').modal('show');  
+                                        // $('#branchModal').modal('show');
                                         $('#branchModal .branch-warning').show();
                                     } else {
                                         // $('#branchModal .select-warning').show();

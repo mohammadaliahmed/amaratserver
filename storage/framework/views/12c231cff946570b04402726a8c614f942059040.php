@@ -101,13 +101,12 @@
                                     <?php $__currentLoopData = session($lastsegment); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id => $details): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <?php
                                             $product = \App\Models\Product::find($details['id']);
-                                            $image_url = !empty($product->image) && Storage::exists($product->image) ? $product->image : 'logo/placeholder.png';
                                             $total += $details['subtotal'];
                                         ?>
                                         <div class="car-sub row mt-3 d-flex align-items-center"
                                             data-product-id="<?php echo e($id); ?>" id="product-id-<?php echo e($id); ?>">
                                             <div class="col-sm-2 cart-images">
-                                                <img alt="Image placeholder" src="<?php echo e(asset(Storage::url($image_url))); ?>"
+                                                <img alt="Image placeholder"  src="storage/<?php echo e($product->image); ?> "
                                                     class="card-image avatar rounded-circle-purchase shadow hover-shadow-lg">
                                             </div>
                                             <div class="col-sm-10">
@@ -284,7 +283,7 @@
                                 success: function(data) {
 
                                     if (data.length == 0) {
-                                        // $('#branchModal').modal('show');  
+                                        // $('#branchModal').modal('show');
                                         $('#branchModal .branch-warning').show();
                                     } else {
                                         // $('#branchModal .select-warning').show();
