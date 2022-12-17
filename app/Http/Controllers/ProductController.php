@@ -117,7 +117,7 @@ class ProductController extends Controller
                 $dir        = 'productimages/';
                 $path = Utility::upload_file($request,'image',$filenameWithExt,$dir,[]);
 
-                
+
                 $product->image  = $path['url'];
             }
 
@@ -223,7 +223,7 @@ class ProductController extends Controller
                 $dir        = 'productimages/';
                 $path = Utility::upload_file($request,'image',$filenameWithExt,$dir,[]);
 
-                
+
                 $product->image  = $path['url'];
             }
 
@@ -290,7 +290,7 @@ class ProductController extends Controller
                 $products = Product::getallproducts()->where('category_id', $request->cat_id)->get();
             } else {
                 $products = Product::getallproducts()->where('products.name', 'LIKE', "%{$request->search}%")->orWhere('category_id', $request->cat_id)->get();
-           
+
                 // $products = Product::getallproducts()->where('products.name', 'LIKE', "%{request->search}%")
                 // ->where(function ($q) use ($request) {
                 //     $q->orWhere('category_id', $request->cat_id);
@@ -414,7 +414,7 @@ class ProductController extends Controller
                                     </div>
                                     <div class="col-sm-2 mt-2">
                                     <a href="#" class="action-btn bg-danger bs-pass-para" data-confirm="' . __("Are You Sure?") .'" data-text="'.__("This action can not be undone. Do you want to continue?") . '" data-confirm-yes=' . $model_delete_id . ' title="' . __('Delete') . '}" data-id="' . $id . '" title="' . __('Delete') . '"   >
-                                    <span class=""><i class="ti ti-trash btn btn-sm text-white"></i></span> 
+                                    <span class=""><i class="ti ti-trash btn btn-sm text-white"></i></span>
                                     </a>
                                         <form method="post" action="' . url('remove-from-cart') . '"  accept-charset="UTF-8" id="' . $model_delete_id . '">
                                             <input name="_method" type="hidden" value="DELETE">

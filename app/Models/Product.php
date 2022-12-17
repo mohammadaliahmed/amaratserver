@@ -35,7 +35,6 @@ class Product extends Model
         return Product::select('products.*', 'b.name as brandname', 'c.name as categoryname')
             ->leftjoin('brands as b', 'b.id', '=', 'products.brand_id')
             ->leftjoin('categories as c', 'c.id', '=', 'products.category_id')
-            ->where('products.created_by', '=', Auth::user()->getCreatedBy())
             ->orderBy('products.id', 'DESC');
     }
 
@@ -50,35 +49,35 @@ class Product extends Model
 
     public function getTotalProductQuantity()
     {
-        $totalquantity = $purchasedquantity = $selledquantity = 0;
-        $authuser = Auth::user();
-        $product_id = $this->id;
+//        $totalquantity = $purchasedquantity = $selledquantity = 0;
+//        $authuser = Auth::user();
+//        $product_id = $this->id;
+//
+//        $purchases = Purchase::where('created_by', $authuser->getCreatedBy());
+//
+//        if ($authuser->isUser()) {
+//            $purchases = $purchases->where('branch_id', $authuser->branch_id)->where('cash_register_id', $authuser->cash_register_id);
+//        }
+//
+//        foreach ($purchases->get() as $purchase) {
+//            $purchaseditem = PurchasedItems::select('quantity')->where('purchase_id', $purchase->id)->where('product_id', $product_id)->first();
+//            $purchasedquantity += $purchaseditem != null ? $purchaseditem->quantity : 0;
+//        }
+//
+//        $sells = Sale::where('created_by', $authuser->getCreatedBy());
+//
+//        if ($authuser->isUser()) {
+//            $sells = $sells->where('branch_id', $authuser->branch_id)->where('cash_register_id', $authuser->cash_register_id);
+//        }
 
-        $purchases = Purchase::where('created_by', $authuser->getCreatedBy());
-       
-        if ($authuser->isUser()) {
-            $purchases = $purchases->where('branch_id', $authuser->branch_id)->where('cash_register_id', $authuser->cash_register_id);
-        }
+//        foreach ($sells->get() as $sell) {
+//            $selleditem = SelledItems::select('quantity')->where('sell_id', $sell->id)->where('product_id', $product_id)->first();
+//            $selledquantity += $selleditem != null ? $selleditem->quantity : 0;
+//        }
 
-        foreach ($purchases->get() as $purchase) {
-            $purchaseditem = PurchasedItems::select('quantity')->where('purchase_id', $purchase->id)->where('product_id', $product_id)->first();
-            $purchasedquantity += $purchaseditem != null ? $purchaseditem->quantity : 0;
-        }
+//        $totalquantity = $purchasedquantity - $selledquantity;
 
-        $sells = Sale::where('created_by', $authuser->getCreatedBy());
-
-        if ($authuser->isUser()) {
-            $sells = $sells->where('branch_id', $authuser->branch_id)->where('cash_register_id', $authuser->cash_register_id);
-        }
-
-        foreach ($sells->get() as $sell) {
-            $selleditem = SelledItems::select('quantity')->where('sell_id', $sell->id)->where('product_id', $product_id)->first();
-            $selledquantity += $selleditem != null ? $selleditem->quantity : 0;
-        }
-
-        $totalquantity = $purchasedquantity - $selledquantity;
-
-        return $totalquantity;
+        return $this->quantity;
     }
 
     public function getProductQuantityByBranch($data)
@@ -164,7 +163,7 @@ class Product extends Model
     {
         $categoryArr  = explode(',', $taxe);
         $taxeRate = 0;
-       
+
         foreach ($categoryArr as $taxe) {
             $taxe    = Tax::find($taxe);
 
