@@ -35,6 +35,7 @@ class SaleController extends Controller
     {
         $sess = session()->get('sales');
 
+
         if (Auth::user()->can('Manage Sales') && isset($sess) && !empty($sess) && count($sess) > 0) {
             $user = Auth::user();
 

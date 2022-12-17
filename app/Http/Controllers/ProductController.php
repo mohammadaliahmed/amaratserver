@@ -299,7 +299,8 @@ class ProductController extends Controller
             }
             if ($products) {
                 foreach ($products as $key => $product) {
-                    $image_url = (!empty($product->image) && Storage::exists($product->image)) ? $product->image : 'logo/placeholder.png';
+
+//                    $image_url = (!empty($product->image) && Storage::exists($product->image)) ? $product->image : 'logo/placeholder.png';
                     if ($request->session_key == 'purchases') {
                         $productprice = $product->purchase_price != 0 ? $product->purchase_price : 0;
                     } else if ($request->session_key == 'sales') {
@@ -314,7 +315,7 @@ class ProductController extends Controller
                             <div class="card card-profile hover-shadow-lg mx-2">
 
                               <div class="mx-auto">
-                                <img alt="Image placeholder" src="' . asset(Storage::url($image_url)) . '" class="card-image avatar rounded-circle shadow hover-shadow-lg" style=" height: 7rem; width: 7rem;   margin-top: 0.7rem;">
+                                <img alt="Image placeholder" src="storage/' .$product->image . '" class="card-image avatar rounded-circle shadow hover-shadow-lg" style=" height: 7rem; width: 7rem;   margin-top: 0.7rem;">
                               </div>
                               <div class="card-body  mt-2 p-3 pt-0 text-center">
                                 <h5 class="mb-0 h6">' . $product->name . '</h5>
