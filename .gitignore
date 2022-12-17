@@ -1,5 +1,6 @@
 /public/hot
 /public/storage
+/public/framework
 /storage/*.key
 /vendor
 .env
