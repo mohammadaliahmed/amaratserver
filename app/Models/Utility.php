@@ -1060,6 +1060,7 @@ class Utility extends Model
 
     public static function upload_file($request,$key_name,$name,$path,$custom_validation =[]){
 
+
         try{
             $settings = Utility::settings();
             // dd($settings);
@@ -1128,12 +1129,18 @@ class Utility extends Model
 
                     if($settings['storage_setting']=='local'){
 
-                        \Storage::disk()->putFileAs(
-                            $path,
-                            $request->file($key_name),
-                            $name
-                        );
-                        $path = $path.$name;
+//                        \Storage::disk()->putFileAs(
+//                            $path,
+//                            $request->file($key_name),
+//                            $name
+//                        );
+                        $nam= substr(str_shuffle(str_repeat($x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(15 / strlen($x)))), 1, 15);
+                        $imageName =$nam . ".jpg";
+                        $uploadPath = 'productimages/';
+                        $imageUrl = $uploadPath . $imageName;
+                        $file->move('storage/'.$uploadPath, $imageName);
+
+                        $path = $imageUrl;
                     }else if($settings['storage_setting'] == 'wasabi'){
 
                         $path = \Storage::disk('wasabi')->putFileAs(
@@ -1177,6 +1184,7 @@ class Utility extends Model
                 'flag' => 0,
                 'msg' => $e->getMessage(),
             ];
+
             return $res;
         }
     }

@@ -74,7 +74,7 @@ class LandingPageSectionController extends Controller
                             {
                                 $ext      = $logo->getClientOriginalExtension();
                                 $fileName = 'logo_' . time() . rand() . '.' . $ext;
-                                $request->file('logo')->storeAs('uploads/custom_landing_page_image', $fileName);
+                                $request->file('logo')->storeAs(' uploads/custom_landing_page_image', $fileName);
                                 $data['logo'] = $fileName;
                             }
                             else
