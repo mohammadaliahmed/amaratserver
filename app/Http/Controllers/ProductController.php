@@ -311,10 +311,13 @@ class ProductController extends Controller
 
                     $output .= '
                      <div class="col-lg-3 col-md-3">
+
                             <div class="tab-pane fade show active toacart" data-url="' . url('add-to-cart/' . $product->id . '/' . $lastsegment) . '">
                             <div class="card card-profile hover-shadow-lg mx-2">
+                                <div class="badge bg-success w-25 text-lg" >'.$product->quantity.'</div>
 
                               <div class="mx-auto">
+
                                 <img alt="Image placeholder" src="storage/' .$product->image . '" class="card-image avatar rounded-circle shadow hover-shadow-lg" style=" height: 7rem; width: 7rem;   margin-top: 0.7rem;">
                               </div>
                               <div class="card-body  mt-2 p-3 pt-0 text-center">
