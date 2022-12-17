@@ -386,14 +386,14 @@ class ProductController extends Controller
 
             $subtotal = $productprice + $tax;
             $cart     = session()->get($session_key);
-            $image_url = (!empty($product->image) && Storage::exists($product->image)) ? $product->image : 'logo/placeholder.png';
+//            $image_url = (!empty($product->image) && Storage::exists($product->image)) ? $product->image : 'logo/placeholder.png';
             $model_delete_id = 'delete-form-' . $id;
 
             $carthtml = '';
 
             $carthtml .= '<div class="row mt-3" data-product-id="' . $id . '" id="product-id-' . $id . '">
                             <div class="col-sm-2">
-                                <img alt="Image placeholder" src="' . asset(Storage::url($image_url)) . '" class="card-image avatar rounded-circle shadow hover-shadow-lg">
+                                <img alt="Image placeholder" src="storage/' . $product->image . '" class="card-image avatar rounded-circle shadow hover-shadow-lg">
                             </div>
                             <div class="col-sm-10">
                                 <div class="row">
