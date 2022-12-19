@@ -1,5 +1,5 @@
 /public/hot
 /public/storage
-/storage/
+/storage
 /vendor
 .env
