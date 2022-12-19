@@ -34,7 +34,7 @@
                        echo '<input type="checkbox" class="m-2" checked
                                name="vendor_ids[]" value="'.$key.'">'.$vendor;
                    }else{
-                      echo '<input type="checkbox" class="m-2" 
+                      echo '<input type="checkbox" class="m-2"
                                name="vendor_ids[]" value="'.$key.'">'.$vendor;
                    }
                    ?>
