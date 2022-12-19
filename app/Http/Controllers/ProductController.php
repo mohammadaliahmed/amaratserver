@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProductVendorMapping;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -50,7 +52,10 @@ class ProductController extends Controller
             $taxes = Tax::where('created_by', $user_id)->pluck('name', 'id');
             $taxes->prepend(__('Apply Tax'), '');
 
-            return view('products.create', compact('categories', 'brands', 'units', 'taxes'));
+            $vendors = Vendor::where('created_by', $user_id)->pluck('name', 'id');
+
+            return view('products.create', compact('categories', 'brands', 'units', 'taxes'
+                , 'vendors'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
@@ -71,12 +76,15 @@ class ProductController extends Controller
                 return redirect()->back()->with('error', $validator->errors()->first());
             }
 
-            $product                 = new Product();
-            $product->name           = $request->name;
+
+
+            $product = new Product();
+            $product->name = $request->name;
+            $product->quantity = 9999;
             $product->purchase_price = (float)$request->purchase_price;
-            $product->sale_price     = (float)$request->sale_price;
-            $product->sku            = $request->sku;
-            $product->description    = $request->description;
+            $product->sale_price = (float)$request->sale_price;
+            $product->sku = $request->sku;
+            $product->description = $request->description;
 
             if (!empty($request->input('category_id'))) {
                 $product->category_id = $request->category_id;
@@ -91,8 +99,8 @@ class ProductController extends Controller
                 $product->unit_id = $request->unit_id;
             }
             $product->product_type = 0;
-            $product->slug         = Str::slug($request->name, '-');
-            $product->created_by   = Auth::user()->getCreatedBy();
+            $product->slug = Str::slug($request->name, '-');
+            $product->created_by = Auth::user()->getCreatedBy();
 
             if ($request->hasFile('image')) {
                 $validator = Validator::make(
@@ -107,22 +115,28 @@ class ProductController extends Controller
                 }
 
                 $filenameWithExt = $request->file('image')->getClientOriginalName();
-                $filename        = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                $extension       = $request->file('image')->getClientOriginalExtension();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('image')->getClientOriginalExtension();
                 $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                $filepath        = $request->file('image')->storeAs('productimages', $fileNameToStore);
+                $filepath = $request->file('image')->storeAs('productimages', $fileNameToStore);
                 // $product->image  = $filepath;
 
 
-                $dir        = 'productimages/';
-                $path = Utility::upload_file($request,'image',$filenameWithExt,$dir,[]);
+                $dir = 'productimages/';
+                $path = Utility::upload_file($request, 'image', $filenameWithExt, $dir, []);
 
 
-                $product->image  = $path['url'];
+                $product->image = $path['url'];
             }
 
-            $product->save();
 
+            $product->save();
+            foreach ($request->vendor_ids as $vendorId) {
+                ProductVendorMapping::create([
+                    'product_id' => $product->id,
+                    'vendor_id' => $vendorId,
+                ]);
+            }
             return redirect()->route('products.index')->with('success', __('Product added successfully.'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
@@ -150,7 +164,16 @@ class ProductController extends Controller
             $taxes = Tax::where('created_by', $user_id)->pluck('name', 'id');
             $taxes->prepend(__('Apply Tax'), '');
 
-            return view('products.edit', compact('product', 'categories', 'brands', 'units', 'taxes'));
+            $vendors = Vendor::where('created_by', $user_id)->pluck('name', 'id');
+
+            $vendorMapping=[];
+            $vendorMappinga=ProductVendorMapping::where('product_id',$product->id)->get();
+            foreach($vendorMappinga as $vendorMap){
+                $vendorMapping[$vendorMap->vendor_id]=$vendorMap->vendor_id;
+            }
+
+            return view('products.edit', compact('product', 'categories',
+                'vendorMapping','brands','vendors', 'units', 'taxes'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
@@ -163,7 +186,7 @@ class ProductController extends Controller
                 $request->all(),
                 [
                     'name' => 'required|max:100|unique:products,name,' . $product->id . ',id,created_by,' . Auth::user()->getCreatedBy(),
-                    'sku' =>  'nullable|regex:/[\-]+/i',
+                    'sku' => 'nullable|regex:/[\-]+/i',
                 ]
             );
 
@@ -171,11 +194,11 @@ class ProductController extends Controller
                 return redirect()->back()->with('error', $validator->errors()->first());
             }
 
-            $product->name           = $request->name;
+            $product->name = $request->name;
             $product->purchase_price = $request->purchase_price;
-            $product->sale_price     = $request->sale_price;
-            $product->sku            = $request->sku;
-            $product->description    = $request->description;
+            $product->sale_price = $request->sale_price;
+            $product->sku = $request->sku;
+            $product->description = $request->description;
             if (!empty($request->input('category_id'))) {
                 $product->category_id = $request->category_id;
             }
@@ -215,19 +238,28 @@ class ProductController extends Controller
                 }
 
                 $filenameWithExt = $request->file('image')->getClientOriginalName();
-                $filename        = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                $extension       = $request->file('image')->getClientOriginalExtension();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('image')->getClientOriginalExtension();
                 $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                $filepath        = $request->file('image')->storeAs('productimages', $fileNameToStore);
+                $filepath = $request->file('image')->storeAs('productimages', $fileNameToStore);
                 // $product->image  = $filepath;
-                $dir        = 'productimages/';
-                $path = Utility::upload_file($request,'image',$filenameWithExt,$dir,[]);
+                $dir = 'productimages/';
+                $path = Utility::upload_file($request, 'image', $filenameWithExt, $dir, []);
 
 
-                $product->image  = $path['url'];
+                $product->image = $path['url'];
             }
 
             $product->save();
+            ProductVendorMapping::where('product_id',$product->id)->delete();
+            if (!empty($request->input('vendor_ids'))) {
+                foreach ($request->vendor_ids as $vendorId) {
+                    ProductVendorMapping::create([
+                        'product_id' => $product->id,
+                        'vendor_id' => $vendorId,
+                    ]);
+                }
+            }
 
             return redirect()->route('products.index')->with('success', __('Product updated successfully.'));
         } else {
@@ -267,13 +299,13 @@ class ProductController extends Controller
                     }
                 )->select(DB::Raw('IFNULL( `taxes`.`percentage` , 0 ) as percentage'))->first();
 
-                $items[$key]['id']          = $item->id;
-                $items[$key]['name']        = $item->name;
-                $items[$key]['quantity']    = '1';
+                $items[$key]['id'] = $item->id;
+                $items[$key]['name'] = $item->name;
+                $items[$key]['quantity'] = '1';
                 $items[$key]['maxquantity'] = $item->getTotalProductQuantity() > 0 ? $item->getTotalProductQuantity() : '';
-                $items[$key]['price']       = $price;
-                $items[$key]['subtotal']    = $price + ($price * $tax->percentage) / 100;
-                $items[$key]['tax']         = $tax->percentage;
+                $items[$key]['price'] = $price;
+                $items[$key]['subtotal'] = $price + ($price * $tax->percentage) / 100;
+                $items[$key]['tax'] = $tax->percentage;
             }
 
             return json_encode($items);
@@ -285,7 +317,7 @@ class ProductController extends Controller
         $lastsegment = $request->session_key;
 
         if (Auth::user()->can('Manage Product') && $request->ajax() && isset($lastsegment) && !empty($lastsegment)) {
-            $output   = "";
+            $output = "";
             if ($request->cat_id !== '' && $request->search == '') {
                 $products = Product::getallproducts()->where('category_id', $request->cat_id)->get();
             } else {
@@ -314,11 +346,10 @@ class ProductController extends Controller
 
                             <div class="tab-pane fade show active toacart" data-url="' . url('add-to-cart/' . $product->id . '/' . $lastsegment) . '">
                             <div class="card card-profile hover-shadow-lg mx-2">
-                                <div class="badge bg-success w-25 text-lg" >'.$product->quantity.'</div>
 
                               <div class="mx-auto">
 
-                                <img alt="Image placeholder" src="storage/' .$product->image . '" class="card-image avatar rounded-circle shadow hover-shadow-lg" style=" height: 7rem; width: 7rem;   margin-top: 0.7rem;">
+                                <img alt="Image placeholder" src="storage/' . $product->image . '" class="card-image avatar rounded-circle shadow hover-shadow-lg" style=" height: 7rem; width: 7rem;   margin-top: 0.7rem;">
                               </div>
                               <div class="card-body  mt-2 p-3 pt-0 text-center">
                                 <h5 class="mb-0 h6">' . $product->name . '</h5>
@@ -359,7 +390,7 @@ class ProductController extends Controller
                 );
             }
 
-            $productname      = $product->name;
+            $productname = $product->name;
             if ($session_key == 'purchases') {
 
                 $productprice = $product->purchase_price != 0 ? $product->purchase_price : 0;
@@ -371,7 +402,7 @@ class ProductController extends Controller
                 $productprice = $product->sale_price != 0 ? $product->sale_price : $product->purchase_price;
             }
 
-            $originalquantity = (int) $productquantity;
+            $originalquantity = (int)$productquantity;
 
             $tax = Product::where('products.id', $id)->leftJoin(
                 'taxes',
@@ -385,7 +416,7 @@ class ProductController extends Controller
             $tax = ($productprice * $producttax) / 100;
 
             $subtotal = $productprice + $tax;
-            $cart     = session()->get($session_key);
+            $cart = session()->get($session_key);
 //            $image_url = (!empty($product->image) && Storage::exists($product->image)) ? $product->image : 'logo/placeholder.png';
             $model_delete_id = 'delete-form-' . $id;
 
@@ -417,7 +448,7 @@ class ProductController extends Controller
                                       <span class="subtotal">' . Auth::user()->priceFormat($subtotal) . '</span>
                                     </div>
                                     <div class="col-sm-2 mt-2">
-                                    <a href="#" class="action-btn bg-danger bs-pass-para" data-confirm="' . __("Are You Sure?") .'" data-text="'.__("This action can not be undone. Do you want to continue?") . '" data-confirm-yes=' . $model_delete_id . ' title="' . __('Delete') . '}" data-id="' . $id . '" title="' . __('Delete') . '"   >
+                                    <a href="#" class="action-btn bg-danger bs-pass-para" data-confirm="' . __("Are You Sure?") . '" data-text="' . __("This action can not be undone. Do you want to continue?") . '" data-confirm-yes=' . $model_delete_id . ' title="' . __('Delete') . '}" data-id="' . $id . '" title="' . __('Delete') . '"   >
                                     <span class=""><i class="ti ti-trash btn btn-sm text-white"></i></span>
                                     </a>
                                         <form method="post" action="' . url('remove-from-cart') . '"  accept-charset="UTF-8" id="' . $model_delete_id . '">
@@ -475,9 +506,9 @@ class ProductController extends Controller
                 $cart[$id]['id'] = $id;
 
                 $subtotal = $cart[$id]["price"] * $cart[$id]["quantity"];
-                $tax      = ($subtotal * $cart[$id]["tax"]) / 100;
+                $tax = ($subtotal * $cart[$id]["tax"]) / 100;
 
-                $cart[$id]["subtotal"]         = $subtotal + $tax;
+                $cart[$id]["subtotal"] = $subtotal + $tax;
                 $cart[$id]["originalquantity"] = $originalquantity;
 
                 if ($originalquantity < $cart[$id]['quantity'] && $session_key == 'sales') {
@@ -552,8 +583,8 @@ class ProductController extends Controller
 
     public function updateCart(Request $request)
     {
-        $id          = $request->id;
-        $quantity    = $request->quantity;
+        $id = $request->id;
+        $quantity = $request->quantity;
         $session_key = $request->session_key;
 
         if (Auth::user()->can('Manage Product') && $request->ajax() && isset($id) && !empty($id) && isset($session_key) && !empty($session_key)) {
@@ -565,11 +596,11 @@ class ProductController extends Controller
 
             if ($quantity) {
                 $cart[$id]["quantity"] = $quantity;
-                $producttax            = $cart[$id]["tax"];
-                $productprice          = $cart[$id]["price"];
+                $producttax = $cart[$id]["tax"];
+                $productprice = $cart[$id]["price"];
 
                 $subtotal = $productprice * $quantity;
-                $tax      = ($subtotal * $producttax) / 100;
+                $tax = ($subtotal * $producttax) / 100;
 
                 $cart[$id]["subtotal"] = $subtotal + $tax;
             }
@@ -608,7 +639,7 @@ class ProductController extends Controller
 
     public function removeFromCart(Request $request)
     {
-        $id          = $request->id;
+        $id = $request->id;
         $session_key = $request->session_key;
         if (Auth::user()->can('Manage Product') && isset($id) && !empty($id) && isset($session_key) && !empty($session_key)) {
             $cart = session()->get($session_key);
@@ -637,10 +668,12 @@ class ProductController extends Controller
             return redirect()->back()->with('error', __('Cart cannot be empty!.'));
         }
     }
+
     public function export()
     {
         $name = 'Product_' . date('Y-m-d i:h:s');
-        $data = Excel::download(new ProductExport(), $name . '.xlsx'); ob_end_clean();
+        $data = Excel::download(new ProductExport(), $name . '.xlsx');
+        ob_end_clean();
 
         return $data;
     }

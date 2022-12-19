@@ -9,11 +9,11 @@
 
 @section('action-btn')
         <a type="button" class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="collapse"
-        data-bs-toggle="tooltip" 
+        data-bs-toggle="tooltip"
             data-bs-target=".multi-collapse" title="{{ __('Filter') }}"> <i class="ti ti-filter"></i> </a>
 
         <a href="{{ route('Sale.export') }}" class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="tooltip" title="{{ __('Export') }}">
-        <i class="ti ti-file-export"></i> 
+        <i class="ti ti-file-export"></i>
         </a>
 @endsection
 
@@ -143,7 +143,7 @@
     @endsection
 
     @push('old-datatable-js')
-        
+
     <script src="{{ asset('custom/js/jquery.dataTables.min.js') }}"></script>
     <script>
         var dataTabelLang = {
@@ -169,23 +169,23 @@
         <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
 
         <script>
-           
+
             $(document).on('click', '.copy_link_sale', function(e) {
                e.preventDefault();
                var copyText = $(this).attr('href');
-       
+
                document.addEventListener('copy', function (e) {
                    e.clipboardData.setData('text/plain', copyText);
                    e.preventDefault();
                }, true);
-       
+
                document.execCommand('copy');
                show_toastr('Success', 'Url copied to clipboard', 'success');
            });
        </script>
 
         <script type="text/javascript">
-            
+
 
             $(document).ready(function() {
                 ajax_invoice_filter();

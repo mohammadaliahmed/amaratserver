@@ -46,28 +46,28 @@
                             </li>
 
 
-{{--                            @if (Gate::check('Manage User') || Gate::check('Manage Role') || Gate::check('Manage Permission'))--}}
-{{--                                <li class="">--}}
-{{--                                    <a href="#!" class="dash-link"><span class="dash-micon"><i class="ti ti-users"></i></span><span--}}
-{{--                                            class="dash-mtext">{{ __('Staff') }}</span><span class="dash-arrow"><i--}}
-{{--                                                data-feather="chevron-right"></i></span></a>--}}
-{{--                                    <ul class="dash-submenu">--}}
+                            {{--                            @if (Gate::check('Manage User') || Gate::check('Manage Role') || Gate::check('Manage Permission'))--}}
+                            {{--                                <li class="">--}}
+                            {{--                                    <a href="#!" class="dash-link"><span class="dash-micon"><i class="ti ti-users"></i></span><span--}}
+                            {{--                                            class="dash-mtext">{{ __('Staff') }}</span><span class="dash-arrow"><i--}}
+                            {{--                                                data-feather="chevron-right"></i></span></a>--}}
+                            {{--                                    <ul class="dash-submenu">--}}
 
-{{--                                        @can('Manage User')--}}
-{{--                                            <li class="">--}}
-{{--                                                <a class="dash-link" href="{{ route('users.index') }}">Users</a>--}}
-{{--                                            </li>--}}
-{{--                                        @endcan--}}
+                            {{--                                        @can('Manage User')--}}
+                            {{--                                            <li class="">--}}
+                            {{--                                                <a class="dash-link" href="{{ route('users.index') }}">Users</a>--}}
+                            {{--                                            </li>--}}
+                            {{--                                        @endcan--}}
 
-{{--                                        @can('Manage Role')--}}
-{{--                                            <li class="">--}}
-{{--                                                <a class="dash-link" href="{{ route('roles.index') }}">Roles</a>--}}
-{{--                                            </li>--}}
-{{--                                        @endcan--}}
+                            {{--                                        @can('Manage Role')--}}
+                            {{--                                            <li class="">--}}
+                            {{--                                                <a class="dash-link" href="{{ route('roles.index') }}">Roles</a>--}}
+                            {{--                                            </li>--}}
+                            {{--                                        @endcan--}}
 
-{{--                                    </ul>--}}
-{{--                                </li>--}}
-{{--                            @endif--}}
+                            {{--                                    </ul>--}}
+                            {{--                                </li>--}}
+                            {{--                            @endif--}}
 
 
                             @can('Manage Customer')
@@ -137,34 +137,34 @@
                                 </li>
                             @endif
 
-                            @can('Manage Purchases')
-                                <li class="">
-                                    <a href="#navbar-purchases"
-                                       class="dash-link {{ Request::segment(1) == 'purchases' || Request::segment(1) . '/' . Request::segment(2) == 'reports/purchases' ? 'active' : '' }}"><span
-                                            class="dash-micon"><i class="ti ti-shopping-cart"></i></span><span
-                                            class="dash-mtext">{{ __('Purchases') }}</span><span class="dash-arrow"><i
-                                                data-feather="chevron-right"></i></span></a>
+                            {{--                            @can('Manage Purchases')--}}
+                            {{--                                <li class="">--}}
+                            {{--                                    <a href="#navbar-purchases"--}}
+                            {{--                                       class="dash-link {{ Request::segment(1) == 'purchases' || Request::segment(1) . '/' . Request::segment(2) == 'reports/purchases' ? 'active' : '' }}"><span--}}
+                            {{--                                            class="dash-micon"><i class="ti ti-shopping-cart"></i></span><span--}}
+                            {{--                                            class="dash-mtext">{{ __('Purchases') }}</span><span class="dash-arrow"><i--}}
+                            {{--                                                data-feather="chevron-right"></i></span></a>--}}
 
 
-                                    <ul class="dash-submenu">
+                            {{--                                    <ul class="dash-submenu">--}}
 
-                                        @can('Manage Product')
-                                            <li class="">
-                                                <a class="dash-link" href="{{ route('purchases.index') }}">Add
-                                                    Purchase</a>
-                                            </li>
-                                        @endcan
+                            {{--                                        @can('Manage Product')--}}
+                            {{--                                            <li class="">--}}
+                            {{--                                                <a class="dash-link" href="{{ route('purchases.index') }}">Add--}}
+                            {{--                                                    Purchase</a>--}}
+                            {{--                                            </li>--}}
+                            {{--                                        @endcan--}}
 
-                                        @can('Manage Category')
-                                            <li class="">
-                                                <a class="dash-link"
-                                                   href="{{ route('reports.purchases') }}">Purchases</a>
-                                            </li>
-                                        @endcan
+                            {{--                                        @can('Manage Category')--}}
+                            {{--                                            <li class="">--}}
+                            {{--                                                <a class="dash-link"--}}
+                            {{--                                                   href="{{ route('reports.purchases') }}">Purchases</a>--}}
+                            {{--                                            </li>--}}
+                            {{--                                        @endcan--}}
 
-                                    </ul>
-                                </li>
-                            @endcan
+                            {{--                                    </ul>--}}
+                            {{--                                </li>--}}
+                            {{--                            @endcan--}}
 
                             @can('Manage Sales')
                                 <li class="">
@@ -180,12 +180,16 @@
                                             <li class="">
                                                 <a class="dash-link" href="{{ route('sales.index') }}">Add Sale</a>
                                             </li>
+
                                         @endcan
 
                                         @can('Manage Category')
                                             <li class="">
                                                 <a class="dash-link" href="{{ route('reports.sales') }}">Sales</a>
                                             </li>
+{{--                                            <li class="">--}}
+{{--                                                <a class="dash-link" href="{{ route('sales.assign') }}">Assign Order</a>--}}
+{{--                                            </li>--}}
                                         @endcan
 
                                     </ul>
@@ -241,26 +245,26 @@
                             {{--            @endif--}}
 
 
-{{--                            @can('Manage Calendar Event')--}}
-{{--                                <li class="dash-item ">--}}
-{{--                                    <a href="{{ route('calendars.index') }}"--}}
-{{--                                       class="dash-link {{ Request::segment(1) == 'calendars' ? 'active' : '' }}"><span--}}
-{{--                                            class="dash-micon"><i class="ti ti-calendar"></i></span><span--}}
-{{--                                            class="dash-mtext">{{ __('Calendar') }}</span>--}}
-{{--                                    </a>--}}
-{{--                                </li>--}}
-{{--                            @endcan--}}
+                            {{--                            @can('Manage Calendar Event')--}}
+                            {{--                                <li class="dash-item ">--}}
+                            {{--                                    <a href="{{ route('calendars.index') }}"--}}
+                            {{--                                       class="dash-link {{ Request::segment(1) == 'calendars' ? 'active' : '' }}"><span--}}
+                            {{--                                            class="dash-micon"><i class="ti ti-calendar"></i></span><span--}}
+                            {{--                                            class="dash-mtext">{{ __('Calendar') }}</span>--}}
+                            {{--                                    </a>--}}
+                            {{--                                </li>--}}
+                            {{--                            @endcan--}}
 
 
-{{--                            @can('Manage Notification')--}}
-{{--                                <li class="dash-item ">--}}
-{{--                                    <a href="{{ route('notifications.index') }}"--}}
-{{--                                       class="dash-link {{ Request::segment(1) == 'notifications' ? 'active' : '' }}"><span--}}
-{{--                                            class="dash-micon"><i class="ti ti-notification"></i></span><span--}}
-{{--                                            class="dash-mtext">{{ __('Notifications') }}</span>--}}
-{{--                                    </a>--}}
-{{--                                </li>--}}
-{{--                            @endcan--}}
+                            {{--                            @can('Manage Notification')--}}
+                            {{--                                <li class="dash-item ">--}}
+                            {{--                                    <a href="{{ route('notifications.index') }}"--}}
+                            {{--                                       class="dash-link {{ Request::segment(1) == 'notifications' ? 'active' : '' }}"><span--}}
+                            {{--                                            class="dash-micon"><i class="ti ti-notification"></i></span><span--}}
+                            {{--                                            class="dash-mtext">{{ __('Notifications') }}</span>--}}
+                            {{--                                    </a>--}}
+                            {{--                                </li>--}}
+                            {{--                            @endcan--}}
 
                             {{--            @if (\Auth::user()->type == 'Owner')--}}
                             {{--                <li class="dash-item {{ (Request::route()->getName() == 'email_template.index' || Request::segment(1) == 'email_template_lang' || Request::route()->getName() == 'manageemail.lang') ? 'active' : '' }}">--}}

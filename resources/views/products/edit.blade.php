@@ -15,6 +15,26 @@
                 {{ Form::select('category_id', $categories, null, ['class' => 'form-control', 'data-toggle' => 'select']) }}
             </div>
         </div>
+        <div class="form-group col-md-12">
+            {{ Form::label('name', 'Choose Vendor', ['class' => 'col-form-label']) }}
+            <br>
+            @foreach($vendors as $key=> $vendor)
+                <label>
+
+                   @php
+                   if(isset($vendorMapping[$key])){
+                       echo '<input type="checkbox" class="m-2" checked
+                               name="vendor_ids[]" value="'.$key.'">'.$vendor;
+                   }else{
+                      echo '<input type="checkbox" class="m-2"
+                               name="vendor_ids[]" value="'.$key.'">'.$vendor;
+                   }
+                   @endphp
+
+                </label>
+                <br>
+            @endforeach
+        </div>
         <div class="form-group col-md-6">
             {{ Form::label('brand_id', __('Brand'), ['class' => 'col-form-label']) }}
             <div class="input-group">
@@ -43,7 +63,7 @@
                                     ]) }}
             {{ Form::label('product-image', __('Choose image'), ['class' => 'custom-file-label1']) }}
         </div>
-    </div>    
+    </div>
     <div class="col-md-6 my-auto">
         {{ Form::hidden('imgstatus', 0) }}
         <div class="form-group" id="product-image">
@@ -57,11 +77,11 @@
         <div class="mb-4 col-md-6">
             <div class="choose-files mt-3">
                 <label for="image">
-                    <div class=" bg-primary edit-product-image"> <i
+                    <div class=" bg-primary edit-product-image"><i
                             class="ti ti-upload px-1"></i>{{ __('Choose file here') }}
                     </div>
                     <input type="file" class="form-control file d-none" name="image" id="image"
-                        data-filename="edit-product-image" accept="image/*">
+                           data-filename="edit-product-image" accept="image/*">
                 </label>
             </div>
         </div>
@@ -69,10 +89,10 @@
         <div class="col-md-6 my-auto">
             {{ Form::hidden('imgstatus', 0) }}
             <div class="form-group" id="product-image">
-              <a href="{{ asset(Storage::url($product->image)) }}" target="_blank">
-                <img src="{{ asset(Storage::url($product->image)) }}" class="profile-image rounded-circle-product"                  
-                    onerror="this.onerror=null;this.src='{{ asset(Storage::url('logo/placeholder.png')) }}';">
-              </a>
+                <a href="{{ asset(Storage::url($product->image)) }}" target="_blank">
+                    <img src="{{ asset(Storage::url($product->image)) }}" class="profile-image rounded-circle-product"
+                         onerror="this.onerror=null;this.src='{{ asset(Storage::url('logo/placeholder.png')) }}';">
+                </a>
 
                 <button type="button" class="action-btn btn-danger btn-xs ms-3 mt-2 product-img-btn">
                     <i class="ti ti-trash text-white btn-xs mb-1"></i>

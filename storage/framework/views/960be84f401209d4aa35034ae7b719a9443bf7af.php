@@ -14,6 +14,21 @@
             <?php echo Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => __('Enter Product Description'), 'rows' => 3, 'style' => 'resize: none']); ?>
 
         </div>
+
+        <div class="form-group col-md-12">
+        <?php echo e(Form::label('name', 'Choose Vendor', ['class' => 'col-form-label'])); ?>
+
+            <br>
+        <?php $__currentLoopData = $vendors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=> $vendor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <label>
+                <input type="checkbox" class="m-2"
+                       name="vendor_ids[]" value="<?php echo e($key); ?>"> <?php echo e($vendor); ?>
+
+            </label>
+            <br>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </div>
+
         <div class="form-group col-md-6">
             <?php echo e(Form::label('category_id', __('Category'), ['class' => 'col-form-label'])); ?>
 
@@ -51,12 +66,12 @@
         <div class="mb-4 col-md-6">
             <div class="choose-files mt-3">
                 <label for="image">
-                    <div class=" bg-primary edit-product-image"> <i
+                    <div class=" bg-primary edit-product-image"><i
                             class="ti ti-upload px-1"></i><?php echo e(__('Choose file here')); ?>
 
                     </div>
                     <input type="file" class="form-control file d-none" name="image" id="image"
-                        data-filename="edit-product-image" accept="image/*">
+                           data-filename="edit-product-image" accept="image/*">
                 </label>
             </div>
         </div>

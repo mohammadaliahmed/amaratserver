@@ -14,11 +14,11 @@
             <div class="col invoice-details text-end">
                 <h1 class="invoice-id h4">{{ $details['invoice_id'] }}</h1>
                 <div class="date mb-3">{{ __('Date of Invoice') }}: {{ $details['date'] }}</div>
-                @if (Utility::getValByName('SITE_RTL') == 'on')
-                    <div class="date mb-3 float-start">{!! DNS2D::getBarcodeHTML(route('sale.link.copy',\Illuminate\Support\Facades\Crypt::encrypt($details['invoice_id'])),'QRCODE',2,2) !!}</div>
-                @else
-                    <div class="date mb-3 float-end">{!! DNS2D::getBarcodeHTML(route('sale.link.copy',\Illuminate\Support\Facades\Crypt::encrypt($details['invoice_id'])),'QRCODE',2,2) !!}</div>
-                @endif
+{{--                @if (Utility::getValByName('SITE_RTL') == 'on')--}}
+{{--                    <div class="date mb-3 float-start">{!! DNS2D::getBarcodeHTML(route('sale.link.copy',\Illuminate\Support\Facades\Crypt::encrypt($details['invoice_id'])),'QRCODE',2,2) !!}</div>--}}
+{{--                @else--}}
+{{--                    <div class="date mb-3 float-end">{!! DNS2D::getBarcodeHTML(route('sale.link.copy',\Illuminate\Support\Facades\Crypt::encrypt($details['invoice_id'])),'QRCODE',2,2) !!}</div>--}}
+{{--                @endif--}}
                 {{-- <div class="date mb-3 float-right">{!! DNS2D::getBarcodeHTML($details['invoice_id'], 'QRCODE', 5, 5) !!}</div> --}}
                 <span class="clearfix" style="clear: both; display: block;"></span>
             </div>
@@ -79,9 +79,9 @@
                     {{-- <button class="btn btn-primary btn-sm btn-done-payment text-right float-right mb-3 "
                         data-url="{{ route('sales.store') }}">{{ __('Done Payment') }}</button>  --}}
                         <button class="btn btn-primary btn-done-payment rounded mb-3 float-right"
-                        data-url="{{ route('sales.store') }}">{{ __('Done Payment') }}</button> 
+                        data-url="{{ route('sales.store') }}">{{ __('Done Payment') }}</button>
 
-                        
+
                 @endif
             </div>
         </div>

@@ -46,28 +46,28 @@
                             </li>
 
 
+                            
+                            
+                            
+                            
+                            
+                            
 
+                            
+                            
+                            
+                            
+                            
 
+                            
+                            
+                            
+                            
+                            
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                            
+                            
+                            
 
 
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Customer')): ?>
@@ -137,34 +137,34 @@
                                 </li>
                             <?php endif; ?>
 
-                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Purchases')): ?>
-                                <li class="">
-                                    <a href="#navbar-purchases"
-                                       class="dash-link <?php echo e(Request::segment(1) == 'purchases' || Request::segment(1) . '/' . Request::segment(2) == 'reports/purchases' ? 'active' : ''); ?>"><span
-                                            class="dash-micon"><i class="ti ti-shopping-cart"></i></span><span
-                                            class="dash-mtext"><?php echo e(__('Purchases')); ?></span><span class="dash-arrow"><i
-                                                data-feather="chevron-right"></i></span></a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
 
 
-                                    <ul class="dash-submenu">
+                            
 
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Product')): ?>
-                                            <li class="">
-                                                <a class="dash-link" href="<?php echo e(route('purchases.index')); ?>">Add
-                                                    Purchase</a>
-                                            </li>
-                                        <?php endif; ?>
+                            
+                            
+                            
+                            
+                            
+                            
 
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Category')): ?>
-                                            <li class="">
-                                                <a class="dash-link"
-                                                   href="<?php echo e(route('reports.purchases')); ?>">Purchases</a>
-                                            </li>
-                                        <?php endif; ?>
+                            
+                            
+                            
+                            
+                            
+                            
 
-                                    </ul>
-                                </li>
-                            <?php endif; ?>
+                            
+                            
+                            
 
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Sales')): ?>
                                 <li class="">
@@ -180,12 +180,16 @@
                                             <li class="">
                                                 <a class="dash-link" href="<?php echo e(route('sales.index')); ?>">Add Sale</a>
                                             </li>
+
                                         <?php endif; ?>
 
                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Category')): ?>
                                             <li class="">
                                                 <a class="dash-link" href="<?php echo e(route('reports.sales')); ?>">Sales</a>
                                             </li>
+
+
+
                                         <?php endif; ?>
 
                                     </ul>
@@ -241,26 +245,26 @@
                             
 
 
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
 
                             
                             

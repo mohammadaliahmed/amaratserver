@@ -97,6 +97,9 @@ class SaleController extends Controller
         }
     }
 
+
+
+
     public function store(Request $request)
     {
         if (Auth::user()->can('Manage Sales')) {

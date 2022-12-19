@@ -101,9 +101,9 @@
                                     <div class="theme-avtar bg-warning">
                                         <i class="ti ti-report-money"></i>
                                     </div>
-                                    <p class="text-muted text-sm mt-4 mb-2"><?php echo e(__('Purchase Of This Month')); ?></p>
+                                    <p class="text-muted text-sm mt-4 mb-2"><?php echo e(__('Orders Of This Month')); ?></p>
                                     <h6 class="mb-3"></h6>
-                                    <h3 class="mb-0"><?php echo e($monthlyPurchasedAmount); ?><span
+                                    <h3 class="mb-0"><?php echo e($monthlyOrders); ?><span
                                             class="text-success text-sm"><i class=""></i> </span></h3>
                                 </div>
                             </div>
@@ -114,9 +114,9 @@
                                     <div class="theme-avtar bg-danger">
                                         <i class="ti ti-chart-bar"></i>
                                     </div>
-                                    <p class="text-muted text-sm mt-4 mb-2"><?php echo e(__('Total Purchase Amount')); ?></p>
+                                    <p class="text-muted text-sm mt-4 mb-2"><?php echo e(__('Total Orders Count')); ?></p>
                                     <h6 class="mb-3"></h6>
-                                    <h3 class="mb-0"><?php echo e($totalPurchasedAmount); ?><span
+                                    <h3 class="mb-0"><?php echo e($totalSalesCount); ?><span
                                             class="text-danger text-sm"><i class=""></i> </span></h3>
                                 </div>
                             </div>
@@ -174,7 +174,7 @@
                         <div class="card-header">
                             <div class="row ">
                                 <div class="col-6">
-                                    <h5><?php echo e(__('Purchase Sale Report')); ?></h5>
+                                    <h5><?php echo e(__('Report')); ?></h5>
                                 </div>
                                 <div class="col-6 text-end">
                                     <h6><?php echo e(__('Last 10 Days')); ?></h6>
@@ -310,11 +310,8 @@
                     width: 2,
                     curve: 'smooth'
                 },
-                series: [{
-                        name: '<?php echo e(__('Purchase')); ?>',
-                        data: <?php echo json_encode($purchasesArray['value']); ?>
+                series: [
 
-                    },
                     {
                         name: '<?php echo e(__('Sales')); ?>',
                         data: <?php echo json_encode($salesArray['value']); ?>
@@ -327,7 +324,7 @@
                         text: '<?php echo e(__('Days')); ?>'
                     }
                 },
-                colors: ['#FF3A6E', '#6fd943'],
+                colors: [ '#6fd943'],
 
                 grid: {
                     strokeDashArray: 4,

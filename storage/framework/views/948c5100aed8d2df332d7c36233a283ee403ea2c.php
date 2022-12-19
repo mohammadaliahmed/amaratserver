@@ -22,6 +22,27 @@
 
             </div>
         </div>
+        <div class="form-group col-md-12">
+            <?php echo e(Form::label('name', 'Choose Vendor', ['class' => 'col-form-label'])); ?>
+
+            <br>
+            <?php $__currentLoopData = $vendors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=> $vendor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <label>
+
+                   <?php
+                   if(isset($vendorMapping[$key])){
+                       echo '<input type="checkbox" class="m-2" checked
+                               name="vendor_ids[]" value="'.$key.'">'.$vendor;
+                   }else{
+                      echo '<input type="checkbox" class="m-2" 
+                               name="vendor_ids[]" value="'.$key.'">'.$vendor;
+                   }
+                   ?>
+
+                </label>
+                <br>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </div>
         <div class="form-group col-md-6">
             <?php echo e(Form::label('brand_id', __('Brand'), ['class' => 'col-form-label'])); ?>
 
@@ -51,12 +72,12 @@
         <div class="mb-4 col-md-6">
             <div class="choose-files mt-3">
                 <label for="image">
-                    <div class=" bg-primary edit-product-image"> <i
+                    <div class=" bg-primary edit-product-image"><i
                             class="ti ti-upload px-1"></i><?php echo e(__('Choose file here')); ?>
 
                     </div>
                     <input type="file" class="form-control file d-none" name="image" id="image"
-                        data-filename="edit-product-image" accept="image/*">
+                           data-filename="edit-product-image" accept="image/*">
                 </label>
             </div>
         </div>
@@ -65,10 +86,10 @@
             <?php echo e(Form::hidden('imgstatus', 0)); ?>
 
             <div class="form-group" id="product-image">
-              <a href="<?php echo e(asset(Storage::url($product->image))); ?>" target="_blank">
-                <img src="<?php echo e(asset(Storage::url($product->image))); ?>" class="profile-image rounded-circle-product"                  
-                    onerror="this.onerror=null;this.src='<?php echo e(asset(Storage::url('logo/placeholder.png'))); ?>';">
-              </a>
+                <a href="<?php echo e(asset(Storage::url($product->image))); ?>" target="_blank">
+                    <img src="<?php echo e(asset(Storage::url($product->image))); ?>" class="profile-image rounded-circle-product"
+                         onerror="this.onerror=null;this.src='<?php echo e(asset(Storage::url('logo/placeholder.png'))); ?>';">
+                </a>
 
                 <button type="button" class="action-btn btn-danger btn-xs ms-3 mt-2 product-img-btn">
                     <i class="ti ti-trash text-white btn-xs mb-1"></i>

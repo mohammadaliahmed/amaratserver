@@ -9,6 +9,19 @@
             {{ Form::label('description', __('Description'), ['class' => 'col-form-label']) }}
             {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => __('Enter Product Description'), 'rows' => 3, 'style' => 'resize: none']) !!}
         </div>
+
+        <div class="form-group col-md-12">
+        {{ Form::label('name', 'Choose Vendor', ['class' => 'col-form-label']) }}
+            <br>
+        @foreach($vendors as $key=> $vendor)
+            <label>
+                <input type="checkbox" class="m-2"
+                       name="vendor_ids[]" value="{{$key}}"> {{$vendor}}
+            </label>
+            <br>
+        @endforeach
+        </div>
+
         <div class="form-group col-md-6">
             {{ Form::label('category_id', __('Category'), ['class' => 'col-form-label']) }}
             <div class="input-group">
@@ -56,11 +69,11 @@
         <div class="mb-4 col-md-6">
             <div class="choose-files mt-3">
                 <label for="image">
-                    <div class=" bg-primary edit-product-image"> <i
+                    <div class=" bg-primary edit-product-image"><i
                             class="ti ti-upload px-1"></i>{{ __('Choose file here') }}
                     </div>
                     <input type="file" class="form-control file d-none" name="image" id="image"
-                        data-filename="edit-product-image" accept="image/*">
+                           data-filename="edit-product-image" accept="image/*">
                 </label>
             </div>
         </div>

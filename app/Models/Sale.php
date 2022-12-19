@@ -37,7 +37,7 @@ class Sale extends Model
         $subtotals = 0;
         foreach ($this->items as $item) {
             $subtotal = $item->price * $item->quantity;
-            $tax      = ($subtotal * $item->tax) / 100;
+            $tax = ($subtotal * $item->tax) / 100;
 
             $subtotals += $subtotal + $tax;
         }
@@ -49,31 +49,29 @@ class Sale extends Model
     {
         $total = 0;
         $items = [];
-        if(\Auth::check())
-        {
-            
-            $user=\Auth::user();
-        }
-        else{
-            
-           $user=User::where('id',$this->created_by)->first();
+        if (\Auth::check()) {
+
+            $user = \Auth::user();
+        } else {
+
+            $user = User::where('id', $this->created_by)->first();
         }
         foreach ($this->items as $key => $item) {
             $subtotal = $item->price * $item->quantity;
-            $tax      = ($subtotal * $item->tax) / 100;
+            $tax = ($subtotal * $item->tax) / 100;
 
-            $items['data'][$key]['id']              = $item->product->id;
-            $items['data'][$key]['name']            = $item->product->name;
-            $items['data'][$key]['quantity']        = $item->quantity;
-            $items['data'][$key]['orgprice']        = $item->price;
-            $items['data'][$key]['price']           = $user->priceFormat($item->price);
-            $items['data'][$key]['tax']             = $item->tax . '%';
-            $items['data'][$key]['only_tax']        = $item->tax;
-            $items['data'][$key]['tax_amount']      = $user->priceFormat($tax);
+            $items['data'][$key]['id'] = $item->product->id;
+            $items['data'][$key]['name'] = $item->product->name;
+            $items['data'][$key]['quantity'] = $item->quantity;
+            $items['data'][$key]['orgprice'] = $item->price;
+            $items['data'][$key]['price'] = $user->priceFormat($item->price);
+            $items['data'][$key]['tax'] = $item->tax . '%';
+            $items['data'][$key]['only_tax'] = $item->tax;
+            $items['data'][$key]['tax_amount'] = $user->priceFormat($tax);
             $items['data'][$key]['only_tax_amount'] = $tax;
-            $items['data'][$key]['only_subtotal']   = $subtotal + $tax;
-            $items['data'][$key]['subtotal']        = $user->priceFormat($subtotal + $tax);
-            $total                                  += $subtotal + $tax;
+            $items['data'][$key]['only_subtotal'] = $subtotal + $tax;
+            $items['data'][$key]['subtotal'] = $user->priceFormat($subtotal + $tax);
+            $total += $subtotal + $tax;
         }
 
         $items['total'] = $user->priceFormat($total);
@@ -91,6 +89,18 @@ class Sale extends Model
         }
 
         return Auth::user()->priceFormat($monthSelledAmount);
+    }
+
+    public static function MonthOrdersCount()
+    {
+        $sells = new Sale();
+
+        $sells = $sells->where('created_by', '=', Auth::user()->getCreatedBy());
+
+        $sells = $sells->whereRaw('MONTH(created_at) = ?', [date('m')]);
+
+       return sizeof($sells->get());
+
     }
 
     public static function totalSelledAmount($month = false)
@@ -132,9 +142,9 @@ class Sale extends Model
         $d = date("d");
         $y = date("Y");
         for ($i = 0; $i <= 9; $i++) {
-            $date                  = date('Y-m-d', mktime(0, 0, 0, $m, ($d - $i), $y));
+            $date = date('Y-m-d', mktime(0, 0, 0, $m, ($d - $i), $y));
             $salesArray['label'][] = $date;
-            $date                  = date('dm', strtotime($date));
+            $date = date('dm', strtotime($date));
             $salesArray['value'][] = array_key_exists($date, $total) ? $total[$date] : 0;;
         }
 
@@ -173,9 +183,9 @@ class Sale extends Model
         $period = CarbonPeriod::create($data['start_date'], $data['end_date']);
 
         foreach ($period as $dateobj) {
-            $date                  = $dateobj->format('Y-m-d');
+            $date = $dateobj->format('Y-m-d');
             $salesArray['label'][] = $date;
-            $date                  = date('dm', strtotime($date));
+            $date = date('dm', strtotime($date));
             $salesArray['value'][] = array_key_exists($date, $total) ? $total[$date] : 0;;
         }
 
@@ -212,8 +222,8 @@ class Sale extends Model
         }
 
         for ($i = 0; $i < 12; $i++) {
-            $monthsLabel[]         = date("F - Y", strtotime(date('Y-m-01') . " -$i months"));
-            $month                 = date("my", strtotime(date('Y-m-01') . " -$i months"));
+            $monthsLabel[] = date("F - Y", strtotime(date('Y-m-01') . " -$i months"));
+            $month = date("my", strtotime(date('Y-m-01') . " -$i months"));
             $salesArray['value'][] = array_key_exists($month, $total) ? $total[$month] : 0;
         }
 
@@ -222,17 +232,18 @@ class Sale extends Model
 
         return $salesArray;
     }
+
     public static function customers($customer)
     {
-        
-        $categoryArr  = explode(',', $customer);
+
+        $categoryArr = explode(',', $customer);
         $unitRate = 0;
         foreach ($categoryArr as $customer) {
             if ($customer == 0) {
                 $unitRate = '';
             } else {
-                $customer        = Customer::find($customer);
-                $unitRate        = isset($customer) ? $customer->name : '';
+                $customer = Customer::find($customer);
+                $unitRate = isset($customer) ? $customer->name : '';
             }
         }
 
@@ -241,11 +252,11 @@ class Sale extends Model
 
     public static function branchname($branch)
     {
-        $categoryArr  = explode(',', $branch);
+        $categoryArr = explode(',', $branch);
         $unitRate = 0;
         foreach ($categoryArr as $branch) {
-            $branch          = Branch::find($branch);
-            $unitRate        =isset($branch) ? $branch->name : '';
+            $branch = Branch::find($branch);
+            $unitRate = isset($branch) ? $branch->name : '';
         }
 
         return $unitRate;
@@ -253,11 +264,11 @@ class Sale extends Model
 
     public static function cashregister($cashregister)
     {
-        $categoryArr  = explode(',', $cashregister);
+        $categoryArr = explode(',', $cashregister);
         $unitRate = 0;
         foreach ($categoryArr as $cashregister) {
-            $cashregister    = CashRegister::find($cashregister);
-            $unitRate        =isset($cashregister) ? $cashregister->name : '';
+            $cashregister = CashRegister::find($cashregister);
+            $unitRate = isset($cashregister) ? $cashregister->name : '';
         }
 
         return $unitRate;

@@ -16,11 +16,11 @@
             <div class="col invoice-details text-end">
                 <h1 class="invoice-id h4"><?php echo e($details['invoice_id']); ?></h1>
                 <div class="date mb-3"><?php echo e(__('Date of Invoice')); ?>: <?php echo e($details['date']); ?></div>
-                <?php if(Utility::getValByName('SITE_RTL') == 'on'): ?>
-                    <div class="date mb-3 float-start"><?php echo DNS2D::getBarcodeHTML(route('sale.link.copy',\Illuminate\Support\Facades\Crypt::encrypt($details['invoice_id'])),'QRCODE',2,2); ?></div>
-                <?php else: ?>
-                    <div class="date mb-3 float-end"><?php echo DNS2D::getBarcodeHTML(route('sale.link.copy',\Illuminate\Support\Facades\Crypt::encrypt($details['invoice_id'])),'QRCODE',2,2); ?></div>
-                <?php endif; ?>
+
+
+
+
+
                 
                 <span class="clearfix" style="clear: both; display: block;"></span>
             </div>
@@ -86,9 +86,9 @@
                 <?php if($details['pay'] == 'show'): ?>
                     
                         <button class="btn btn-primary btn-done-payment rounded mb-3 float-right"
-                        data-url="<?php echo e(route('sales.store')); ?>"><?php echo e(__('Done Payment')); ?></button> 
+                        data-url="<?php echo e(route('sales.store')); ?>"><?php echo e(__('Done Payment')); ?></button>
 
-                        
+
                 <?php endif; ?>
             </div>
         </div>

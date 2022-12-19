@@ -44,7 +44,7 @@
                                         <th class="w-25">{{ __('Name') }}</th>
                                         <th>{{ __('Brand') }}</th>
                                         <th>{{ __('Category') }}</th>
-                                        <th>{{ __('Quantity') }}</th>
+{{--                                        <th>{{ __('Quantity') }}</th>--}}
 {{--                                        <th>{{ __('Barcode') }}</th>--}}
                                         <th width="200px">{{ __('Action') }}</th>
                                     </tr>
@@ -56,15 +56,15 @@
                                             <td><span class="break-all">{{ $product->name }}</span></td>
                                             <td>{{ $product->brandname }}</td>
                                             <td>{{ $product->categoryname }}</td>
-                                            <td>
-                                                @if ($product->getTotalProductQuantity() > \App\Models\Utility::settings()['low_product_stock_threshold'])
-                                                    <span
-                                                        class="badge bg-success p-2 px-3 rounded">{{ $product->getTotalProductQuantity() }}</span>
-                                                @else
-                                                    <span
-                                                        class="badge bg-danger p-2 px-3 rounded">{{ $product->getTotalProductQuantity() }}</span>
-                                                @endif
-                                            </td>
+{{--                                            <td>--}}
+{{--                                                @if ($product->getTotalProductQuantity() > \App\Models\Utility::settings()['low_product_stock_threshold'])--}}
+{{--                                                    <span--}}
+{{--                                                        class="badge bg-success p-2 px-3 rounded">{{ $product->getTotalProductQuantity() }}</span>--}}
+{{--                                                @else--}}
+{{--                                                    <span--}}
+{{--                                                        class="badge bg-danger p-2 px-3 rounded">{{ $product->getTotalProductQuantity() }}</span>--}}
+{{--                                                @endif--}}
+{{--                                            </td>--}}
 {{--                                            <td>--}}
 {{--                                                <div id="{{ $product->id }}"--}}
 {{--                                                    class="product_barcode product_barcode_hight_de"--}}

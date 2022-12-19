@@ -85,6 +85,7 @@ class HomeController extends Controller
             $vendors = Vendor::select('id')->where('created_by', '=', $user_id)->count();
 
             $monthlySelledAmount = Sale::totalSelledAmount(true);
+            $monthlyOrders = Sale::MonthOrdersCount();
             $totalSelledAmount   = Sale::totalSelledAmount();
 
             $monthlyPurchasedAmount = Purchase::totalPurchasedAmount(true);
@@ -93,6 +94,8 @@ class HomeController extends Controller
             $purchasesArray = Purchase::getPurchaseReportChart();
 
             $salesArray = Sale::getSalesReportChart();
+
+            $totalSalesCount=sizeof(Sale::all());
 
             $todos = Todo::where('created_by', '=', Auth::user()->id)->orderBy('id', 'DESC')->get();
 
@@ -112,6 +115,8 @@ class HomeController extends Controller
                 'totalPurchasedAmount',
                 'purchasesArray',
                 'salesArray',
+                'totalSalesCount',
+                'monthlyOrders',
                 'todos',
                 'saletarget',
             ];

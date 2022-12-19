@@ -42,7 +42,7 @@
                                         <th class="w-25"><?php echo e(__('Name')); ?></th>
                                         <th><?php echo e(__('Brand')); ?></th>
                                         <th><?php echo e(__('Category')); ?></th>
-                                        <th><?php echo e(__('Quantity')); ?></th>
+
 
                                         <th width="200px"><?php echo e(__('Action')); ?></th>
                                     </tr>
@@ -54,15 +54,15 @@
                                             <td><span class="break-all"><?php echo e($product->name); ?></span></td>
                                             <td><?php echo e($product->brandname); ?></td>
                                             <td><?php echo e($product->categoryname); ?></td>
-                                            <td>
-                                                <?php if($product->getTotalProductQuantity() > \App\Models\Utility::settings()['low_product_stock_threshold']): ?>
-                                                    <span
-                                                        class="badge bg-success p-2 px-3 rounded"><?php echo e($product->getTotalProductQuantity()); ?></span>
-                                                <?php else: ?>
-                                                    <span
-                                                        class="badge bg-danger p-2 px-3 rounded"><?php echo e($product->getTotalProductQuantity()); ?></span>
-                                                <?php endif; ?>
-                                            </td>
+
+
+
+
+
+
+
+
+
 
 
 

@@ -83,6 +83,7 @@ Route::get('purchased-items', 'PurchaseController@purchasedItems')->name('purcha
 Route::resource('purchases', 'PurchaseController')->middleware(['auth', 'XSS']);
 
 Route::get('selled-invoice/{id}', 'SaleController@selledInvoice')->name('selled.invoice'); //PDF
+Route::get('sale/assign', 'SaleController@selledInvoice')->name('sales.assign'); //PDF
 Route::get('selled-invoices/preview/{template}/{color}', 'SaleController@previewSelledInvoice')->name('selled.invoice.preview');
 Route::get('sales-invoices/{id}/get_invoice', 'SaleController@printSaleInvoice')->name('get.sales.invoice')->middleware(['XSS']);
 Route::get('sales-items', 'SaleController@salesItems')->name('sales.items')->middleware(['auth', 'XSS']);

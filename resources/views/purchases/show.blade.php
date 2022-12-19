@@ -1,6 +1,6 @@
 
 @push('scripts')
-    
+
 @endpush
 
 @if( !empty($purchases) && count($purchases) > 0)
@@ -19,18 +19,18 @@
             <div class="col invoice-details text-end">
                 <h1 class="invoice-id h4">{{ $details['invoice_id'] }}</h1>
                 <div class="date mb-3">{{ __('Date of Invoice') }}: {{ $details['date'] }}</div>
-                @if (Utility::getValByName('SITE_RTL') == 'on')
-                    <div class="date mb-3 float-start">{!! DNS2D::getBarcodeHTML(route('purchase.link.copy',\Illuminate\Support\Facades\Crypt::encrypt($details['invoice_id'])),'QRCODE',2,2) !!}</div>
-                @else
-                    <div class="date mb-3 float-end">{!! DNS2D::getBarcodeHTML(route('purchase.link.copy',\Illuminate\Support\Facades\Crypt::encrypt($details['invoice_id'])),'QRCODE',2,2) !!}</div>
-                @endif
+{{--                @if (Utility::getValByName('SITE_RTL') == 'on')--}}
+{{--                    <div class="date mb-3 float-start">{!! DNS2D::getBarcodeHTML(route('purchase.link.copy',\Illuminate\Support\Facades\Crypt::encrypt($details['invoice_id'])),'QRCODE',2,2) !!}</div>--}}
+{{--                @else--}}
+{{--                    <div class="date mb-3 float-end">{!! DNS2D::getBarcodeHTML(route('purchase.link.copy',\Illuminate\Support\Facades\Crypt::encrypt($details['invoice_id'])),'QRCODE',2,2) !!}</div>--}}
+{{--                @endif--}}
              <span class="clearfix" style="clear: both; display: block;"></span>
             </div>
         </div>
-        
-       
+
+
         <div class="row invoice">
-            
+
             <div class="col-12 col-md-12">
                 <div class="invoice-table">
                     <table class="table">
