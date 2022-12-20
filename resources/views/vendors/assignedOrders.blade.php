@@ -50,7 +50,7 @@
                     @foreach($orders as $key=> $order)
                         <tr>
                             <th scope="row">{{$key + 1}}</th>
-                            <td><img src="storage/{{$order->product->image}}" width="70" height="70"></td>
+                            <td><img src="{{url('').'/storage/'.$order->product->image}}" width="70" height="70"></td>
                             <td>{{$order->product->name}}</td>
                             <td>{{$order->quantity}}</td>
                             <td>{{$order->created_at}}</td>
