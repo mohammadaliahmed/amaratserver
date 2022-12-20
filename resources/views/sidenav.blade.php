@@ -82,18 +82,29 @@
 
 
                             @can('Manage Vendor')
-                                <li class="dash-item ">
-                                    <a href="{{ route('vendors.index') }}"
-                                       class="dash-link {{ Request::segment(1) == 'customers' ? 'active' : '' }}"><span
-                                            class="dash-micon"><i class="ti ti-user-plus"></i></span><span
-                                            class="dash-mtext">{{ __('Vendors') }}</span>
-                                    </a>
+
+                                <li class="dash-item">
+                                    <a href="#" class="dash-link"><span class="dash-micon"><i
+                                                class="ti ti-brand-producthunt"></i></span><span
+                                            class="dash-mtext">{{ __('Vendors') }}</span><span class="dash-arrow"><i
+                                                data-feather="chevron-right"></i></span></a>
+                                    <ul class="dash-submenu">
+
+
+                                        <li class="">
+                                            <a class="dash-link" href="{{ route('vendors.index') }}">Vendors</a>
+                                        </li>
+                                        <li class="">
+                                            <a class="dash-link" href="{{ route('vendors.orders') }}">Assigned Orders</a>
+                                        </li>
+                                    </ul>
                                 </li>
                             @endcan
 
 
                             @if (Gate::check('Manage Product') || Gate::check('Manage Category') || Gate::check('Manage Brand') || Gate::check('Manage Tax') || Gate::check('Manage Unit'))
-                                <li class="">
+
+                                <li class="dash-item">
                                     <a href="#" class="dash-link"><span class="dash-micon"><i
                                                 class="ti ti-brand-producthunt"></i></span><span
                                             class="dash-mtext">{{ __('Products') }}</span><span class="dash-arrow"><i
@@ -167,7 +178,7 @@
                             {{--                            @endcan--}}
 
                             @can('Manage Sales')
-                                <li class="">
+                                <li class="dash-item">
                                     <a href="#" class="dash-link"><span class="dash-micon"><i
                                                 class="ti ti-book"></i></span><span
                                             class="dash-mtext">{{ __('Sales') }}</span><span class="dash-arrow"><i
@@ -180,16 +191,12 @@
                                             <li class="">
                                                 <a class="dash-link" href="{{ route('sales.index') }}">Add Sale</a>
                                             </li>
-
                                         @endcan
 
                                         @can('Manage Category')
                                             <li class="">
                                                 <a class="dash-link" href="{{ route('reports.sales') }}">Sales</a>
                                             </li>
-{{--                                            <li class="">--}}
-{{--                                                <a class="dash-link" href="{{ route('sales.assign') }}">Assign Order</a>--}}
-{{--                                            </li>--}}
                                         @endcan
 
                                     </ul>

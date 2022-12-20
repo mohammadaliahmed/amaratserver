@@ -6,24 +6,25 @@
 
 
 <?php $__env->startSection('action-btn'); ?>
-        <a type="button" class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="collapse"
-        data-bs-toggle="tooltip"
-            data-bs-target=".multi-collapse" title="<?php echo e(__('Filter')); ?>"> <i class="ti ti-filter"></i> </a>
+    <a type="button" class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="collapse"
+       data-bs-toggle="tooltip"
+       data-bs-target=".multi-collapse" title="<?php echo e(__('Filter')); ?>"> <i class="ti ti-filter"></i> </a>
 
-        <a href="<?php echo e(route('Sale.export')); ?>" class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="tooltip" title="<?php echo e(__('Export')); ?>">
+    <a href="<?php echo e(route('Sale.export')); ?>" class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="tooltip"
+       title="<?php echo e(__('Export')); ?>">
         <i class="ti ti-file-export"></i>
-        </a>
+    </a>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('breadcrumb'); ?>
-         <li class="breadcrumb-item"><a href="<?php echo e(route('home')); ?>"><?php echo e(__('Home')); ?></a></li>
-        <li class="breadcrumb-item"><?php echo e(__('Sale list')); ?></li>
+    <li class="breadcrumb-item"><a href="<?php echo e(route('home')); ?>"><?php echo e(__('Home')); ?></a></li>
+    <li class="breadcrumb-item"><?php echo e(__('Sale list')); ?></li>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startPush('old-datatable-css'); ?>
-<link rel="stylesheet" href="<?php echo e(asset('custom/css/jquery.dataTables.min.css')); ?>">
-<link rel="stylesheet" href="<?php echo e(asset('custom/css/customdatatable.css')); ?>">
-<link rel="stylesheet" href="<?php echo e(asset('assets/css/plugins/flatpickr.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('custom/css/jquery.dataTables.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('custom/css/customdatatable.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('assets/css/plugins/flatpickr.min.css')); ?>">
 <?php $__env->stopPush(); ?>
 
 
@@ -33,7 +34,7 @@
         // minimum setup
         document.querySelector("#pc-daterangepicker-1").flatpickr({
             mode: "range",
-            onChange: function(selectedDates, dateStr, instance) {
+            onChange: function (selectedDates, dateStr, instance) {
                 var dates = dateStr.split(" to ");
                 var start = moment(dates[0]).format('YYYY-MM-DD');
                 var end = moment(dates[0]).format('YYYY-MM-DD');
@@ -68,7 +69,7 @@
 
                                     <div class="col-lg-4 col-md-9 col-sm-12">
                                         <input type='text' class="form-control" id="pc-daterangepicker-1"
-                                            placeholder="Select time" type="text" />
+                                               placeholder="Select time" type="text"/>
                                         <?php echo e(Form::hidden('start_date1', $start_date, ['class' => 'form-control', 'id' => 'start_date1'])); ?>
 
                                         <?php echo e(Form::hidden('due_date1', $end_date, ['class' => 'form-control', 'id' => 'end_date1'])); ?>
@@ -100,9 +101,9 @@
                 <div class="card table-card">
                     <div class="card-header card-body table-border-style">
                         
-                    <div class="col-sm-12 table-responsive mt-3 table_over">
-                        <table class="table dataTable" id="myTable" role="grid">
-                            <thead class="thead-light">
+                        <div class="col-sm-12 table-responsive mt-3 table_over">
+                            <table class="table dataTable" id="myTable" role="grid">
+                                <thead class="thead-light">
                                 <tr role="row">
                                     <th style="width: 277px;"><?php echo e(__('Invoice ID')); ?></th>
                                     <th><?php echo e(__('Date')); ?></th>
@@ -112,12 +113,13 @@
                                     <th><?php echo e(__('Total')); ?></th>
                                     <th><?php echo e(__('Payment Status')); ?></th>
                                     <th style="width: 180px;"><?php echo e(__('Action')); ?></th>
+                                    <th>Assign Order</th>
                                 </tr>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
 
-                            </tbody>
-                            <tfoot>
+                                </tbody>
+                                <tfoot>
                                 <tr>
                                     <td rowspan="1" colspan="1">
                                         <h5 class="h6"><?php echo e(__('Grand Total')); ?></h5>
@@ -134,10 +136,10 @@
                                     <td rowspan="1" colspan="1"></td>
                                     <td rowspan="1" colspan="1"></td>
                                 </tr>
-                            </tfoot>
-                        </table>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
-                </div>
                 </div>
 
             </div>
@@ -147,24 +149,24 @@
 
     <?php $__env->startPush('old-datatable-js'); ?>
 
-    <script src="<?php echo e(asset('custom/js/jquery.dataTables.min.js')); ?>"></script>
-    <script>
-        var dataTabelLang = {
-            paginate: {previous: "<i class='fas fa-angle-left'>", next: "<i class='fas fa-angle-right'>"},
-            lengthMenu: "<?php echo e(__('Show')); ?> _MENU_ <?php echo e(__('entries')); ?>",
-            zeroRecords: "<?php echo e(__('No data available in table.')); ?>",
-            info: "<?php echo e(__('Showing')); ?> _START_ <?php echo e(__('to')); ?> _END_ <?php echo e(__('of')); ?> _TOTAL_ <?php echo e(__('entries')); ?>",
-            infoEmpty: "<?php echo e(__('Showing 0 to 0 of 0 entries')); ?>",
-            infoFiltered: "<?php echo e(__('(filtered from _MAX_ total entries)')); ?>",
-            search: "<?php echo e(__('Search:')); ?>",
-            thousands: ",",
-            loadingRecords: "<?php echo e(__('Loading...')); ?>",
-            processing: "<?php echo e(__('Processing...')); ?>"
-        };
+        <script src="<?php echo e(asset('custom/js/jquery.dataTables.min.js')); ?>"></script>
+        <script>
+            var dataTabelLang = {
+                paginate: {previous: "<i class='fas fa-angle-left'>", next: "<i class='fas fa-angle-right'>"},
+                lengthMenu: "<?php echo e(__('Show')); ?> _MENU_ <?php echo e(__('entries')); ?>",
+                zeroRecords: "<?php echo e(__('No data available in table.')); ?>",
+                info: "<?php echo e(__('Showing')); ?> _START_ <?php echo e(__('to')); ?> _END_ <?php echo e(__('of')); ?> _TOTAL_ <?php echo e(__('entries')); ?>",
+                infoEmpty: "<?php echo e(__('Showing 0 to 0 of 0 entries')); ?>",
+                infoFiltered: "<?php echo e(__('(filtered from _MAX_ total entries)')); ?>",
+                search: "<?php echo e(__('Search:')); ?>",
+                thousands: ",",
+                loadingRecords: "<?php echo e(__('Loading...')); ?>",
+                processing: "<?php echo e(__('Processing...')); ?>"
+            };
 
-        var site_currency_symbol_position = '<?php echo e(\App\Models\Utility::getValByName('site_currency_symbol_position')); ?>';
-        var site_currency_symbol = '<?php echo e(\App\Models\Utility::getValByName('site_currency_symbol')); ?>';
-    </script>
+            var site_currency_symbol_position = '<?php echo e(\App\Models\Utility::getValByName('site_currency_symbol_position')); ?>';
+            var site_currency_symbol = '<?php echo e(\App\Models\Utility::getValByName('site_currency_symbol')); ?>';
+        </script>
 
     <?php $__env->stopPush(); ?>
 
@@ -173,28 +175,28 @@
 
         <script>
 
-            $(document).on('click', '.copy_link_sale', function(e) {
-               e.preventDefault();
-               var copyText = $(this).attr('href');
+            $(document).on('click', '.copy_link_sale', function (e) {
+                e.preventDefault();
+                var copyText = $(this).attr('href');
 
-               document.addEventListener('copy', function (e) {
-                   e.clipboardData.setData('text/plain', copyText);
-                   e.preventDefault();
-               }, true);
+                document.addEventListener('copy', function (e) {
+                    e.clipboardData.setData('text/plain', copyText);
+                    e.preventDefault();
+                }, true);
 
-               document.execCommand('copy');
-               show_toastr('Success', 'Url copied to clipboard', 'success');
-           });
-       </script>
+                document.execCommand('copy');
+                show_toastr('Success', 'Url copied to clipboard', 'success');
+            });
+        </script>
 
         <script type="text/javascript">
 
 
-            $(document).ready(function() {
+            $(document).ready(function () {
                 ajax_invoice_filter();
             });
 
-            $(document).on('change', '#sell_to, #sell_by', function(e) {
+            $(document).on('change', '#sell_to, #sell_by', function (e) {
                 ajax_invoice_filter();
             });
 
@@ -210,53 +212,56 @@
                 }
 
                 $('#myTable').DataTable({
-                        "processing": true,
-                        "destroy": true,
-                        "paging": true,
-                        "pageLength": 10,
-                        "ordering": false,
-                        "language": dataTabelLang,
-                        "ajax": {
-                            "type": "GET",
-                            "url": data.url,
-                            "data": data,
+                    "processing": true,
+                    "destroy": true,
+                    "paging": true,
+                    "pageLength": 10,
+                    "ordering": false,
+                    "language": dataTabelLang,
+                    "ajax": {
+                        "type": "GET",
+                        "url": data.url,
+                        "data": data,
+                    },
+                    "columns": [{
+                        "data": "invoice_id"
+                    },
+                        {
+                            "data": "created_at"
                         },
-                        "columns": [{
-                                "data": "invoice_id"
-                            },
-                            {
-                                "data": "created_at"
-                            },
-                            {
-                                "data": "username"
-                            },
-                            {
-                                "data": "customername"
-                            },
-                            {
-                                "data": "itemscount"
-                            },
-                            {
-                                "data": "itemstotal"
-                            },
-                            {
-                                "data": "paymentstatus"
-                            },
-                            {
-                                "data": "action"
-                            }
-                        ],
-                    })
-                    .on("xhr.dt", function(e, settings, json, xhr) {
+                        {
+                            "data": "username"
+                        },
+                        {
+                            "data": "customername"
+                        },
+                        {
+                            "data": "itemscount"
+                        },
+                        {
+                            "data": "itemstotal"
+                        },
+                        {
+                            "data": "paymentstatus"
+                        },
+                        {
+                            "data": "action"
+                        },
+                        {
+                            "data": "assign"
+                        }
+                    ],
+                })
+                    .on("xhr.dt", function (e, settings, json, xhr) {
                         $('#totalitems').text(json.totalItemsCount);
                         $('#totalcounts').text(json.totalCount);
-                        setTimeout(function() {
+                        setTimeout(function () {
                             loadConfirm();
                         }, 1000);
                     });
             }
 
-            $(document).on('click', '.payment-action', function(e) {
+            $(document).on('click', '.payment-action', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
 
@@ -272,7 +277,7 @@
                     data: {
                         status: status
                     },
-                    success: function(response) {
+                    success: function (response) {
 
                         if (response) {
 
@@ -295,7 +300,7 @@
                                 'unpaid partially-paid paid').addClass(payment_class).text(payment);
                         }
                     },
-                    error: function(data) {
+                    error: function (data) {
                         data = data.responseJSON;
                         show_toastr('<?php echo e(__('Error')); ?>', data.error, 'error');
                     }

@@ -30,6 +30,11 @@ class Product extends Model
         return $this->hasOne('App\Models\Tax', 'id', 'tax_id');
     }
 
+    public function vendors()
+    {
+        return $this->hasMany('App\Models\ProductVendorMapping',  'product_id');
+    }
+
     public static function getallproducts()
     {
         return Product::select('products.*', 'b.name as brandname', 'c.name as categoryname')

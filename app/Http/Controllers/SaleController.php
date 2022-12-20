@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vendor;
+use App\Models\VendorOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -60,7 +62,7 @@ class SaleController extends Controller
             }
 
             $settings['company_telephone'] = $settings['company_telephone'] != '' ? ", " . $settings['company_telephone'] : '';
-            $settings['company_state']     = $settings['company_state'] != '' ? ", " . $settings['company_state'] : '';
+            $settings['company_state'] = $settings['company_state'] != '' ? ", " . $settings['company_state'] : '';
 
             $userdetails = '<h2 class="h6"><b>' . ucfirst($details['user']['name']) . ' </b> <h2  class="h6 font-weight-normal">' . '<p class="m-0 h6 font-weight-normal">' . $settings['company_name'] . $settings['company_telephone'] . '</p>' . '<p class="m-0 h6 font-weight-normal">' . $settings['company_address'] . '</p>' . '<p class="m-0 h6 font-weight-normal">' . $settings['company_city'] . $settings['company_state'] . '</p>' . '<p class="m-0 h6 font-weight-normal">' . $settings['company_country'] . '</p>' . '<p class="m-0 h6 font-weight-normal">' . $settings['company_zipcode'] . '</p></h2>';
 
@@ -69,19 +71,19 @@ class SaleController extends Controller
             $details['user']['details'] = $userdetails;
 
             $mainsubtotal = 0;
-            $sales        = [];
+            $sales = [];
 
             foreach ($sess as $key => $value) {
                 $subtotal = $value['price'] * $value['quantity'];
-                $tax      = ($subtotal * $value['tax']) / 100;
+                $tax = ($subtotal * $value['tax']) / 100;
 
-                $sales['data'][$key]['name']       = $value['name'];
-                $sales['data'][$key]['quantity']   = $value['quantity'];
-                $sales['data'][$key]['price']      = Auth::user()->priceFormat($value['price']);
-                $sales['data'][$key]['tax']        = $value['tax'] . '%';
+                $sales['data'][$key]['name'] = $value['name'];
+                $sales['data'][$key]['quantity'] = $value['quantity'];
+                $sales['data'][$key]['price'] = Auth::user()->priceFormat($value['price']);
+                $sales['data'][$key]['tax'] = $value['tax'] . '%';
                 $sales['data'][$key]['tax_amount'] = Auth::user()->priceFormat($tax);
-                $sales['data'][$key]['subtotal']   = Auth::user()->priceFormat($value['subtotal']);
-                $mainsubtotal                      += $value['subtotal'];
+                $sales['data'][$key]['subtotal'] = Auth::user()->priceFormat($value['subtotal']);
+                $mainsubtotal += $value['subtotal'];
             }
             $sales['total'] = Auth::user()->priceFormat($mainsubtotal);
 
@@ -98,18 +100,16 @@ class SaleController extends Controller
     }
 
 
-
-
     public function store(Request $request)
     {
         if (Auth::user()->can('Manage Sales')) {
             $user_id = Auth::user()->getCreatedBy();
 
-            $customer_id      = Customer::customer_id($request->vc_name);
-            $branch_id        = $request->branch_id != '' ? $request->branch_id : 0;
+            $customer_id = Customer::customer_id($request->vc_name);
+            $branch_id = $request->branch_id != '' ? $request->branch_id : 0;
             $cash_register_id = $request->cash_register_id != '' ? $request->cash_register_id : 0;
-            $invoice_id       = $this->invoiceSellNumber();
-            $sales            = session()->get('sales');
+            $invoice_id = $this->invoiceSellNumber();
+            $sales = session()->get('sales');
 
             if (isset($sales) && !empty($sales) && count($sales) > 0) {
                 $result = DB::table('sales')->where('invoice_id', $invoice_id)->where('created_by', $user_id)->get();
@@ -123,11 +123,12 @@ class SaleController extends Controller
                 } else {
                     $sale = new Sale();
 
-                    $sale->invoice_id       = $invoice_id;
-                    $sale->customer_id      = $customer_id;
-                    $sale->branch_id        = $branch_id;
+                    $sale->invoice_id = $invoice_id;
+                    $sale->customer_id = $customer_id;
+                    $sale->branch_id = $branch_id;
+                    $sale->status = 2;
                     $sale->cash_register_id = $cash_register_id;
-                    $sale->created_by       = $user_id;
+                    $sale->created_by = $user_id;
 
                     $sale->save();
 
@@ -141,19 +142,19 @@ class SaleController extends Controller
                         $product_quantity = $original_quantity - $value['quantity'];
 
                         if ($product != null && !empty($product)) {
-                            Product::where('id', $product_id)->update(['quantity' => $product_quantity]);
+//                            Product::where('id', $product_id)->update(['quantity' => $product_quantity]);
                         }
 
                         $tax_id = Product::tax_id($product_id);
 
                         $selleditems = new SelledItems();
 
-                        $selleditems->sell_id    = $sale->id;
+                        $selleditems->sell_id = $sale->id;
                         $selleditems->product_id = $product_id;
-                        $selleditems->price      = $value['price'];
-                        $selleditems->quantity   = $value['quantity'];
-                        $selleditems->tax_id     = $tax_id;
-                        $selleditems->tax        = $value['tax'];
+                        $selleditems->price = $value['price'];
+                        $selleditems->quantity = $value['quantity'];
+                        $selleditems->tax_id = $tax_id;
+                        $selleditems->tax = $value['tax'];
 
                         $selleditems->save();
                     }
@@ -161,10 +162,10 @@ class SaleController extends Controller
                     session()->forget('sales');
 
                     if ($sale->customer != null) {
-                        $sale_id              = Crypt::encrypt($sale->id);
-                        $sale->customer_name  = ucfirst($sale->customer->name);
+                        $sale_id = Crypt::encrypt($sale->id);
+                        $sale->customer_name = ucfirst($sale->customer->name);
                         $sale->customer_email = $sale->customer->email;
-                        $sale->url            = route('get.sales.invoice', $sale_id);
+                        $sale->url = route('get.sales.invoice', $sale_id);
 
 //                        try {
 //                            Mail::to($sale->customer_email)->send(new SelledInvoice($sale));
@@ -220,14 +221,14 @@ class SaleController extends Controller
             $user_id = Auth::user()->getCreatedBy();
 
             if ($request->has('product') && $request->has('quantity')) {
-                $products   = $request->product;
+                $products = $request->product;
                 $quantities = $request->quantity;
 
                 $sale->customer_id = $request->customer_id;
 
                 if (Auth::user()->isOwner()) {
 
-                    $sale->branch_id        = $request->branch_id;
+                    $sale->branch_id = $request->branch_id;
                     $sale->cash_register_id = $request->cash_register_id;
                 }
 
@@ -238,22 +239,22 @@ class SaleController extends Controller
 
                     for ($i = 0; $i < count($products); $i++) {
                         $product_id = $products[$i];
-                        $quantity   = (int)$quantities[$i];
+                        $quantity = (int)$quantities[$i];
 
                         $product = Product::whereId($product_id)->where('created_by', $user_id)->first();
 
-                        $tax   = ($product->taxes == null) ? 0 : (float)$product->taxes->percentage;
+                        $tax = ($product->taxes == null) ? 0 : (float)$product->taxes->percentage;
                         $price = $product->sale_price;
 
                         $tax_id = Product::tax_id($product_id);
 
-                        $ri             = new SelledItems();
-                        $ri->sell_id    = $sale->id;
+                        $ri = new SelledItems();
+                        $ri->sell_id = $sale->id;
                         $ri->product_id = $product_id;
-                        $ri->price      = $price;
-                        $ri->quantity   = $quantity;
-                        $ri->tax_id     = $tax_id;
-                        $ri->tax        = $tax;
+                        $ri->price = $price;
+                        $ri->quantity = $quantity;
+                        $ri->tax_id = $tax_id;
+                        $ri->tax = $tax;
                         $ri->save();
                     }
 
@@ -285,7 +286,7 @@ class SaleController extends Controller
 
             foreach ($items as $key => $item) {
                 $subtotal = $item->price * $item->quantity;
-                $tax      = ($subtotal * $item->tax) / 100;
+                $tax = ($subtotal * $item->tax) / 100;
 
                 $items[$key]['subtotal'] = $subtotal + $tax;
             }
@@ -303,14 +304,14 @@ class SaleController extends Controller
         $sell = Sale::find($sell_id);
 
         if (!empty($sell)) {
-            $user     = User::select('*')->where('id', $sell->created_by)->first();
+            $user = User::select('*')->where('id', $sell->created_by)->first();
             $settings = Utility::settings($user->id);
 
-            $invoice_id    = $user->sellInvoiceNumberFormat($sell->invoice_id);
+            $invoice_id = $user->sellInvoiceNumberFormat($sell->invoice_id);
             $invoice_color = $user->sellInvoiceColor();
 
             $settings['company_telephone'] = $settings['company_telephone'] != '' ? ", " . $settings['company_telephone'] : '';
-            $settings['company_state']     = $settings['company_state'] != '' ? ", " . $settings['company_state'] : '';
+            $settings['company_state'] = $settings['company_state'] != '' ? ", " . $settings['company_state'] : '';
 
             $userdetails = [
                 ucfirst($user->name),
@@ -363,7 +364,7 @@ class SaleController extends Controller
 
             foreach ($items as $key => $item) {
                 $subtotal = $item->price * $item->quantity;
-                $tax      = ($subtotal * $item->tax) / 100;
+                $tax = ($subtotal * $item->tax) / 100;
 
                 $total += $st = $subtotal + $tax;
                 $invoice->addItem($item->productname, "", $item->quantity, $item->price, $item->tax, $tax, $st);
@@ -396,7 +397,7 @@ class SaleController extends Controller
     public function printSaleInvoice($id)
     {
         $sale_id = Crypt::decrypt($id);
-        $sale    = Sale::findOrFail($sale_id);
+        $sale = Sale::findOrFail($sale_id);
 
         if ($sale) {
             $user = User::select('*')->where('id', $sale->created_by)->first();
@@ -407,25 +408,25 @@ class SaleController extends Controller
 
             foreach ($selleditems as $key => $item) {
                 $subtotal = $item->price * $item->quantity;
-                $tax      = ($subtotal * $item->tax) / 100;
+                $tax = ($subtotal * $item->tax) / 100;
 
                 $total += $st = $subtotal + $tax;
 
-                $item->name       = $item->productname;
-                $item->quantity   = $item->quantity;
-                $item->price      = $user->priceFormat($item->price);
-                $item->tax        = $item->tax . '%';
+                $item->name = $item->productname;
+                $item->quantity = $item->quantity;
+                $item->price = $user->priceFormat($item->price);
+                $item->tax = $item->tax . '%';
                 $item->tax_amount = $user->priceFormat($tax);
-                $item->subtotal   = $user->priceFormat($st);
-                $items[]          = $item;
+                $item->subtotal = $user->priceFormat($st);
+                $items[] = $item;
             }
 
-            $sale->items    = $items;
+            $sale->items = $items;
             $sale->subtotal = $user->priceFormat($total);
 
-            $settings                      = Utility::settings($user->id);
+            $settings = Utility::settings($user->id);
             $settings['company_telephone'] = $settings['company_telephone'] != '' ? ", " . $settings['company_telephone'] : '';
-            $settings['company_state']     = $settings['company_state'] != '' ? ", " . $settings['company_state'] : '';
+            $settings['company_state'] = $settings['company_state'] != '' ? ", " . $settings['company_state'] : '';
 
             $userdetails = [
                 ucfirst($user->name),
@@ -464,7 +465,7 @@ class SaleController extends Controller
             //Set your logo
             $logo = \App\Models\Utility::get_file('uploads/logo/');
             $company_logo = \App\Models\Utility::get_superadmin_logo();
-            $img          = asset($logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png'));
+            $img = asset($logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png'));
 
             $font_color = Utility::getFontColor($color);
 
@@ -492,32 +493,33 @@ class SaleController extends Controller
 
         $items = [];
         for ($i = 1; $i <= 3; $i++) {
-            $item             = new \stdClass();
-            $item->name       = 'Item ' . $i;
-            $item->quantity   = 2;
-            $item->price      = '$100.00';
-            $item->tax        = '0%';
+            $item = new \stdClass();
+            $item->name = 'Item ' . $i;
+            $item->quantity = 2;
+            $item->price = '$100.00';
+            $item->tax = '0%';
             $item->tax_amount = '$0.0';
-            $item->subtotal   = '$200.00';
-            $items[]          = $item;
+            $item->subtotal = '$200.00';
+            $items[] = $item;
         }
 
         $sale->invoice_id = 1;
-        $sale->items      = $items;
-        $sale->subtotal   = '$600.00';
+        $sale->items = $items;
+        $sale->subtotal = '$600.00';
         $sale->created_at = date('Y-m-d H:i:s');
 
-        $preview    = 1;
-        $color      = '#' . $color;
+        $preview = 1;
+        $color = '#' . $color;
         $font_color = Utility::getFontColor($color);
 
         //Set your logo
         $logo = \App\Models\Utility::get_file('uploads/logo/');
         $company_logo = \App\Models\Utility::get_superadmin_logo();
-        $img          = asset($logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png'));
+        $img = asset($logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png'));
 
         return view('sales.templates.' . $template, compact('sale', 'preview', 'color', 'font_color', 'settings', 'user', 'customerdetails', 'img'));
     }
+
     public function export()
     {
         $name = 'Sale_' . date('Y-m-d i:h:s');
@@ -525,5 +527,35 @@ class SaleController extends Controller
         ob_end_clean();
 
         return $data;
+    }
+
+    public function AssignOrder(Request $request, $id)
+    {
+        $sale = Sale::find($id);
+        if ($request->isMethod('post')) {
+
+            VendorOrder::create([
+                'vendor_id' => $request->vendorId,
+                'quantity' => $request->quantity,
+                'product_id' => $request->productId,
+                'sale_id' => $id,
+                'status' => 'assigned',
+            ]);
+            return redirect()->to($request->url())->with('success', "Order Assigned");
+
+
+        } else {
+
+            foreach ($sale->items as $item) {
+                $item->product = Product::find($item->product_id);
+                $item->product->assigned = VendorOrder::where('sale_id', $id)->where('product_id', $item->product_id)
+                    ->first();
+            }
+
+
+            return view('sales.assign', compact('sale'));
+        }
+
+
     }
 }

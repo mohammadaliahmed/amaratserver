@@ -82,18 +82,29 @@
 
 
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Vendor')): ?>
-                                <li class="dash-item ">
-                                    <a href="<?php echo e(route('vendors.index')); ?>"
-                                       class="dash-link <?php echo e(Request::segment(1) == 'customers' ? 'active' : ''); ?>"><span
-                                            class="dash-micon"><i class="ti ti-user-plus"></i></span><span
-                                            class="dash-mtext"><?php echo e(__('Vendors')); ?></span>
-                                    </a>
+
+                                <li class="dash-item">
+                                    <a href="#" class="dash-link"><span class="dash-micon"><i
+                                                class="ti ti-brand-producthunt"></i></span><span
+                                            class="dash-mtext"><?php echo e(__('Vendors')); ?></span><span class="dash-arrow"><i
+                                                data-feather="chevron-right"></i></span></a>
+                                    <ul class="dash-submenu">
+
+
+                                        <li class="">
+                                            <a class="dash-link" href="<?php echo e(route('vendors.index')); ?>">Vendors</a>
+                                        </li>
+                                        <li class="">
+                                            <a class="dash-link" href="<?php echo e(route('vendors.orders')); ?>">Assigned Orders</a>
+                                        </li>
+                                    </ul>
                                 </li>
                             <?php endif; ?>
 
 
                             <?php if(Gate::check('Manage Product') || Gate::check('Manage Category') || Gate::check('Manage Brand') || Gate::check('Manage Tax') || Gate::check('Manage Unit')): ?>
-                                <li class="">
+
+                                <li class="dash-item">
                                     <a href="#" class="dash-link"><span class="dash-micon"><i
                                                 class="ti ti-brand-producthunt"></i></span><span
                                             class="dash-mtext"><?php echo e(__('Products')); ?></span><span class="dash-arrow"><i
@@ -167,7 +178,7 @@
                             
 
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Sales')): ?>
-                                <li class="">
+                                <li class="dash-item">
                                     <a href="#" class="dash-link"><span class="dash-micon"><i
                                                 class="ti ti-book"></i></span><span
                                             class="dash-mtext"><?php echo e(__('Sales')); ?></span><span class="dash-arrow"><i
@@ -180,16 +191,12 @@
                                             <li class="">
                                                 <a class="dash-link" href="<?php echo e(route('sales.index')); ?>">Add Sale</a>
                                             </li>
-
                                         <?php endif; ?>
 
                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Category')): ?>
                                             <li class="">
                                                 <a class="dash-link" href="<?php echo e(route('reports.sales')); ?>">Sales</a>
                                             </li>
-
-
-
                                         <?php endif; ?>
 
                                     </ul>

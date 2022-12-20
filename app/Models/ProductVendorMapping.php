@@ -16,4 +16,11 @@ class ProductVendorMapping extends Model
     ];
 
 
+    public function vendor()
+    {
+
+        return $this->hasOne('App\Models\Vendor', 'id', 'vendor_id');
+    }
+
+
 }

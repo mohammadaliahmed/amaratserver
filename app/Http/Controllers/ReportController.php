@@ -183,6 +183,7 @@ class ReportController extends Controller
             $start_date = $first_day_of_current_month;
             $end_date = $first_day_of_next_month;
 
+
             return view('reports.sale', compact('customers', 'users', 'start_date', 'end_date'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
@@ -315,16 +316,16 @@ class ReportController extends Controller
                     <div class="action-btn btn-primary ms-2">
                     <a href="' . route('purchase.link.copy', Crypt::encrypt($invoice->id)) . '" class="mx-3 btn btn-sm d-inline-flex align-items-center copy_link" data-bs-toggle="tooltip"  data-title="' . __('Copy Link') . '"  title="' . __('Copy Link') . '"><i class="ti ti-link text-white"></i></a>
                     </div>
-                    
+
                     <div class="action-btn btn-info ms-2">
                     <a href="' . route('edit.purchase.invoice', $invoice->id) . '" class="mx-3 btn btn-sm d-inline-flex align-items-center"  data-bs-toggle="tooltip"  data-title="' . __('Edit') . '"  title="' . __('Edit') . '"> <i class="ti ti-pencil text-white" title="Edit"></i></a>
                     </div>
-                  
-                    
+
+
                     <div class="action-btn btn-warning ms-2">
                     <a href="#" data-ajax-popup="true" data-title="' . __('Purchase Invoice') . '" data-size="lg" data-url="' . route('show.purchase.invoice', $invoice->id) . '" class="mx-3 btn btn-sm d-inline-flex align-items-center"  data-bs-toggle="tooltip"  data-title="' . __('Show') . '"   title="' . __('Show') . '"><i class="ti ti-eye text-white"></i></a>
                     </div>
-                    
+
                     <div class="action-btn bg-danger ms-2">
                     <a href="#" class="mx-3 btn btn-sm d-inline-flex align-items-center delete-icon bs-pass-para" data-toggle="tooltip"  data-bs-toggle="tooltip"  data-title="' . __('Delete') . '"  title="' . __('Delete') . '" data-confirm="' . __("Are You Sure?") . '"data-text="' .__("This action can not be undone. Do you want to continue?") . '" data-confirm-yes=' . $model_delete_id . '>
                     <i class="ti ti-trash text-white"></i>
@@ -346,12 +347,12 @@ class ReportController extends Controller
                     <div class="action-btn btn-dark ms-2">
                     <a href="' . route('get.sales.invoice', Crypt::encrypt($invoice->id)) . '" target="_blank" class="mx-3 btn btn-sm d-inline-flex align-items-center" data-bs-toggle="tooltip"  data-title="' . __('Download') . '"   title="' . __('Download') . '"><i class="ti ti-arrow-bar-to-down text-white"></i></a>
                     </div>
- 
+
                     <div class="action-btn btn-primary ms-2">
                     <a href="' . route('sale.link.copy', Crypt::encrypt($invoice->id)) . '" class="mx-3 btn btn-sm d-inline-flex align-items-center copy_link_sale"   data-bs-toggle="tooltip"  data-title="' . __('Copy Link') . '"  title="' . __('Copy Link') . '"><i class="ti ti-link text-white"></i></a>
                     </div>
- 
-                     
+
+
                     <div class="action-btn btn-info ms-2">
                     <a href="' . route('edit.sale.invoice', $invoice->id) . '" class="mx-3 btn btn-sm d-inline-flex align-items-center"  data-bs-toggle="tooltip"  data-title="' . __('Edit') . '" title="' . __('Edit') . '"><i class="ti ti-pencil text-white"></i></a>
                     </div>
@@ -360,7 +361,7 @@ class ReportController extends Controller
                     <div class="action-btn btn-warning ms-2">
                     <a href="#" data-ajax-popup="true" data-title="' . __('Sale Invoice') . '" data-size="lg" data-url="' . route('show.sell.invoice', $invoice->id) . '" class="mx-3 btn btn-sm d-inline-flex align-items-center" data-bs-toggle="tooltip"  data-title="' . __('Show') . '" title="' . __('Show') . '"><i class="ti ti-eye text-white"></i></a>
                     </div>
-    
+
                     <div class="action-btn bg-danger ms-2">
                     <a href="#" class="mx-3 btn btn-sm d-inline-flex align-items-center delete-icon bs-pass-para" data-bs-toggle="tooltip"  data-title="' . __('Delete') . '"  title="' . __('Delete') . '" data-confirm="' . __("Are You Sure?") . '"data-text="' .__("This action can not be undone. Do you want to continue?") . '" data-confirm-yes=' . $model_delete_id . '>
                         <i class="ti ti-trash text-white"></i>
@@ -369,13 +370,14 @@ class ReportController extends Controller
 
 
 
-                    
+
                     <form method="POST" action="' . route('sales.destroy', $invoice->id) . '" accept-charset="UTF-8" id="' . $model_delete_id . '">
                         <input name="_method" type="hidden" value="DELETE">
                         <input name="_token" type="hidden" value="' . csrf_token() . '">
                     </form>';
                     $invoicearray[$key]['customername'] = $invoice->customer != null ? ucfirst($invoice->customer->name) : __('Walk-in Customer');
                 }
+                $invoicearray[$key]['assign']       = '<a href="'. route('sale.assign',$invoice->id).'" class="btn btn-primary">Assign</a>';
 
                 $invoicearray[$key]['id']         = $invoice->id;
                 $invoicearray[$key]['username']   = ucfirst($invoice->user->name);
@@ -385,7 +387,9 @@ class ReportController extends Controller
 
                 $totalItemsCount += $invoice->items->count();
                 $totalCount      += $invoice->getTotal();
+
             }
+
             $data['draw']            = 1;
             $data['recordsTotal']    = count($invoicearray);
             $data['recordsFiltered'] = count($invoicearray);
@@ -400,13 +404,13 @@ class ReportController extends Controller
     }
 
     public function productStockAnalysisView(Request $request)
-    {     
-       
+    {
+
         $display_status = '';
-        
+
         if (\Auth::user()->isOwner()) {
             $cash_registers = ['-1' => __('All')];
-            
+
 
             $branches  = $cash_registers + Branch::where('created_by', Auth::user()->getCreatedBy())->pluck('name', 'id')->toArray();
         } else if (\Auth::user()->isUser()) {
