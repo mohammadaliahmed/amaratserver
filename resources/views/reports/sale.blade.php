@@ -99,7 +99,7 @@
                     <div class="card-header card-body table-border-style">
                         {{-- <h5></h5> --}}
                         <div class="col-sm-12 table-responsive mt-3 table_over">
-                            <table class="table dataTable" id="myTable" role="grid">
+                            <table class="table dataTable table-sm" id="myTable" role="grid">
                                 <thead class="thead-light">
                                 <tr role="row">
                                     <th style="width: 277px;">{{ __('Invoice ID') }}</th>
@@ -109,6 +109,7 @@
                                     <th>{{ __('Items Sold') }}</th>
                                     <th>{{ __('Total') }}</th>
                                     <th>{{ __('Payment Status') }}</th>
+                                    <th>{{ __('Order Status') }}</th>
                                     <th style="width: 180px;">{{ __('Action') }}</th>
                                     <th>Assign Order</th>
                                 </tr>
@@ -237,10 +238,14 @@
                         },
                         {
                             "data": "itemstotal"
-                        },
-                        {
+                        }
+                        , {
                             "data": "paymentstatus"
                         },
+                        {
+                            "data": "order_status"
+                        },
+
                         {
                             "data": "action"
                         },
@@ -277,24 +282,25 @@
                     success: function (response) {
 
                         if (response) {
+                            location.reload();
 
-                            $('[data-li-id="' + id + '"] .payment-action').removeClass('selected');
-
-                            if (ele.hasClass('selected')) {
-
-                                ele.removeClass('selected');
-
-                            } else {
-                                ele.addClass('selected');
-                            }
-
-                            var payment = $('[data-li-id="' + id + '"] .payment-actions').find('.selected')
-                                .text().trim();
-
-                            var payment_class = $('[data-li-id="' + id + '"] .payment-actions').find(
-                                '.selected').attr('data-class');
-                            $('[data-li-id="' + id + '"] .payment-label').removeClass(
-                                'unpaid partially-paid paid').addClass(payment_class).text(payment);
+                            // $('[data-li-id="' + id + '"] .payment-action').removeClass('selected');
+                            //
+                            // if (ele.hasClass('selected')) {
+                            //
+                            //     ele.removeClass('selected');
+                            //
+                            // } else {
+                            //     ele.addClass('selected');
+                            // }
+                            //
+                            // var payment = $('[data-li-id="' + id + '"] .payment-actions').find('.selected')
+                            //     .text().trim();
+                            //
+                            // var payment_class = $('[data-li-id="' + id + '"] .payment-actions').find(
+                            //     '.selected').attr('data-class');
+                            // $('[data-li-id="' + id + '"] .payment-label').removeClass(
+                            //     'unpaid partially-paid paid').addClass(payment_class).text(payment);
                         }
                     },
                     error: function (data) {

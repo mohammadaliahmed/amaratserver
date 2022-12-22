@@ -44,6 +44,7 @@
                         <th scope="col">Product</th>
                         <th scope="col">Quantity</th>
                         <th scope="col">Date</th>
+                        <th scope="col">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -54,6 +55,35 @@
                             <td>{{$order->product->name}}</td>
                             <td>{{$order->quantity}}</td>
                             <td>{{$order->created_at}}</td>
+                            <td>
+                                @php
+                                    $orderStatus=($order->order_status == 1 ? __('Acknowledged') : (($order->order_status == 2 ? __('Received') : __('Sent'))));
+                                    $order_class = Utility::convertStringToSlug(($order->order_status == 1 ? 'Partially Paid' : (($order->order_status == 2 ? 'Paid' : 'Unpaid'))));
+
+                                @endphp
+
+                                <li class="nav-item dropdown display-payment" data-li-id="{{$order->id}}">
+                                    <span data-bs-toggle="dropdown"
+                                          class="badge payment-label badge-lg p-2  {{$order_class}}">{{$orderStatus}}</span>
+                                    <div class="dropdown-menu dropdown-list payment-status dropdown-menu-right">
+                                        <div class="dropdown-list-content payment-actions" data-id="{{$order->id}}"
+                                             data-url="{{route('update.vendor.order.status',['vendorId'=>$vendor->id,'orderId'=>$order->id])}}"
+                                        >
+                                            <a href="#" data-status="0" data-class="unpaid"
+                                               class="dropdown-item payment-action">Sent
+                                            </a>
+                                            <a href="#" data-status="1" data-class="partially-paid"
+                                               class="dropdown-item payment-action ">
+                                                Acknowledged
+                                            </a>
+                                            <a href="#" data-status="2" data-class="paid"
+                                               class="dropdown-item payment-action">
+                                                Received
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </td>
 
                         </tr>
                     @endforeach
@@ -86,6 +116,55 @@
 
 
         });
+
+
+        $(document).on('click', '.payment-action', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+
+            var ele = $(this);
+
+            var id = ele.parent().attr('data-id');
+            var url = ele.parent().attr('data-url');
+            var status = ele.attr('data-status');
+
+            $.ajax({
+                url: url,
+                method: 'PATCH',
+                data: {
+                    status: status
+                },
+                success: function (response) {
+
+                    if (response) {
+                        // location.reload();
+
+                        $('[data-li-id="' + id + '"] .payment-action').removeClass('selected');
+
+                        if (ele.hasClass('selected')) {
+
+                            ele.removeClass('selected');
+
+                        } else {
+                            ele.addClass('selected');
+                        }
+
+                        var payment = $('[data-li-id="' + id + '"] .payment-actions').find('.selected')
+                            .text().trim();
+
+                        var payment_class = $('[data-li-id="' + id + '"] .payment-actions').find(
+                            '.selected').attr('data-class');
+                        $('[data-li-id="' + id + '"] .payment-label').removeClass(
+                            'unpaid partially-paid paid').addClass(payment_class).text(payment);
+                    }
+                },
+                error: function (data) {
+                    data = data.responseJSON;
+                    show_toastr('{{ __('Error') }}', data.error, 'error');
+                }
+            });
+        });
+
     </script>
 
 @endpush

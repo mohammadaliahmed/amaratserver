@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomerOrdersTimeline;
+use App\Models\VendorOrder;
+use App\Models\VendorOrdersTimeline;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -113,7 +116,7 @@ class ReportController extends Controller
             }
 
             $settings['company_telephone'] = $settings['company_telephone'] != '' ? ", " . $settings['company_telephone'] : '';
-            $settings['company_state']     = $settings['company_state'] != '' ? ", " . $settings['company_state'] : '';
+            $settings['company_state'] = $settings['company_state'] != '' ? ", " . $settings['company_state'] : '';
 
             $userdetails =
                 '<h2 class="h6">' . ucfirst($details['user']['name']) . '<h2>' .
@@ -129,7 +132,7 @@ class ReportController extends Controller
 
             $purchases = $purchase->itemsArray();
 
-            return view('purchases.show', compact('purchases', 'details','purchase'));
+            return view('purchases.show', compact('purchases', 'details', 'purchase'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
@@ -220,7 +223,7 @@ class ReportController extends Controller
             }
 
             $settings['company_telephone'] = $settings['company_telephone'] != '' ? ", " . $settings['company_telephone'] : '';
-            $settings['company_state']     = $settings['company_state'] != '' ? ", " . $settings['company_state'] : '';
+            $settings['company_state'] = $settings['company_state'] != '' ? ", " . $settings['company_state'] : '';
 
             $userdetails =
                 '<h2 class="h6">' . ucfirst($details['user']['name']) . '<h2>' .
@@ -236,7 +239,7 @@ class ReportController extends Controller
 
             $sales = $sell->itemsArray();
 
-            return view('sales.show', compact('sales', 'details','sell'));
+            return view('sales.show', compact('sales', 'details', 'sell'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
@@ -245,14 +248,14 @@ class ReportController extends Controller
     public function invoiceFilter(Request $request)
     {
         if ((Auth::user()->can('Manage Purchases') || Auth::user()->can('Manage Sales')) && $request->ajax()) {
-            $data         = [];
+            $data = [];
             $invoicearray = [];
 
             $data['start_date'] = $request->has('start_date') ? $request->input('start_date') : '';
-            $data['end_date']   = $request->has('end_date') ? $request->input('end_date') : '';
-            $data['vendors']    = $request->has('vendors') ? $request->input('vendors') : 0;
-            $data['customers']  = $request->has('customers') ? $request->input('customers') : 0;
-            $data['user_id']    = $request->has('user_id') && $request->input('user_id') != '' ? $request->input('user_id') : \Auth::user()->getCreatedBy();
+            $data['end_date'] = $request->has('end_date') ? $request->input('end_date') : '';
+            $data['vendors'] = $request->has('vendors') ? $request->input('vendors') : 0;
+            $data['customers'] = $request->has('customers') ? $request->input('customers') : 0;
+            $data['user_id'] = $request->has('user_id') && $request->input('user_id') != '' ? $request->input('user_id') : \Auth::user()->getCreatedBy();
 
             if ($data['vendors'] == 1) {
                 $invoices = new Purchase();
@@ -277,7 +280,7 @@ class ReportController extends Controller
             if ($data['start_date'] != '' && $data['end_date'] != '') {
                 $invoices = $invoices->whereDate('created_at', '>=', $data['start_date'])->whereDate('created_at', '<=', $data['end_date']);
             } else if ($data['start_date'] != '' || $data['end_date'] != '') {
-                $date     = $data['start_date'] == '' ? ($data['end_date'] == '' ? '' : $data['end_date']) : $data['start_date'];
+                $date = $data['start_date'] == '' ? ($data['end_date'] == '' ? '' : $data['end_date']) : $data['start_date'];
                 $invoices = $invoices->whereDate('created_at', '=', $date);
             }
 
@@ -285,10 +288,12 @@ class ReportController extends Controller
 
             foreach ($invoices->orderBy('id', 'DESC')->get() as $key => $invoice) {
                 $payment_status = ($invoice->status == 1 ? __('Partially Paid') : (($invoice->status == 2 ? __('Paid') : __('Unpaid'))));
+                $order_status = ($invoice->order_status == 1 ? __('Shipped') : (($invoice->order_status == 2 ? __('Completed') : __('Pending'))));
 
                 $payment_class = Utility::convertStringToSlug(($invoice->status == 1 ? 'Partially Paid' : (($invoice->status == 2 ? 'Paid' : 'Unpaid'))));
+                $order_class = Utility::convertStringToSlug(($invoice->order_status == 1 ? 'Partially Paid' : (($invoice->order_status == 2 ? 'Paid' : 'Unpaid'))));
 
-                $invoicearray[$key]['paymentstatus']     = '
+                $invoicearray[$key]['paymentstatus'] = '
                         <li class="nav-item dropdown display-payment" data-li-id="' . $invoice->id . '">
                             <span data-bs-toggle="dropdown" class="badge payment-label badge-lg p-2  ' . $payment_class . '">' . $payment_status . '</span>
                             <div class="dropdown-menu dropdown-list payment-status dropdown-menu-right">
@@ -307,7 +312,7 @@ class ReportController extends Controller
                     $invoicearray[$key]['invoice_id'] = '
                         <a class="btn btn-outline-primary" href="#" data-ajax-popup="true" data-title="' . __('Purchase Invoice') . '" data-size="lg" data-url="' . route('show.purchase.invoice', $invoice->id) . '" >' . Auth::user()->purchaseInvoiceNumberFormat($invoice->invoice_id) . '</a>
                         ';
-                    $invoicearray[$key]['action']     = '
+                    $invoicearray[$key]['action'] = '
 
                     <div class="action-btn btn-dark ms-2">
                     <a href="' . route('get.purchased.invoice', Crypt::encrypt($invoice->id)) . '" target="_blank" class="mx-3 btn btn-sm d-inline-flex align-items-center " data-bs-toggle="tooltip"  data-title="' . __('Download') . '"    title="' . __('Download') . '"><i class="ti ti-arrow-bar-to-down text-white"></i></a>
@@ -327,7 +332,7 @@ class ReportController extends Controller
                     </div>
 
                     <div class="action-btn bg-danger ms-2">
-                    <a href="#" class="mx-3 btn btn-sm d-inline-flex align-items-center delete-icon bs-pass-para" data-toggle="tooltip"  data-bs-toggle="tooltip"  data-title="' . __('Delete') . '"  title="' . __('Delete') . '" data-confirm="' . __("Are You Sure?") . '"data-text="' .__("This action can not be undone. Do you want to continue?") . '" data-confirm-yes=' . $model_delete_id . '>
+                    <a href="#" class="mx-3 btn btn-sm d-inline-flex align-items-center delete-icon bs-pass-para" data-toggle="tooltip"  data-bs-toggle="tooltip"  data-title="' . __('Delete') . '"  title="' . __('Delete') . '" data-confirm="' . __("Are You Sure?") . '"data-text="' . __("This action can not be undone. Do you want to continue?") . '" data-confirm-yes=' . $model_delete_id . '>
                     <i class="ti ti-trash text-white"></i>
                      </a>
                      </div>
@@ -342,7 +347,7 @@ class ReportController extends Controller
                     $invoicearray[$key]['invoice_id'] = '
                         <a class="btn btn-outline-primary" href="#" data-ajax-popup="true" data-title="' . __('Purchase Invoice') . '" data-size="lg" data-url="' . route('show.purchase.invoice', $invoice->id) . '" >' . Auth::user()->sellInvoiceNumberFormat($invoice->invoice_id) . '</a>
                        ';
-                    $invoicearray[$key]['action']       = '
+                    $invoicearray[$key]['action'] = '
 
                     <div class="action-btn btn-dark ms-2">
                     <a href="' . route('get.sales.invoice', Crypt::encrypt($invoice->id)) . '" target="_blank" class="mx-3 btn btn-sm d-inline-flex align-items-center" data-bs-toggle="tooltip"  data-title="' . __('Download') . '"   title="' . __('Download') . '"><i class="ti ti-arrow-bar-to-down text-white"></i></a>
@@ -363,7 +368,7 @@ class ReportController extends Controller
                     </div>
 
                     <div class="action-btn bg-danger ms-2">
-                    <a href="#" class="mx-3 btn btn-sm d-inline-flex align-items-center delete-icon bs-pass-para" data-bs-toggle="tooltip"  data-title="' . __('Delete') . '"  title="' . __('Delete') . '" data-confirm="' . __("Are You Sure?") . '"data-text="' .__("This action can not be undone. Do you want to continue?") . '" data-confirm-yes=' . $model_delete_id . '>
+                    <a href="#" class="mx-3 btn btn-sm d-inline-flex align-items-center delete-icon bs-pass-para" data-bs-toggle="tooltip"  data-title="' . __('Delete') . '"  title="' . __('Delete') . '" data-confirm="' . __("Are You Sure?") . '"data-text="' . __("This action can not be undone. Do you want to continue?") . '" data-confirm-yes=' . $model_delete_id . '>
                         <i class="ti ti-trash text-white"></i>
                     </a>
                     </div>
@@ -377,25 +382,41 @@ class ReportController extends Controller
                     </form>';
                     $invoicearray[$key]['customername'] = $invoice->customer != null ? ucfirst($invoice->customer->name) : __('Walk-in Customer');
                 }
-                $invoicearray[$key]['assign']       = '<a href="'. route('sale.assign',$invoice->id).'" class="btn btn-primary">Assign</a>';
+                $invoicearray[$key]['assign'] = '<a href="' . route('sale.assign', $invoice->id) . '" class="btn btn-primary">Assign</a>';
 
-                $invoicearray[$key]['id']         = $invoice->id;
-                $invoicearray[$key]['username']   = ucfirst($invoice->user->name);
+                $invoicearray[$key]['id'] = $invoice->id;
+                $invoicearray[$key]['username'] = ucfirst($invoice->user->name);
                 $invoicearray[$key]['created_at'] = Auth::user()->datetimeFormat($invoice->created_at);
                 $invoicearray[$key]['itemscount'] = $invoice->items->count();
                 $invoicearray[$key]['itemstotal'] = Auth::user()->priceFormat($invoice->getTotal());
 
+                $invoicearray[$key]['order_status'] = '
+                        <li class="nav-item dropdown display-payment" data-li-id="' . $invoice->id . '">
+                            <span data-bs-toggle="dropdown" class="badge payment-label badge-lg p-2  ' . $order_class . '">' . $order_status . '</span>
+                            <div class="dropdown-menu dropdown-list payment-status dropdown-menu-right">
+                                <div class="dropdown-list-content payment-actions" data-id="' . $invoice->id . '" data-url="' . route('update.order.status', ['slug' => ($data['vendors'] == 1 ? 'purchase' : ($data['customers'] == 1 ? 'sale' : '')), 'id' => $invoice->id]) . '">
+                                    <a href="#" data-status="0" data-class="unpaid" class="dropdown-item payment-action ' . ($invoice->order_status == 0 ? 'selected' : '') . '">' . __('Pending') . '
+                                    </a>
+                                    <a href="#" data-status="1" data-class="partially-paid" class="dropdown-item payment-action ' . ($invoice->order_status == 1 ? 'selected' : '') . '">' . __('Shipped') . '
+                                    </a>
+                                    <a href="#" data-status="2" data-class="paid" class="dropdown-item payment-action ' . ($invoice->order_status == 2 ? 'selected' : '') . '">' . __('Completed') . '
+                                    </a>
+
+                                </div>
+                            </div>
+                        </li>';
+
                 $totalItemsCount += $invoice->items->count();
-                $totalCount      += $invoice->getTotal();
+                $totalCount += $invoice->getTotal();
 
             }
 
-            $data['draw']            = 1;
-            $data['recordsTotal']    = count($invoicearray);
+            $data['draw'] = 1;
+            $data['recordsTotal'] = count($invoicearray);
             $data['recordsFiltered'] = count($invoicearray);
             $data['totalItemsCount'] = $totalItemsCount;
-            $data['totalCount']      = Auth::user()->priceFormat($totalCount);
-            $data['data']            = $invoicearray;
+            $data['totalCount'] = Auth::user()->priceFormat($totalCount);
+            $data['data'] = $invoicearray;
 
             return json_encode($data);
         } else {
@@ -412,7 +433,7 @@ class ReportController extends Controller
             $cash_registers = ['-1' => __('All')];
 
 
-            $branches  = $cash_registers + Branch::where('created_by', Auth::user()->getCreatedBy())->pluck('name', 'id')->toArray();
+            $branches = $cash_registers + Branch::where('created_by', Auth::user()->getCreatedBy())->pluck('name', 'id')->toArray();
         } else if (\Auth::user()->isUser()) {
 
             $cash_registers = [Auth::user()->cash_register_id => __('Assigned Cash Register')];
@@ -432,15 +453,15 @@ class ReportController extends Controller
     public function productStockAnalysisFilter(Request $request)
     {
         if ($request->ajax()) {
-            $data         = [];
+            $data = [];
             $invoicearray = [];
 
             $authuser = Auth::user();
 
             $data['start_date'] = $request->has('start_date') ? $request->input('start_date') : '';
-            $data['end_date']   = $request->has('end_date') ? $request->input('end_date') : '';
-            $data['branch_id']   = $request->has('branch_id') ? $request->input('branch_id') : '-1';
-            $data['cash_register_id']   = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
+            $data['end_date'] = $request->has('end_date') ? $request->input('end_date') : '';
+            $data['branch_id'] = $request->has('branch_id') ? $request->input('branch_id') : '-1';
+            $data['cash_register_id'] = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
 
             $productObj = Product::getallproducts();
 
@@ -472,10 +493,10 @@ class ReportController extends Controller
                 }
             }
 
-            $data['draw']            = 1;
-            $data['recordsTotal']    = count($productArray);
+            $data['draw'] = 1;
+            $data['recordsTotal'] = count($productArray);
             $data['recordsFiltered'] = count($productArray);
-            $data['data']            = $productArray;
+            $data['data'] = $productArray;
 
             return json_encode($data);
         } else {
@@ -513,13 +534,13 @@ class ReportController extends Controller
     public function productCategoryAnalysisFilter(Request $request)
     {
         if ($request->ajax()) {
-            $data         = [];
+            $data = [];
 
             $data['start_date'] = $request->has('start_date') ? $request->input('start_date') : '';
-            $data['end_date']   = $request->has('end_date') ? $request->input('end_date') : '';
-            $data['category_id']   = $request->has('category_id') ? $request->input('category_id') : '-1';
-            $data['branch_id']   = $request->has('branch_id') ? $request->input('branch_id') : '-1';
-            $data['cash_register_id']   = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
+            $data['end_date'] = $request->has('end_date') ? $request->input('end_date') : '';
+            $data['category_id'] = $request->has('category_id') ? $request->input('category_id') : '-1';
+            $data['branch_id'] = $request->has('branch_id') ? $request->input('branch_id') : '-1';
+            $data['cash_register_id'] = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
 
             $data = Category::getProductCategoryAnalysis($data);
 
@@ -560,13 +581,13 @@ class ReportController extends Controller
     public function productBrandAnalysisFilter(Request $request)
     {
         if ($request->ajax()) {
-            $data         = [];
+            $data = [];
 
             $data['start_date'] = $request->has('start_date') ? $request->input('start_date') : '';
-            $data['end_date']   = $request->has('end_date') ? $request->input('end_date') : '';
-            $data['brand_id']   = $request->has('brand_id') ? $request->input('brand_id') : '-1';
-            $data['branch_id']   = $request->has('branch_id') ? $request->input('branch_id') : '-1';
-            $data['cash_register_id']   = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
+            $data['end_date'] = $request->has('end_date') ? $request->input('end_date') : '';
+            $data['brand_id'] = $request->has('brand_id') ? $request->input('brand_id') : '-1';
+            $data['branch_id'] = $request->has('branch_id') ? $request->input('branch_id') : '-1';
+            $data['cash_register_id'] = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
 
             $data = Brand::getProductBrandAnalysis($data);
 
@@ -607,13 +628,13 @@ class ReportController extends Controller
     public function productPurchaseTaxAnalysisFilter(Request $request)
     {
         if ($request->ajax()) {
-            $data         = [];
+            $data = [];
 
             $data['start_date'] = $request->has('start_date') ? $request->input('start_date') : '';
-            $data['end_date']   = $request->has('end_date') ? $request->input('end_date') : '';
-            $data['branch_id']   = $request->has('branch_id') ? $request->input('branch_id') : '-1';
-            $data['cash_register_id']   = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
-            $data['vendor_id']   = $request->has('vendor_id') ? $request->input('vendor_id') : '-1';
+            $data['end_date'] = $request->has('end_date') ? $request->input('end_date') : '';
+            $data['branch_id'] = $request->has('branch_id') ? $request->input('branch_id') : '-1';
+            $data['cash_register_id'] = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
+            $data['vendor_id'] = $request->has('vendor_id') ? $request->input('vendor_id') : '-1';
 
             $data = Tax::getProductPurchaseTaxAnalysis($data);
 
@@ -626,13 +647,13 @@ class ReportController extends Controller
     public function productSaleTaxAnalysisFilter(Request $request)
     {
         if ($request->ajax()) {
-            $data         = [];
+            $data = [];
 
             $data['start_date'] = $request->has('start_date') ? $request->input('start_date') : '';
-            $data['end_date']   = $request->has('end_date') ? $request->input('end_date') : '';
-            $data['branch_id']   = $request->has('branch_id') ? $request->input('branch_id') : '-1';
-            $data['cash_register_id']   = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
-            $data['customer_id']   = $request->has('customer_id') ? $request->input('customer_id') : '-1';
+            $data['end_date'] = $request->has('end_date') ? $request->input('end_date') : '';
+            $data['branch_id'] = $request->has('branch_id') ? $request->input('branch_id') : '-1';
+            $data['cash_register_id'] = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
+            $data['customer_id'] = $request->has('customer_id') ? $request->input('customer_id') : '-1';
 
             $data = Tax::getProductSaleTaxAnalysis($data);
 
@@ -672,12 +693,12 @@ class ReportController extends Controller
     public function expenseAnalysisFilter(Request $request)
     {
         if ($request->ajax()) {
-            $data         = [];
+            $data = [];
 
             $data['start_date'] = $request->has('start_date') ? $request->input('start_date') : '';
-            $data['end_date']   = $request->has('end_date') ? $request->input('end_date') : '';
-            $data['expense_category_id']   = $request->has('expense_category_id') ? $request->input('expense_category_id') : '-1';
-            $data['branch_id']   = $request->has('branch_id') ? $request->input('branch_id') : '-1';
+            $data['end_date'] = $request->has('end_date') ? $request->input('end_date') : '';
+            $data['expense_category_id'] = $request->has('expense_category_id') ? $request->input('expense_category_id') : '-1';
+            $data['branch_id'] = $request->has('branch_id') ? $request->input('branch_id') : '-1';
 
             $data = Expense::getExpenseAnalysis($data);
 
@@ -717,13 +738,13 @@ class ReportController extends Controller
     public function customerSalesAnalysisFilter(Request $request)
     {
         if ($request->ajax()) {
-            $data         = [];
+            $data = [];
 
             $data['start_date'] = $request->has('start_date') ? $request->input('start_date') : '';
-            $data['end_date']   = $request->has('end_date') ? $request->input('end_date') : '';
-            $data['branch_id']   = $request->has('branch_id') ? $request->input('branch_id') : '-1';
-            $data['cash_register_id']   = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
-            $data['customer_id']   = $request->has('customer_id') ? $request->input('customer_id') : '-1';
+            $data['end_date'] = $request->has('end_date') ? $request->input('end_date') : '';
+            $data['branch_id'] = $request->has('branch_id') ? $request->input('branch_id') : '-1';
+            $data['cash_register_id'] = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
+            $data['customer_id'] = $request->has('customer_id') ? $request->input('customer_id') : '-1';
 
             $data = Customer::getCustomerSalesAnalysis($data);
 
@@ -763,13 +784,13 @@ class ReportController extends Controller
     public function vendorPurchasedAnalysisFilter(Request $request)
     {
         if ($request->ajax()) {
-            $data         = [];
+            $data = [];
 
             $data['start_date'] = $request->has('start_date') ? $request->input('start_date') : '';
-            $data['end_date']   = $request->has('end_date') ? $request->input('end_date') : '';
-            $data['branch_id']   = $request->has('branch_id') ? $request->input('branch_id') : '-1';
-            $data['cash_register_id']   = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
-            $data['vendor_id']   = $request->has('vendor_id') ? $request->input('vendor_id') : '-1';
+            $data['end_date'] = $request->has('end_date') ? $request->input('end_date') : '';
+            $data['branch_id'] = $request->has('branch_id') ? $request->input('branch_id') : '-1';
+            $data['cash_register_id'] = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
+            $data['vendor_id'] = $request->has('vendor_id') ? $request->input('vendor_id') : '-1';
 
             $data = Vendor::getVendorPurchasedAnalysis($data);
             return json_encode($data);
@@ -827,13 +848,13 @@ class ReportController extends Controller
     public function purchasedDailyChartFilter(Request $request)
     {
         if ($request->ajax()) {
-            $data         = [];
+            $data = [];
 
             $data['start_date'] = $request->has('start_date') ? $request->input('start_date') : '';
-            $data['end_date']   = $request->has('end_date') ? $request->input('end_date') : '';
-            $data['branch_id']   = $request->has('branch_id') ? $request->input('branch_id') : '-1';
-            $data['cash_register_id']   = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
-            $data['vendor_id']   = $request->has('vendor_id') ? $request->input('vendor_id') : '-1';
+            $data['end_date'] = $request->has('end_date') ? $request->input('end_date') : '';
+            $data['branch_id'] = $request->has('branch_id') ? $request->input('branch_id') : '-1';
+            $data['cash_register_id'] = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
+            $data['vendor_id'] = $request->has('vendor_id') ? $request->input('vendor_id') : '-1';
 
             $purchasesArray = Purchase::getPurchaseReportDailyChart($data);
 
@@ -846,10 +867,10 @@ class ReportController extends Controller
     public function purchasedMonthlyChartFilter(Request $request)
     {
         if ($request->ajax()) {
-            $data         = [];
+            $data = [];
 
-            $data['branch_id']   = $request->has('branch_id') ? $request->input('branch_id') : '-1';
-            $data['cash_register_id']   = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
+            $data['branch_id'] = $request->has('branch_id') ? $request->input('branch_id') : '-1';
+            $data['cash_register_id'] = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
 
             $purchasesArray = Purchase::getPurchaseReportMonthlyChart($data);
 
@@ -881,6 +902,7 @@ class ReportController extends Controller
 
         return view('reports.sold-daily', compact('branches', 'cash_registers', 'start_date', 'end_date', 'display_status'));
     }
+
     public function soldMonthlyAnalysisView(Request $request)
     {
         $display_status = '';
@@ -907,13 +929,13 @@ class ReportController extends Controller
     public function soldDailyChartFilter(Request $request)
     {
         if ($request->ajax()) {
-            $data         = [];
+            $data = [];
 
             $data['start_date'] = $request->has('start_date') ? $request->input('start_date') : '';
-            $data['end_date']   = $request->has('end_date') ? $request->input('end_date') : '';
-            $data['branch_id']   = $request->has('branch_id') ? $request->input('branch_id') : '-1';
-            $data['cash_register_id']   = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
-            $data['customer_id']   = $request->has('customer_id') ? $request->input('customer_id') : '-1';
+            $data['end_date'] = $request->has('end_date') ? $request->input('end_date') : '';
+            $data['branch_id'] = $request->has('branch_id') ? $request->input('branch_id') : '-1';
+            $data['cash_register_id'] = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
+            $data['customer_id'] = $request->has('customer_id') ? $request->input('customer_id') : '-1';
 
             $salesArray = Sale::getSaleReportDailyChart($data);
 
@@ -926,10 +948,10 @@ class ReportController extends Controller
     public function soldMonthlyChartFilter(Request $request)
     {
         if ($request->ajax()) {
-            $data         = [];
+            $data = [];
 
-            $data['branch_id']   = $request->has('branch_id') ? $request->input('branch_id') : '-1';
-            $data['cash_register_id']   = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
+            $data['branch_id'] = $request->has('branch_id') ? $request->input('branch_id') : '-1';
+            $data['cash_register_id'] = $request->has('cash_register_id') ? $request->input('cash_register_id') : '-1';
 
             $salesArray = Sale::getSaleReportMonthlyChart($data);
 
@@ -963,6 +985,60 @@ class ReportController extends Controller
         echo json_encode($response);
     }
 
+    public function updateOrderStatus(Request $request, $slug, $id)
+    {
+        $response = false;
+        $status = $request->has('status') ? $request->status : 0;
+
+        if ($slug == 'purchase') {
+
+            $purchase = Purchase::find($id);
+            $purchase->order_status = $status;
+            $purchase->save();
+
+            $response = true;
+        } else if ($slug == 'sale') {
+
+            $sale = Sale::find($id);
+            $sale->order_status = $status;
+            $sale->save();
+
+            $response = true;
+
+            $user = \Auth::user();
+            CustomerOrdersTimeline::create([
+               'sale_id'=>$id,
+               'order_status'=>$status,
+               'updated_by'=>$user->id,
+            ]);
+        }
+
+
+        echo json_encode($response);
+    }
+
+    public function updateVendorOrderStatus(Request $request, $vendorId, $orderId)
+    {
+        $response = false;
+        $status = $request->has('status') ? $request->status : 0;
+
+
+        $sale = VendorOrder::find($orderId);
+        $sale->order_status = $status;
+        $sale->save();
+
+        $response = true;
+        $user = \Auth::user();
+        VendorOrdersTimeline::create([
+            'order_id'=>$orderId,
+            'order_status'=>$status,
+            'updated_by'=>$user->id,
+        ]);
+
+
+        echo json_encode($response);
+    }
+
     public function purchaseLink($id, Request $request)
     {
         $id = \Illuminate\Support\Facades\Crypt::decrypt($id);
@@ -980,7 +1056,7 @@ class ReportController extends Controller
             $settings = Utility::settings();
 
             $details = [
-                'invoice_id' =>  $user->purchaseInvoiceNumberFormat($purchase->invoice_id),
+                'invoice_id' => $user->purchaseInvoiceNumberFormat($purchase->invoice_id),
                 'vendor' => $purchase->vendor != null ? $purchase->vendor->toArray() : [],
                 'user' => $purchase->user != null ? $purchase->user->toArray() : [],
                 'date' => $user->dateFormat($purchase->created_at),
@@ -1003,7 +1079,7 @@ class ReportController extends Controller
             }
 
             $settings['company_telephone'] = $settings['company_telephone'] != '' ? ", " . $settings['company_telephone'] : '';
-            $settings['company_state']     = $settings['company_state'] != '' ? ", " . $settings['company_state'] : '';
+            $settings['company_state'] = $settings['company_state'] != '' ? ", " . $settings['company_state'] : '';
 
             $userdetails =
                 '<h2 class="h6">' . ucfirst($details['user']['name']) . '<h2>' .
@@ -1019,7 +1095,7 @@ class ReportController extends Controller
 
 
             $purchases = $purchase->itemsArray();
-            return view('purchases.purchase_invoice', compact('purchases', 'details', 'user','purchase'));
+            return view('purchases.purchase_invoice', compact('purchases', 'details', 'user', 'purchase'));
             // return view('purchases.show', compact('purchases', 'details'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
@@ -1066,7 +1142,7 @@ class ReportController extends Controller
             }
 
             $settings['company_telephone'] = $settings['company_telephone'] != '' ? ", " . $settings['company_telephone'] : '';
-            $settings['company_state']     = $settings['company_state'] != '' ? ", " . $settings['company_state'] : '';
+            $settings['company_state'] = $settings['company_state'] != '' ? ", " . $settings['company_state'] : '';
 
             $userdetails =
                 '<h2 class="h6">' . ucfirst($details['user']['name']) . '<h2>' .
@@ -1082,7 +1158,7 @@ class ReportController extends Controller
 
             $sales = $sell->itemsArray();
 
-            return view('sales.sale_invoice', compact('sales', 'details', 'user','sell'));
+            return view('sales.sale_invoice', compact('sales', 'details', 'user', 'sell'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }

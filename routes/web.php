@@ -157,6 +157,8 @@ Route::get('filter-sold-daily-chart', 'ReportController@soldDailyChartFilter')->
 Route::get('filter-sold-monthly-chart', 'ReportController@soldMonthlyChartFilter')->name('sold.monthly.chart.filter')->middleware(['auth', 'XSS']);
 
 Route::patch('update-payment-status/{slug}/{id}', 'ReportController@updatePaymentStatus')->name('update.payment.status')->middleware(['auth', 'XSS']);
+Route::patch('update-order-status/{slug}/{id}', 'ReportController@updateOrderStatus')->name('update.order.status')->middleware(['auth', 'XSS']);
+Route::patch('update-vendor-order-status/{vendorId}/{orderId}', 'ReportController@updateVendorOrderStatus')->name('update.vendor.order.status')->middleware(['auth', 'XSS']);
 
 Route::resource('reports', 'ReportController')->middleware(['auth', 'XSS']);
 
