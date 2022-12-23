@@ -7,7 +7,7 @@
      if (!empty($setting['color'])) {
          $color = $setting['color'];
      }
-     
+
  @endphp
 
 
@@ -60,7 +60,7 @@
          @else
              <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" id="main-style-link">
          @endif
-     @endif --}} 
+     @endif --}}
 
      @if ($SITE_RTL == 'on')
         <link rel="stylesheet" href="{{ asset('assets/css/style-rtl.css') }}">
@@ -93,11 +93,11 @@
                             <div class="page-header-title">
                                 <h4 class="m-b-10">@yield('title')</h4>
                             </div>
-                            <ul class="breadcrumb">                           
+                            <ul class="breadcrumb">
                                 @yield('breadcrumb')
                             </ul>
                         </div>
-    
+
                         <div class="col-md-6">
                             <div class="col-12">
                                 @yield('filter')
@@ -113,7 +113,7 @@
             <!-- [ breadcrumb ] end -->
             <!-- [ Main Content ] start -->
             @yield('content')
-    
+
         </div>
     </div>
      @include('footer')
@@ -147,7 +147,7 @@
      <script src="{{ asset('assets/js/dash.js') }}"></script>
      <script src="{{ asset('assets/js/plugins/main.min.js') }}"></script>
      <script src="{{ asset('assets/js/plugins/simple-datatables.js') }}"></script>
-    
+
      <script src="{{ asset('assets/js/plugins/bootstrap-switch-button.min.js') }}"></script>
      <script src="{{ asset('custom/libs/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
      <script src="{{ asset('assets/js/plugins/sweetalert2.all.min.js') }}"></script>

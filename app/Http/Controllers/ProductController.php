@@ -67,8 +67,8 @@ class ProductController extends Controller
             $validator = Validator::make(
                 $request->all(),
                 [
-                    'name' => 'required|max:100|unique:products,name,NULL,id,created_by,' . Auth::user()->getCreatedBy(),
-                    'sku' => 'nullable|regex:/[\-]+/i',
+                    'name' => 'required|max:100',
+                    'sku' => 'nullable',
                 ]
             );
 
@@ -185,8 +185,8 @@ class ProductController extends Controller
             $validator = Validator::make(
                 $request->all(),
                 [
-                    'name' => 'required|max:100|unique:products,name,' . $product->id . ',id,created_by,' . Auth::user()->getCreatedBy(),
-                    'sku' => 'nullable|regex:/[\-]+/i',
+                    'name' => 'required|max:100',
+                    'sku' => 'nullable',
                 ]
             );
 

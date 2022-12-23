@@ -68,7 +68,31 @@
                             {{--                                    </ul>--}}
                             {{--                                </li>--}}
                             {{--                            @endif--}}
+                            @can('Manage Sales')
+                                <li class="dash-item">
+                                    <a href="#" class="dash-link"><span class="dash-micon"><i
+                                                class="ti ti-book"></i></span><span
+                                            class="dash-mtext">{{ __('Sales') }}</span><span class="dash-arrow"><i
+                                                data-feather="chevron-right"></i></span></a>
 
+
+                                    <ul class="dash-submenu">
+
+                                        @can('Manage Product')
+                                            <li class="">
+                                                <a class="dash-link" href="{{ route('sales.index') }}">Add Sale</a>
+                                            </li>
+                                        @endcan
+
+                                        @can('Manage Category')
+                                            <li class="">
+                                                <a class="dash-link" href="{{ route('reports.sales') }}">Sales</a>
+                                            </li>
+                                        @endcan
+
+                                    </ul>
+                                </li>
+                            @endcan
 
                             @can('Manage Customer')
                                 <li class="dash-item ">
@@ -132,11 +156,11 @@
                                             </li>
                                         @endcan
 
-                                        @can('Manage Tax')
-                                            <li class="">
-                                                <a class="dash-link" href="{{ route('taxes.index') }}">Tax</a>
-                                            </li>
-                                        @endcan
+{{--                                        @can('Manage Tax')--}}
+{{--                                            <li class="">--}}
+{{--                                                <a class="dash-link" href="{{ route('taxes.index') }}">Tax</a>--}}
+{{--                                            </li>--}}
+{{--                                        @endcan--}}
 
                                         @can('Manage Unit')
                                             <li class="">
@@ -177,31 +201,7 @@
                             {{--                                </li>--}}
                             {{--                            @endcan--}}
 
-                            @can('Manage Sales')
-                                <li class="dash-item">
-                                    <a href="#" class="dash-link"><span class="dash-micon"><i
-                                                class="ti ti-book"></i></span><span
-                                            class="dash-mtext">{{ __('Sales') }}</span><span class="dash-arrow"><i
-                                                data-feather="chevron-right"></i></span></a>
 
-
-                                    <ul class="dash-submenu">
-
-                                        @can('Manage Product')
-                                            <li class="">
-                                                <a class="dash-link" href="{{ route('sales.index') }}">Add Sale</a>
-                                            </li>
-                                        @endcan
-
-                                        @can('Manage Category')
-                                            <li class="">
-                                                <a class="dash-link" href="{{ route('reports.sales') }}">Sales</a>
-                                            </li>
-                                        @endcan
-
-                                    </ul>
-                                </li>
-                            @endcan
 
                             {{--            @can('Manage Returns')--}}
 

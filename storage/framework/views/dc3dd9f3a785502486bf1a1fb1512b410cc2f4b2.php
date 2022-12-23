@@ -68,7 +68,31 @@
                             
                             
                             
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Sales')): ?>
+                                <li class="dash-item">
+                                    <a href="#" class="dash-link"><span class="dash-micon"><i
+                                                class="ti ti-book"></i></span><span
+                                            class="dash-mtext"><?php echo e(__('Sales')); ?></span><span class="dash-arrow"><i
+                                                data-feather="chevron-right"></i></span></a>
 
+
+                                    <ul class="dash-submenu">
+
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Product')): ?>
+                                            <li class="">
+                                                <a class="dash-link" href="<?php echo e(route('sales.index')); ?>">Add Sale</a>
+                                            </li>
+                                        <?php endif; ?>
+
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Category')): ?>
+                                            <li class="">
+                                                <a class="dash-link" href="<?php echo e(route('reports.sales')); ?>">Sales</a>
+                                            </li>
+                                        <?php endif; ?>
+
+                                    </ul>
+                                </li>
+                            <?php endif; ?>
 
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Customer')): ?>
                                 <li class="dash-item ">
@@ -132,11 +156,11 @@
                                             </li>
                                         <?php endif; ?>
 
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Tax')): ?>
-                                            <li class="">
-                                                <a class="dash-link" href="<?php echo e(route('taxes.index')); ?>">Tax</a>
-                                            </li>
-                                        <?php endif; ?>
+
+
+
+
+
 
                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Unit')): ?>
                                             <li class="">
@@ -177,31 +201,7 @@
                             
                             
 
-                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Sales')): ?>
-                                <li class="dash-item">
-                                    <a href="#" class="dash-link"><span class="dash-micon"><i
-                                                class="ti ti-book"></i></span><span
-                                            class="dash-mtext"><?php echo e(__('Sales')); ?></span><span class="dash-arrow"><i
-                                                data-feather="chevron-right"></i></span></a>
 
-
-                                    <ul class="dash-submenu">
-
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Product')): ?>
-                                            <li class="">
-                                                <a class="dash-link" href="<?php echo e(route('sales.index')); ?>">Add Sale</a>
-                                            </li>
-                                        <?php endif; ?>
-
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Category')): ?>
-                                            <li class="">
-                                                <a class="dash-link" href="<?php echo e(route('reports.sales')); ?>">Sales</a>
-                                            </li>
-                                        <?php endif; ?>
-
-                                    </ul>
-                                </li>
-                            <?php endif; ?>
 
                             
 

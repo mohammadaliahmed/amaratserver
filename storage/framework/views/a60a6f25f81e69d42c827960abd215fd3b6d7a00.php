@@ -7,7 +7,7 @@
      if (!empty($setting['color'])) {
          $color = $setting['color'];
      }
-     
+
  ?>
 
 
@@ -53,7 +53,7 @@
      <link rel="stylesheet" href="<?php echo e(asset('custom/css/custom.css')); ?>">
 
 
-      
+     
 
      <?php if($SITE_RTL == 'on'): ?>
         <link rel="stylesheet" href="<?php echo e(asset('assets/css/style-rtl.css')); ?>">
@@ -86,11 +86,11 @@
                             <div class="page-header-title">
                                 <h4 class="m-b-10"><?php echo $__env->yieldContent('title'); ?></h4>
                             </div>
-                            <ul class="breadcrumb">                           
+                            <ul class="breadcrumb">
                                 <?php echo $__env->yieldContent('breadcrumb'); ?>
                             </ul>
                         </div>
-    
+
                         <div class="col-md-6">
                             <div class="col-12">
                                 <?php echo $__env->yieldContent('filter'); ?>
@@ -106,7 +106,7 @@
             <!-- [ breadcrumb ] end -->
             <!-- [ Main Content ] start -->
             <?php echo $__env->yieldContent('content'); ?>
-    
+
         </div>
     </div>
      <?php echo $__env->make('footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -140,7 +140,7 @@
      <script src="<?php echo e(asset('assets/js/dash.js')); ?>"></script>
      <script src="<?php echo e(asset('assets/js/plugins/main.min.js')); ?>"></script>
      <script src="<?php echo e(asset('assets/js/plugins/simple-datatables.js')); ?>"></script>
-    
+
      <script src="<?php echo e(asset('assets/js/plugins/bootstrap-switch-button.min.js')); ?>"></script>
      <script src="<?php echo e(asset('custom/libs/bootstrap-notify/bootstrap-notify.min.js')); ?>"></script>
      <script src="<?php echo e(asset('assets/js/plugins/sweetalert2.all.min.js')); ?>"></script>

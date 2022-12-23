@@ -9,31 +9,34 @@
             {{ Form::label('description', __('Description'), ['class' => 'col-form-label']) }}
             {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => __('Enter Product Description'), 'rows' => 3, 'style' => 'resize: none']) !!}
         </div>
+
+        <div class="form-group col-md-12">
+            {{ Form::label('name', 'Choose Vendor', ['class' => 'col-form-label']) }}
+            <br>
+            <div class="row">
+                @foreach($vendors as $key=> $vendor)
+                    <label class="col-3">
+
+                        @php
+                            if(isset($vendorMapping[$key])){
+                                echo '<input type="checkbox" class="m-2" checked
+                                        name="vendor_ids[]" value="'.$key.'">'.$vendor;
+                            }else{
+                               echo '<input type="checkbox" class="m-2"
+                                        name="vendor_ids[]" value="'.$key.'">'.$vendor;
+                            }
+                        @endphp
+
+                    </label>
+                    <br>
+                @endforeach
+            </div>
+        </div>
         <div class="form-group col-md-6">
             {{ Form::label('category_id', __('Category'), ['class' => 'col-form-label']) }}
             <div class="input-group">
                 {{ Form::select('category_id', $categories, null, ['class' => 'form-control', 'data-toggle' => 'select']) }}
             </div>
-        </div>
-        <div class="form-group col-md-12">
-            {{ Form::label('name', 'Choose Vendor', ['class' => 'col-form-label']) }}
-            <br>
-            @foreach($vendors as $key=> $vendor)
-                <label>
-
-                   @php
-                   if(isset($vendorMapping[$key])){
-                       echo '<input type="checkbox" class="m-2" checked
-                               name="vendor_ids[]" value="'.$key.'">'.$vendor;
-                   }else{
-                      echo '<input type="checkbox" class="m-2"
-                               name="vendor_ids[]" value="'.$key.'">'.$vendor;
-                   }
-                   @endphp
-
-                </label>
-                <br>
-            @endforeach
         </div>
         <div class="form-group col-md-6">
             {{ Form::label('brand_id', __('Brand'), ['class' => 'col-form-label']) }}
@@ -41,13 +44,13 @@
                 {{ Form::select('brand_id', $brands, null, ['class' => 'form-control', 'data-toggle' => 'select']) }}
             </div>
         </div>
-        <div class="form-group col-md-6">
-            {{ Form::label('tax_id', __('Tax'), ['class' => 'col-form-label']) }}
-            <div class="input-group">
-                {{ Form::select('tax_id', $taxes, null, ['class' => 'form-control', 'data-toggle' => 'select']) }}
-            </div>
-        </div>
-        <div class="form-group col-md-6">
+        {{--        <div class="form-group col-md-6">--}}
+        {{--            {{ Form::label('tax_id', __('Tax'), ['class' => 'col-form-label']) }}--}}
+        {{--            <div class="input-group">--}}
+        {{--                {{ Form::select('tax_id', $taxes, null, ['class' => 'form-control', 'data-toggle' => 'select']) }}--}}
+        {{--            </div>--}}
+        {{--        </div>--}}
+        <div class="form-group col-md-12">
             {{ Form::label('unit_id', __('Unit'), ['class' => 'col-form-label']) }}
             <div class="input-group">
                 {{ Form::select('unit_id', $units, null, ['class' => 'form-control', 'data-toggle' => 'select']) }}
@@ -111,7 +114,7 @@
             {{ Form::number('sale_price', null, ['class' => 'form-control', 'placeholder' => __('Enter new Selling Price'), 'step' => '0.01']) }}
         </div>
         <div class="form-group col-md-4">
-            {{ Form::label('sku', __('SKU'), ['class' => 'col-form-label']) }}
+            {{ Form::label('sku', __('SKU (Stock keeping unit)'), ['class' => 'col-form-label']) }}
             {{ Form::text('sku', null, ['class' => 'form-control', 'placeholder' => __('Enter new SKU Code')]) }}
         </div>
     </div>
