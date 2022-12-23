@@ -442,7 +442,7 @@ class ProductController extends Controller
                                         </span>
                                     </div>
                                     <div class="col-sm-2 mt-2">
-                                      <span class="tax">' . $producttax . '%</span>
+//                                      <span class="tax"></span>
                                     </div>
                                     <div class="col-sm-3 mt-2">
                                       <span class="subtotal">' . Auth::user()->priceFormat($subtotal) . '</span>

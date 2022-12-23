@@ -124,7 +124,7 @@
                                                         </span>
                                                     </div>
                                                     <div class="col-sm-2 mt-2" style="margin-left: 19px;">
-                                                        <span class="tax">{{ $details['tax'] }}%</span>
+{{--                                                        <span class="tax">{{ $details['tax'] }}%</span>--}}
                                                     </div>
                                                     <div class="col-sm-3 mt-2" style="margin-left: -19px;">
                                                         <span
