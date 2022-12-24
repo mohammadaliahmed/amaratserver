@@ -63,6 +63,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+
         if (Auth::user()->can('Create Product')) {
             $validator = Validator::make(
                 $request->all(),
@@ -75,7 +76,6 @@ class ProductController extends Controller
             if ($validator->fails()) {
                 return redirect()->back()->with('error', $validator->errors()->first());
             }
-
 
 
             $product = new Product();
@@ -120,8 +120,6 @@ class ProductController extends Controller
                 $fileNameToStore = $filename . '_' . time() . '.' . $extension;
                 $filepath = $request->file('image')->storeAs('productimages', $fileNameToStore);
                 // $product->image  = $filepath;
-
-
                 $dir = 'productimages/';
                 $path = Utility::upload_file($request, 'image', $filenameWithExt, $dir, []);
 
@@ -129,13 +127,14 @@ class ProductController extends Controller
                 $product->image = $path['url'];
             }
 
-
             $product->save();
-            foreach ($request->vendor_ids as $vendorId) {
-                ProductVendorMapping::create([
-                    'product_id' => $product->id,
-                    'vendor_id' => $vendorId,
-                ]);
+            if ($request->has('vendor_ids')) {
+                foreach ($request->vendor_ids as $vendorId) {
+                    ProductVendorMapping::create([
+                        'product_id' => $product->id,
+                        'vendor_id' => $vendorId,
+                    ]);
+                }
             }
             return redirect()->route('products.index')->with('success', __('Product added successfully.'));
         } else {
@@ -166,14 +165,14 @@ class ProductController extends Controller
 
             $vendors = Vendor::where('created_by', $user_id)->pluck('name', 'id');
 
-            $vendorMapping=[];
-            $vendorMappinga=ProductVendorMapping::where('product_id',$product->id)->get();
-            foreach($vendorMappinga as $vendorMap){
-                $vendorMapping[$vendorMap->vendor_id]=$vendorMap->vendor_id;
+            $vendorMapping = [];
+            $vendorMappinga = ProductVendorMapping::where('product_id', $product->id)->get();
+            foreach ($vendorMappinga as $vendorMap) {
+                $vendorMapping[$vendorMap->vendor_id] = $vendorMap->vendor_id;
             }
 
             return view('products.edit', compact('product', 'categories',
-                'vendorMapping','brands','vendors', 'units', 'taxes'));
+                'vendorMapping', 'brands', 'vendors', 'units', 'taxes'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
@@ -185,8 +184,8 @@ class ProductController extends Controller
             $validator = Validator::make(
                 $request->all(),
                 [
-                    'name' => 'required|max:100',
-                    'sku' => 'nullable',
+                    'name' => 'required|max:100|unique:products,name,' . $product->id . ',id,created_by,' . Auth::user()->getCreatedBy(),
+                    'sku' => 'nullable|regex:/[\-]+/i',
                 ]
             );
 
@@ -251,7 +250,7 @@ class ProductController extends Controller
             }
 
             $product->save();
-            ProductVendorMapping::where('product_id',$product->id)->delete();
+            ProductVendorMapping::where('product_id', $product->id)->delete();
             if (!empty($request->input('vendor_ids'))) {
                 foreach ($request->vendor_ids as $vendorId) {
                     ProductVendorMapping::create([
@@ -442,7 +441,7 @@ class ProductController extends Controller
                                         </span>
                                     </div>
                                     <div class="col-sm-2 mt-2">
-//                                      <span class="tax"></span>
+                                      <span class="tax"></span>
                                     </div>
                                     <div class="col-sm-3 mt-2">
                                       <span class="subtotal">' . Auth::user()->priceFormat($subtotal) . '</span>

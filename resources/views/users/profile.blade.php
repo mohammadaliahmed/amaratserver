@@ -95,18 +95,19 @@
                                                     <div class="d-flex align-items-center">
                                                         <div class="bg-primary profile_update nowrap">
                                                             <i class="ti ti-upload px-1"></i>
-                                                            {{ __('Choose Image here') }}
+                                                            {{ __('Choose picture') }}
                                                         </div>
-                                                        <div class="action-btn bg-danger ms-2">
-                                                            <a class="btn btn-sm d-inline-flex align-items-center"
-                                                               onclick="document.getElementById('delete_avatar').submit();">
-                                                                <i class="ti ti-trash text-white"></i>
-                                                            </a>
-                                                        </div>
+
                                                     </div>
                                                     <input type="file" class="form-control file d-none" name="profile"
-                                                           id="avatar" accept="image/png, image/jpeg" data-filename="profile_update">
+                                                           id="avatar" data-filename="profile_update">
                                                 </label>
+                                                <div class="action-btn bg-danger ms-2">
+                                                    <a class="btn btn-sm d-inline-flex align-items-center"
+                                                       onclick="document.getElementById('delete_avatar').submit();">
+                                                        <i class="ti ti-trash text-white"></i>
+                                                    </a>
+                                                </div>
                                             </div>
                                             <span
                                                 class="text-xs text-muted">{{ __('Please upload a valid image file. Size of image should not be more than 2MB.') }}</span>
@@ -189,8 +190,8 @@
                                                        type="password"
                                                        id="confirm_password" required autocomplete="confirm_password"
                                                        placeholder="{{ __('Confirm New Password') }}">
-                                                <div class="input-group-addon">
-                                                    <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                                <div class="input-group-addon d-flex align-content-center-center">
+                                                    <a href="" class="m-2" ><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
 

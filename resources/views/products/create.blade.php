@@ -1,9 +1,9 @@
-{{--{{ Form::open(['url' => 'products', 'enctype' => 'multipart/form-data']) }}--}}
+{{ Form::open(['url' => 'products', 'enctype' => 'multipart/form-data']) }}
 <div class="modal-body">
     <div class="row">
         <div class="form-group col-md-12">
-{{--            {{ Form::label('name', __('Product Name'), ['class' => 'col-form-label']) }}--}}
-{{--            {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => __('Enter new Product Name'), 'required' => '']) }}--}}
+            {{ Form::label('name', __('Product Name'), ['class' => 'col-form-label']) }}
+            {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => __('Enter new Product Name'), 'required' => '']) }}
         </div>
         <div class="form-group col-md-12">
             {{ Form::label('description', __('Description'), ['class' => 'col-form-label']) }}

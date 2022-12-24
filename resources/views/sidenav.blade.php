@@ -68,6 +68,14 @@
                             {{--                                    </ul>--}}
                             {{--                                </li>--}}
                             {{--                            @endif--}}
+
+                            <li class="dash-item">
+                                <a href="{{ route('reports.sales') }}" class="dash-link"><span class="dash-micon"><i
+                                            class="ti ti-book"></i></span><span
+                                        class="dash-mtext">{{ __('Orders') }}</span><span class="dash-arrow"><i
+                                            data-feather="chevron-right"></i></span></a>
+
+                            </li>
                             @can('Manage Sales')
                                 <li class="dash-item">
                                     <a href="#" class="dash-link"><span class="dash-micon"><i
@@ -84,11 +92,6 @@
                                             </li>
                                         @endcan
 
-                                        @can('Manage Category')
-                                            <li class="">
-                                                <a class="dash-link" href="{{ route('reports.sales') }}">Sales</a>
-                                            </li>
-                                        @endcan
 
                                     </ul>
                                 </li>

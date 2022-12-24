@@ -68,6 +68,14 @@
                             
                             
                             
+
+                            <li class="dash-item">
+                                <a href="<?php echo e(route('reports.sales')); ?>" class="dash-link"><span class="dash-micon"><i
+                                            class="ti ti-book"></i></span><span
+                                        class="dash-mtext"><?php echo e(__('Orders')); ?></span><span class="dash-arrow"><i
+                                            data-feather="chevron-right"></i></span></a>
+
+                            </li>
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Sales')): ?>
                                 <li class="dash-item">
                                     <a href="#" class="dash-link"><span class="dash-micon"><i
@@ -84,11 +92,6 @@
                                             </li>
                                         <?php endif; ?>
 
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Category')): ?>
-                                            <li class="">
-                                                <a class="dash-link" href="<?php echo e(route('reports.sales')); ?>">Sales</a>
-                                            </li>
-                                        <?php endif; ?>
 
                                     </ul>
                                 </li>

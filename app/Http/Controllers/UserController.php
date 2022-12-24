@@ -101,20 +101,20 @@ class UserController extends Controller
             }
 
             try {
-                $user->type = 'User';  
+                $user->type = 'User';
                 $user->userpassword = $userpassword;
-     
-                $uArr = [   
+
+                $uArr = [
                     'app_name'  =>env('APP_NAME'),
                     'app_url'=> env('APP_URL'),
                     'user_name' => $request->name,
                     'user_email' => $request->email,
                     'user_password' => $userpassword,
-                    
+
                   ];
-            
+
                   $resp = Utility::sendEmailTemplate('user_create', [$user->id => $user->email], $uArr);
-                  
+
 
                 // Mail::to($user->email)->send(new UserCreate($user));
             } catch (\Exception $e) {
@@ -363,7 +363,7 @@ class UserController extends Controller
             // $path = $request->file('profile')->storeAs('uploads/avatar/', $fileNameToStore);
             // dd($path);
             $path = Utility::upload_file($request,'profile',$filenameWithExt,$dir,[]);
-            
+
             if($path['flag'] == 1){
                 $url = $path['url'];
             }else{
@@ -398,7 +398,7 @@ class UserController extends Controller
         $user->avatar = '';
         $user->save();
 
-        return redirect()->route('profile.display')->with('success', __('Profile deleted successfully.'));
+        return redirect()->route('profile.display')->with('success', __('Profile picture deleted successfully.'));
     }
 
     public function updatePassword(Request $request)
@@ -424,23 +424,23 @@ class UserController extends Controller
         }
     }
 
-    public function checkUserType() 
-    {  
-        
+    public function checkUserType()
+    {
+
         $user = User::select('id')->where('id', '=', Auth::user()->getCreatedBy())->where('is_active', '=', 1)->get();
-       
-        
+
+
         if (!empty($user) && count($user) > 0) {
             $user[0]['isOwner'] = Auth::user()->isOwner();
             $user[0]['isUser']  = Auth::user()->isUser();
-            if (Auth::user()->isUser()) {   
+            if (Auth::user()->isUser()) {
                 $user[0]['branch_id']        = Auth::user()->branch->id;
                 $user[0]['branchname']       = Auth::user()->branch->name;
                 $user[0]['cash_register_id'] = Auth::user()->cashregister->id;
                 $user[0]['cashregistername'] = Auth::user()->cashregister->name;
             }
         }
-        
+
         return json_encode($user);
     }
 }

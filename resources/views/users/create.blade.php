@@ -17,19 +17,19 @@
         {{ Form::select('role', $roles, null, ['class' => 'form-control', 'data-toggle' => 'select', 'required'=>'' ]) }}
     </div>
 
-    <div class="form-group col-md-6">
-        {{ Form::label('branch_id', __('Branch'),['class' => 'col-form-label']) }}
-        <div class="input-group">
-            {{ Form::select('branch_id', $branches, null, ['class' => 'form-control', 'data-toggle' => 'select']) }}
-        </div>
-    </div>
+{{--    <div class="form-group col-md-6">--}}
+{{--        {{ Form::label('branch_id', __('Branch'),['class' => 'col-form-label']) }}--}}
+{{--        <div class="input-group">--}}
+{{--            {{ Form::select('branch_id', $branches, null, ['class' => 'form-control', 'data-toggle' => 'select']) }}--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
-    <div class="form-group col-md-6">
-        {{ Form::label('cash_register_id', __('Cash Register'),['class' => 'col-form-label']) }}
-        <div class="input-group">
-            {{ Form::select('cash_register_id', ['' => __('Select Cash Register')], null, ['class' => 'form-control', 'data-toggle' => 'select']) }}
-        </div>
-    </div>
+{{--    <div class="form-group col-md-6">--}}
+{{--        {{ Form::label('cash_register_id', __('Cash Register'),['class' => 'col-form-label']) }}--}}
+{{--        <div class="input-group">--}}
+{{--            {{ Form::select('cash_register_id', ['' => __('Select Cash Register')], null, ['class' => 'form-control', 'data-toggle' => 'select']) }}--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
     <div class="form-group col-md-6">
         {{ Form::label('password', __('Password'),['class' => 'col-form-label']) }}<br>
@@ -41,7 +41,7 @@
         {{ Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => __('Confirm Password')]) }}
     </div>
 </div>
-</div>  
+</div>
 
 <div class="modal-footer">
         <button type="button" class="btn btn-secondary btn-light" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
