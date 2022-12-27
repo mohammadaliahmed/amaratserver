@@ -82,12 +82,14 @@ class UserController extends Controller
             $userrequest['password']  = $userpassword;
             $userrequest['parent_id'] = \Auth::user()->getCreatedBy();
 
-            if (!empty($request->input('branch_id'))) {
-                $userrequest['branch_id'] = $request->input('branch_id');
-            }
-            if (!empty($request->input('cash_register_id'))) {
-                $userrequest['cash_register_id'] = $request->input('cash_register_id');
-            }
+//            if (!empty($request->input('branch_id'))) {
+//                $userrequest['branch_id'] = $request->input('branch_id');
+                $userrequest['branch_id'] = 1;
+//            }
+//            if (!empty($request->input('cash_register_id'))) {
+//                $userrequest['cash_register_id'] = $request->input('cash_register_id');
+                $userrequest['cash_register_id'] = 1;
+//            }
             $userrequest['lang']      = $default_language;
             $userrequest['is_active'] = 1;
 
