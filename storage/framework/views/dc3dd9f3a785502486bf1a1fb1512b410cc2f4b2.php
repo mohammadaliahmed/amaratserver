@@ -23,20 +23,19 @@
 
 
                 <div class="navbar-wrapper">
-                    <div class="m-header main-logo bg-primary">
-                        <a href="<?php echo e(route('home')); ?>" class="b-brand">
+                    <div class="m-header bg-primary"  >
+                        <a href="<?php echo e(route('home')); ?>" class="b-brand" >
                             <!-- ========   change your logo hear   ============ -->
-                            <img
+                            <center>
+                            <img height="150"
                                 src="<?php echo e($logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png')); ?>"
-                                alt="<?php echo e(config('app.name', 'Posgo')); ?>" class="logo logo-lg">
-
+                                alt="<?php echo e(config('app.name', 'Posgo')); ?>">
+                            </center>
 
                         </a>
                     </div>
                     <br>
-                    <div class="d-flex justify-content-center">
-                        <h3><?php echo e(config('app.name')); ?></h3>
-                    </div>
+
                     <div class="navbar-content">
                         <ul class="dash-navbar">
                             <li class="dash-item  <?php echo e(Request::segment(1) == '' ? 'active' : ''); ?>">

@@ -23,20 +23,19 @@
 
 
                 <div class="navbar-wrapper">
-                    <div class="m-header main-logo bg-primary">
-                        <a href="{{ route('home') }}" class="b-brand">
+                    <div class="m-header bg-primary"  >
+                        <a href="{{ route('home') }}" class="b-brand" >
                             <!-- ========   change your logo hear   ============ -->
-                            <img
+                            <center>
+                            <img height="150"
                                 src="{{ $logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png') }}"
-                                alt="{{ config('app.name', 'Posgo') }}" class="logo logo-lg">
-
+                                alt="{{ config('app.name', 'Posgo') }}">
+                            </center>
 
                         </a>
                     </div>
                     <br>
-                    <div class="d-flex justify-content-center">
-                        <h3>{{ config('app.name') }}</h3>
-                    </div>
+
                     <div class="navbar-content">
                         <ul class="dash-navbar">
                             <li class="dash-item  {{ Request::segment(1) == '' ? 'active' : '' }}">

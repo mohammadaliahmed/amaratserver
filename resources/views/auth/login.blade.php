@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-         >
+    >
 
 </head>
 <body style="background: #e8e8e8">
@@ -24,19 +24,26 @@
         <div class="card m-5 p-5">
 
             <div class="row">
+                <div class="col-lg-6 col-12 d-none d-sm-block" style="background: #584ed2">
 
-                    <img class="col-lg-6 col-12 d-none d-sm-block" src="{{$logo.'/construction.jpg'}}">
+                        <div class="p-4">
+                            <img width="200" height="300"
+                                 src="{{ $logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png') }}"
+                                 >
+                        </div>
+
+                </div>
+                {{--                    <img class="col-lg-6 col-12 d-none d-sm-block" src="{{$logo.'/construction.jpg'}}">--}}
 
                 <div class="col-lg-6 col-12 p-4 " style="background: #e8e8e8">
 
-                    <div class="card p-2">
-                        <center>
-                            <img width="80" height="80"
-                                 src="{{ $logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png') }}"
-                                 alt="{{ config('app.name', 'Posgo') }}" class="logo logo-lg">
-                            <h2>Amarat Materials</h2>
-                        </center>
-                    </div>
+                    {{--                    <div class="card p-2"  style="background: #584ed2"  >--}}
+                    {{--                        <center>--}}
+                    {{--                            <img width="150" height="200"--}}
+                    {{--                                 src="{{ $logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png') }}"--}}
+                    {{--                                 alt="{{ config('app.name', 'Posgo') }}" class="logo logo-lg">--}}
+                    {{--                        </center>--}}
+                    {{--                    </div>--}}
 
                     <div class="">
                         <h2 class="mt-3 f-w-600">{{ 'Login' }}</h2>

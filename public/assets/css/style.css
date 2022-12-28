@@ -16618,7 +16618,6 @@ body.theme-4 .card .card-header h5:after, body.theme-4 .card .card-header .h5:af
 }
 
 .dash-sidebar .m-header {
-    height: 70px;
     display: flex;
     align-items: center;
     padding: 15px 20px;
