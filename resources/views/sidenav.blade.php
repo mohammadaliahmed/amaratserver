@@ -23,7 +23,7 @@
 
 
                 <div class="navbar-wrapper">
-                    <div class="m-header main-logo">
+                    <div class="m-header main-logo bg-primary">
                         <a href="{{ route('home') }}" class="b-brand">
                             <!-- ========   change your logo hear   ============ -->
                             <img
