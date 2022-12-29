@@ -15,6 +15,7 @@ class Customer extends Model
         'address',
         'city',
         'state',
+        'password',
         'country',
         'zipcode',
         'is_active',
@@ -64,16 +65,16 @@ class Customer extends Model
         }
 
         $walk_in_customer_array = [];
-        
+
         if ($data['customer_id'] == '-1' || $data['customer_id'] == '0')
         {
             $count_walk_in_customer = Sale::where('created_by', $authuser->getCreatedBy())->where('customer_id', 0)->count();
-            
+
             if($count_walk_in_customer > 0) {
 
                 $walk_in_customer_array = [
                                     '0' => [
-                                            'id' => 0, 
+                                            'id' => 0,
                                             'name' => 'Walk-in Customers',
                                             'phone_number' => '',
                                             'email' => '',

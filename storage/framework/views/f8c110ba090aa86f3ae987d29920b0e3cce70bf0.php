@@ -23,7 +23,7 @@
     <div class="d-flex justify-content-center">
         <div class="card m-5 p-5">
 
-            <div class="row border-secondary">
+            <div class="row">
                 <div class="col-lg-6 col-12 d-none d-sm-block" style="background: #584ed2">
 
                         <div class="p-4">
