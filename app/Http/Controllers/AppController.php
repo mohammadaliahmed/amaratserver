@@ -17,7 +17,7 @@ class AppController extends Controller
             $customer_has_mail = Customer::Where('email', $request->email)->count();
             if ($customer_has_mail != 0) {
                 return response()->json([
-                    'code' => Response::HTTP_FORBIDDEN, 'message' => "", 'error' => "Email already exists"
+                    'code' => Response::HTTP_FORBIDDEN, 'message' =>"Email already exists"
                 ], Response::HTTP_FORBIDDEN);
             }
         }
@@ -29,7 +29,6 @@ class AppController extends Controller
             'phone_number' => $request->phone_number,
             'address' => $request->address,
             'is_active' => 1,
-
         ]);
         return response()->json([
             'code' => Response::HTTP_OK, 'message' => "Saved", 'error' => "", "customer" => $customer
@@ -40,7 +39,6 @@ class AppController extends Controller
     public function Login(Request $request)
     {
         if (!empty($request->email)) {
-
             $customer_has_mail = Customer::Where('email', $request->email)->count();
             if ($customer_has_mail == 0) {
                 return response()->json([
@@ -58,7 +56,6 @@ class AppController extends Controller
                         'code' => Response::HTTP_OK,  'message' => "",'customer'=>$customer
                     ], Response::HTTP_OK);
                 }
-
 
             }
         }
