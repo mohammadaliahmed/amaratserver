@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -60,6 +61,12 @@ class AppController extends Controller
             }
         }
 
+    }
 
+    public function ListProducts(){
+        $products=Product::all();
+        return response()->json([
+            'code' => Response::HTTP_OK,  'message' => "",'products'=>$products
+        ], Response::HTTP_OK);
     }
 }
