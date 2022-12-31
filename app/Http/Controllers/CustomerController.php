@@ -89,8 +89,8 @@ class CustomerController extends Controller
                     'customer_country'=> $request->country,
                     'customer_zipcode'=> $request->zipcode,
                   ];
-              
-                
+
+
                   $resp = Utility::sendEmailTemplate('customer_create', [$customer->id => $customer->email], $uArr);
 
                 // Mail::to($customer->email)->send(new CustomerCreate($customer));
@@ -106,7 +106,8 @@ class CustomerController extends Controller
 
     public function show(Customer $customer)
     {
-        return redirect()->back()->with('error', __('Permission denied.'));
+        return view('customers.view', compact('customer'));
+
     }
 
     public function edit(Customer $customer)

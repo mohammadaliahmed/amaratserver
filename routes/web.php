@@ -89,6 +89,7 @@ Route::get('sales-invoices/{id}/get_invoice', 'SaleController@printSaleInvoice')
 Route::get('sales-items', 'SaleController@salesItems')->name('sales.items')->middleware(['auth', 'XSS']);
 
 Route::resource('sales', 'SaleController')->middleware(['auth', 'XSS']);
+Route::resource('sites', 'SitesController')->middleware(['auth', 'XSS']);
 
 Route::get('returned-items', 'ProductsReturnController@returnedItems')->name('returned.items')->middleware(['auth', 'XSS']);
 Route::resource('productsreturn', 'ProductsReturnController')->middleware(['auth', 'XSS']);

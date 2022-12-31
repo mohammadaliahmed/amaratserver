@@ -25,10 +25,15 @@ class Customer extends Model
     public static function customer_id($customer_name)
     {
         $customers = DB::select(
-            DB::raw("SELECT IFNULL( (SELECT id from customers where name = :name and created_by = :created_by limit 1), '0') as customer_id"), ['name' => $customer_name,  'created_by' => Auth::user()->getCreatedBy(), ]
+            DB::raw("SELECT IFNULL( (SELECT id from customers where name = :name and created_by = :created_by limit 1), '0') as customer_id"), ['name' => $customer_name, 'created_by' => Auth::user()->getCreatedBy(),]
         );
 
         return $customers[0]->customer_id;
+    }
+
+    public function sites()
+    {
+        return $this->hasMany('App\Models\Sites', 'customer_id');
     }
 
     public static function getCustomerSalesAnalysis(array $data)
@@ -38,48 +43,41 @@ class Customer extends Model
         $customers = Customer::where('created_by', $authuser->getCreatedBy());
         $sold = Sale::where('created_by', $authuser->getCreatedBy());
 
-        if ($data['customer_id'] != '-1')
-        {
+        if ($data['customer_id'] != '-1') {
             $sold = $sold->where('customer_id', $data['customer_id']);
             $customers = $customers->where('id', $data['customer_id']);
         }
 
-        if ($data['branch_id'] != '-1')
-        {
+        if ($data['branch_id'] != '-1') {
             $sold = $sold->where('branch_id', $data['branch_id']);
         }
 
-        if ($data['cash_register_id'] != '-1')
-        {
+        if ($data['cash_register_id'] != '-1') {
             $sold = $sold->where('cash_register_id', $data['cash_register_id']);
         }
 
-        if($data['start_date'] != '' && $data['end_date'] != '')
-        {
+        if ($data['start_date'] != '' && $data['end_date'] != '') {
             $sold = $sold->whereDate('created_at', '>=', $data['start_date'])->whereDate('created_at', '<=', $data['end_date']);
-        }
-        else if($data['start_date'] != '' || $data['end_date'] != '')
-        {
-            $date     = $data['start_date'] == '' ? ($data['end_date'] == '' ? '' : $data['end_date']) : $data['start_date'];
+        } else if ($data['start_date'] != '' || $data['end_date'] != '') {
+            $date = $data['start_date'] == '' ? ($data['end_date'] == '' ? '' : $data['end_date']) : $data['start_date'];
             $sold = $sold->whereDate('created_at', '=', $date);
         }
 
         $walk_in_customer_array = [];
 
-        if ($data['customer_id'] == '-1' || $data['customer_id'] == '0')
-        {
+        if ($data['customer_id'] == '-1' || $data['customer_id'] == '0') {
             $count_walk_in_customer = Sale::where('created_by', $authuser->getCreatedBy())->where('customer_id', 0)->count();
 
-            if($count_walk_in_customer > 0) {
+            if ($count_walk_in_customer > 0) {
 
                 $walk_in_customer_array = [
-                                    '0' => [
-                                            'id' => 0,
-                                            'name' => 'Walk-in Customers',
-                                            'phone_number' => '',
-                                            'email' => '',
-                                          ]
-                                    ];
+                    '0' => [
+                        'id' => 0,
+                        'name' => 'Walk-in Customers',
+                        'phone_number' => '',
+                        'email' => '',
+                    ]
+                ];
             }
         }
 
@@ -89,7 +87,7 @@ class Customer extends Model
 
         $total_sold_quantity = $total_sold_price = 0;
 
-        foreach($customers as $counter => $customer) {
+        foreach ($customers as $counter => $customer) {
 
             $sold_quantity = $sold_price = 0;
 
@@ -117,12 +115,12 @@ class Customer extends Model
             $productcustomer[$counter]['total_amount'] = Auth::user()->priceFormat($sold_price);
         }
 
-        $data['draw']            = 1;
-        $data['recordsTotal']    = count($productcustomer);
+        $data['draw'] = 1;
+        $data['recordsTotal'] = count($productcustomer);
         $data['recordsFiltered'] = count($productcustomer);
         $data['totalSoldQuantity'] = $total_sold_quantity;
         $data['totalSoldPrice'] = Auth::user()->priceFormat($total_sold_price);
-        $data['data']            = $productcustomer;
+        $data['data'] = $productcustomer;
 
         return $data;
     }
