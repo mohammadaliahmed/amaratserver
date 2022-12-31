@@ -180,12 +180,12 @@ class UserController extends Controller
             $user->email    = $request->email;
             $user->address  = $request->address;
             $user->password = $request->password;
-            if (!empty($request->input('branch_id'))) {
-                $user->branch_id = $request->branch_id;
-            }
-            if (!empty($request->input('cash_register_id'))) {
-                $user->cash_register_id = $request->cash_register_id;
-            }
+//            if (!empty($request->input('branch_id'))) {
+                $user->branch_id = 1;
+//            }
+//            if (!empty($request->input('cash_register_id'))) {
+                $user->cash_register_id = 1;
+//            }
             $user->save();
 
             $roles = $request['roles'];
