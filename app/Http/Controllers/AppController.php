@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -29,6 +30,7 @@ class AppController extends Controller
             'password' => md5($request->password),
             'phone_number' => $request->phone_number,
             'address' => $request->address,
+            'city' => $request->city,
             'is_active' => 1,
         ]);
         return response()->json([
@@ -65,8 +67,22 @@ class AppController extends Controller
 
     public function ListProducts(){
         $products=Product::all();
+        foreach ($products as $product){
+            $product->vendors;
+            $unit=Unit::where('id',$product->unit_id)->pluck('shortname');
+            if(sizeof($unit)>0){
+                $product->unit=$unit[0];
+            }else{
+                $product->unit="";
+            }
+
+        }
         return response()->json([
             'code' => Response::HTTP_OK,  'message' => "",'products'=>$products
         ], Response::HTTP_OK);
+    }
+
+    public function PlaceOrder(Request $request){
+
     }
 }

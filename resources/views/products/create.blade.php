@@ -45,10 +45,22 @@
 {{--                {{ Form::select('tax_id', $taxes, null, ['class' => 'form-control', 'data-toggle' => 'select']) }}--}}
 {{--            </div>--}}
 {{--        </div>--}}
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-4">
             {{ Form::label('unit_id', __('Unit'), ['class' => 'col-form-label']) }}
             <div class="input-group">
                 {{ Form::select('unit_id', $units, null, ['class' => 'form-control', 'data-toggle' => 'select']) }}
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            {{ Form::label('unit_id', __('Unit Value'), ['class' => 'col-form-label']) }}
+            <div class="input-group">
+                {{ Form::text('unit_value', null, ['class' => 'form-control', 'placeholder' => __('Enter unit value'), 'required']) }}
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            {{ Form::label('unit_id', __('Min order qty for no dc'), ['class' => 'col-form-label']) }}
+            <div class="input-group">
+                {{ Form::text('moq', null, ['class' => 'form-control', 'placeholder' => __('Enter moq value'), 'required']) }}
             </div>
         </div>
         <div class="form-group col-md-6">

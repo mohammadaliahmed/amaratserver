@@ -7,7 +7,8 @@
         </div>
         <div class="form-group col-md-12">
             {{ Form::label('description', __('Description'), ['class' => 'col-form-label']) }}
-            {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => __('Enter Product Description'), 'rows' => 3, 'style' => 'resize: none']) !!}
+            {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => __('Enter Product Description'), '
+rows' => 3, 'style' => 'resize: none']) !!}
         </div>
 
         <div class="form-group col-md-12">
@@ -50,10 +51,22 @@
         {{--                {{ Form::select('tax_id', $taxes, null, ['class' => 'form-control', 'data-toggle' => 'select']) }}--}}
         {{--            </div>--}}
         {{--        </div>--}}
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-4">
             {{ Form::label('unit_id', __('Unit'), ['class' => 'col-form-label']) }}
             <div class="input-group">
                 {{ Form::select('unit_id', $units, null, ['class' => 'form-control', 'data-toggle' => 'select']) }}
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            {{ Form::label('unit_id', __('Unit Value'), ['class' => 'col-form-label']) }}
+            <div class="input-group">
+                {{ Form::text('unit_value', null, ['class' => 'form-control', 'placeholder' => __('Enter unit value'), 'required']) }}
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            {{ Form::label('unit_id', __('Min order qty for no dc'), ['class' => 'col-form-label']) }}
+            <div class="input-group">
+                {{ Form::text('moq', null, ['class' => 'form-control', 'placeholder' => __('Enter moq value'), 'required']) }}
             </div>
         </div>
         {{-- <div class="mb-4 col-md-6">

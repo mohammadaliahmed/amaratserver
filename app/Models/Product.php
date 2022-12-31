@@ -23,6 +23,9 @@ class Product extends Model
         'image',
         'product_type',
         'created_by',
+        'moq',
+        'unit_value',
+        'created_by',
     ];
 
     public function taxes()

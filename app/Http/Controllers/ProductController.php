@@ -83,6 +83,8 @@ class ProductController extends Controller
             $product->quantity = 9999;
             $product->purchase_price = (float)$request->purchase_price;
             $product->sale_price = (float)$request->sale_price;
+            $product->moq = $request->moq;
+            $product->unit_value = $request->unit_value;
             $product->sku = $request->sku;
             $product->description = $request->description;
 
@@ -197,6 +199,8 @@ class ProductController extends Controller
             $product->purchase_price = $request->purchase_price;
             $product->sale_price = $request->sale_price;
             $product->sku = $request->sku;
+            $product->moq = $request->moq;
+            $product->unit_value = $request->unit_value;
             $product->description = $request->description;
             if (!empty($request->input('category_id'))) {
                 $product->category_id = $request->category_id;
