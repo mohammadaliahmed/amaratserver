@@ -68,7 +68,6 @@ class AppController extends Controller
     public function ListProducts(){
         $products=Product::all();
         foreach ($products as $product){
-            $product->vendors;
             $unit=Unit::where('id',$product->unit_id)->pluck('shortname');
             if(sizeof($unit)>0){
                 $product->unit=$unit[0];

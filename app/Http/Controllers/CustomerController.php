@@ -21,7 +21,7 @@ class CustomerController extends Controller
     public function index()
     {
         if (Auth::user()->can('Manage Customer')) {
-            $customers = Customer::where('created_by', '=', Auth::user()->getCreatedBy())->orderBy('id', 'DESC')->get();
+            $customers = Customer::all();
 
             return view('customers.index')->with('customers', $customers);
         } else {
