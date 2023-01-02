@@ -1,10 +1,9 @@
-{{ Form::open(['url' => 'sites']) }}
+{{ Form::model($site, ['route' => ['sites.update', $site->id], 'method' => 'PUT']) }}
 <div class="modal-body">
     <div class="row">
         <div class="form-group col-md-4">
             {{ Form::label('name', __('Name'), ['class' => 'col-form-label']) }}
             {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => __('Enter site name'), 'required'=>'required']) }}
-            <input  name="customerId" hidden type="text" value="{{$id}}">
         </div>
 
         <div class="form-group col-md-4">
@@ -23,9 +22,10 @@
 
     </div>
 </div>
+
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary btn-light" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
-    <input class="btn btn-primary" type="submit" value="{{ __('Create') }}">
+    <input class="btn btn-primary" type="submit" value="{{ __('Edit') }}">
 </div>
 
 {{ Form::close() }}

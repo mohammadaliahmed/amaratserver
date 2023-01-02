@@ -90,6 +90,7 @@ Route::get('sales-items', 'SaleController@salesItems')->name('sales.items')->mid
 
 Route::resource('sales', 'SaleController')->middleware(['auth', 'XSS']);
 Route::resource('sites', 'SitesController')->middleware(['auth', 'XSS']);
+Route::get('createSite/{id}', 'SitesController@createSite')->name('customer.createSite')->middleware(['auth', 'XSS']);
 
 Route::get('returned-items', 'ProductsReturnController@returnedItems')->name('returned.items')->middleware(['auth', 'XSS']);
 Route::resource('productsreturn', 'ProductsReturnController')->middleware(['auth', 'XSS']);
