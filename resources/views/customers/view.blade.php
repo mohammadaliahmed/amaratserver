@@ -49,7 +49,7 @@
                                     <th>{{ __('City') }}</th>
                                     <th>{{ __('Details') }}</th>
                                     <th>{{ __('Date/Time Added') }} </th>
-                                    <th width="200px">{{ __('Action') }}</th>
+{{--                                    <th width="200px">{{ __('Action') }}</th>--}}
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -61,32 +61,32 @@
                                         <td>{{ $site->city }}</td>
                                         <td>{{ $site->details }}</td>
                                         <td>{{ Auth::user()->datetimeFormat($site->created_at) }}</td>
-                                        <td class="Action">
-                                            <div class="action-btn btn-info ms-2">
-                                                <a href="#"
-                                                   class="mx-3 btn btn-sm d-inline-flex align-items-center"
-                                                   data-ajax-popup="true" title="{{ __('Edit Site') }}"
-                                                   data-title="{{ __('Edit Site') }}" data-size="lg"
-                                                   data-url="{{ route('sites.edit', $site->id) }}"
-                                                   data-bs-toggle="tooltip" title="{{ __('Edit Site') }}">
-                                                    <i class="ti ti-pencil text-white"></i>
+{{--                                        <td class="Action">--}}
+{{--                                            <div class="action-btn btn-info ms-2">--}}
+{{--                                                <a href="#"--}}
+{{--                                                   class="mx-3 btn btn-sm d-inline-flex align-items-center"--}}
+{{--                                                   data-ajax-popup="true" title="{{ __('Edit Site') }}"--}}
+{{--                                                   data-title="{{ __('Edit Site') }}" data-size="lg"--}}
+{{--                                                   data-url="{{ route('sites.edit', $site->id) }}"--}}
+{{--                                                   data-bs-toggle="tooltip" title="{{ __('Edit Site') }}">--}}
+{{--                                                    <i class="ti ti-pencil text-white"></i>--}}
 
-                                                </a>
-                                            </div>
-                                            <div class="action-btn bg-danger ms-2">
-                                                <a href="#"
-                                                   class="bs-pass-para mx-3 btn btn-sm d-inline-flex align-items-center"
-                                                   data-toggle="sweet-alert" data-bs-toggle="tooltip"
-                                                   data-confirm="{{ __('Are You Sure?') }}"
-                                                   data-text="{{ __('This action can not be undone. Do you want to continue?') }}"
-                                                   data-confirm-yes="delete-form-{{ $site->id }}"
-                                                   title="{{ __('Delete') }}">
-                                                    <i class="ti ti-trash text-white"></i>
-                                                </a>
-                                            </div>
-                                            {!! Form::open(['method' => 'DELETE', 'route' => ['sites.destroy', $site->id], 'id' => 'delete-form-' . $site->id]) !!}
-                                            {!! Form::close() !!}
-                                        </td>
+{{--                                                </a>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="action-btn bg-danger ms-2">--}}
+{{--                                                <a href="#"--}}
+{{--                                                   class="bs-pass-para mx-3 btn btn-sm d-inline-flex align-items-center"--}}
+{{--                                                   data-toggle="sweet-alert" data-bs-toggle="tooltip"--}}
+{{--                                                   data-confirm="{{ __('Are You Sure?') }}"--}}
+{{--                                                   data-text="{{ __('This action can not be undone. Do you want to continue?') }}"--}}
+{{--                                                   data-confirm-yes="delete-form-{{ $site->id }}"--}}
+{{--                                                   title="{{ __('Delete') }}">--}}
+{{--                                                    <i class="ti ti-trash text-white"></i>--}}
+{{--                                                </a>--}}
+{{--                                            </div>--}}
+{{--                                            {!! Form::open(['method' => 'DELETE', 'route' => ['sites.destroy', $site->id], 'id' => 'delete-form-' . $site->id]) !!}--}}
+{{--                                            {!! Form::close() !!}--}}
+{{--                                        </td>--}}
                                     </tr>
                                 @endforeach
                                 </tbody>
