@@ -173,7 +173,7 @@ class ReportController extends Controller
         if (Auth::user()->can('Manage Sales')) {
             $user_id = Auth::user()->getCreatedBy();
 
-            $customers = Customer::where('created_by', $user_id)->pluck('name', 'id');
+            $customers = Customer::all()->pluck('name', 'id');
             $customers->prepend(__('Walk-in Customers'), 0);
             $customers->prepend(__('All'), '');
 

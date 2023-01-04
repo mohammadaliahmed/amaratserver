@@ -398,20 +398,14 @@ class SaleController extends Controller
     {
         $sale_id = Crypt::decrypt($id);
         $sale = Sale::findOrFail($sale_id);
-
         if ($sale) {
             $user = User::select('*')->where('id', $sale->created_by)->first();
-
             $selleditems = SelledItems::select('selled_items.*', 'products.name as productname')->join('products', 'products.id', '=', 'selled_items.product_id')->where('products.created_by', '=', $user->getCreatedBy())->where('selled_items.sell_id', '=', $sale->id)->get();
-
             $total = 0;
-
             foreach ($selleditems as $key => $item) {
                 $subtotal = $item->price * $item->quantity;
                 $tax = ($subtotal * $item->tax) / 100;
-
                 $total += $st = $subtotal + $tax;
-
                 $item->name = $item->productname;
                 $item->quantity = $item->quantity;
                 $item->price = $user->priceFormat($item->price);
@@ -420,14 +414,11 @@ class SaleController extends Controller
                 $item->subtotal = $user->priceFormat($st);
                 $items[] = $item;
             }
-
             $sale->items = $items;
             $sale->subtotal = $user->priceFormat($total);
-
             $settings = Utility::settings($user->id);
             $settings['company_telephone'] = $settings['company_telephone'] != '' ? ", " . $settings['company_telephone'] : '';
             $settings['company_state'] = $settings['company_state'] != '' ? ", " . $settings['company_state'] : '';
-
             $userdetails = [
                 ucfirst($user->name),
                 $settings['company_name'] . $settings['company_telephone'],
@@ -436,12 +427,9 @@ class SaleController extends Controller
                 $settings['company_country'],
                 $settings['company_zipcode'],
             ];
-
             $customer = $sale->customer;
-
             if ($customer != null) {
                 $customer->state = $customer->state != '' ? ", " . $customer->state : '';
-
                 $customerdetails = [
                     ucfirst($customer->name),
                     $customer->phone_number,
@@ -461,24 +449,19 @@ class SaleController extends Controller
                 ];
             }
             $color = '#' . $settings['sale_invoice_color'];
-
             //Set your logo
             $logo = \App\Models\Utility::get_file('uploads/logo/');
             $company_logo = \App\Models\Utility::get_superadmin_logo();
             $img = asset($logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png'));
-
             $font_color = Utility::getFontColor($color);
-
             return view('sales.templates.' . $settings['sale_invoice_template'], compact('sale', 'color', 'font_color', 'settings', 'user', 'userdetails', 'customerdetails', 'img'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
-
     public function previewSelledInvoice($template, $color)
     {
         $settings = Utility::settings();
-
         $sale = new Sale();
         $user = Auth::user();
 
@@ -542,20 +525,13 @@ class SaleController extends Controller
                 'status' => 'assigned',
             ]);
             return redirect()->to($request->url())->with('success', "Order Assigned");
-
-
         } else {
-
             foreach ($sale->items as $item) {
                 $item->product = Product::find($item->product_id);
                 $item->product->assigned = VendorOrder::where('sale_id', $id)->where('product_id', $item->product_id)
                     ->first();
             }
-
-
             return view('sales.assign', compact('sale'));
         }
-
-
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\Sale;
+use App\Models\SelledItems;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -83,5 +85,35 @@ class AppController extends Controller
 
     public function PlaceOrder(Request $request){
 
+        $latest= Sale::orderBy('created_at', 'desc')->first();
+        $invoice_id=$latest ? $latest->invoice_id + 1 : 1;
+
+        $sale=new Sale();
+        $sale->customer_id=$request->user['id'];
+        $sale->invoice_id=$invoice_id;
+        $sale->branch_id=0;
+        $sale->cash_register_id=0;
+        $sale->status=0;
+        $sale->created_by=1;
+        $sale->save();
+
+        foreach ($request->items as $key => $value) {
+            $product_id = $value['id'];
+            $selleditems = new SelledItems();
+            $selleditems->sell_id = $sale->id;
+            $selleditems->product_id = $product_id;
+            $selleditems->price = $value['sale_price'];
+            $selleditems->quantity = $value['quantity'];
+            $selleditems->tax_id = 0;
+            $selleditems->tax = 0;
+
+            $selleditems->save();
+        }
+        return response()->json([
+            'code' => Response::HTTP_OK,  'message' => "success"
+        ], Response::HTTP_OK);
+
     }
+
+
 }
