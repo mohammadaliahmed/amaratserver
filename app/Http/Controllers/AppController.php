@@ -128,7 +128,7 @@ class AppController extends Controller
 
     public function OrderItems($id)
     {
-        $sellItems = SelledItems::where('sell_id',27)->with('product')->get();
+        $sellItems = SelledItems::where('sell_id',$id)->with('product')->get();
         return response()->json([
             'code' => Response::HTTP_OK, 'message' => "success", 'sellItems' => $sellItems
         ], Response::HTTP_OK);
