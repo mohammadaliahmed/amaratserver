@@ -120,7 +120,7 @@ class AppController extends Controller
 
     public function MyOrders($id)
     {
-        $sales = Sale::where('customer_id',$id)->with('items')->get();
+        $sales = Sale::where('customer_id',$id)->orderBy('id','desc')->with('items')->get();
         return response()->json([
             'code' => Response::HTTP_OK, 'message' => "success", 'sales' => $sales
         ], Response::HTTP_OK);
