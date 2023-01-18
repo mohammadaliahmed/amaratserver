@@ -23,3 +23,4 @@ Route::post('register', [\App\Http\Controllers\AppController::class,'Register'])
 Route::post('login', [\App\Http\Controllers\AppController::class,'Login']);
 Route::post('placeOrder', [\App\Http\Controllers\AppController::class,'PlaceOrder']);
 Route::get('products', [\App\Http\Controllers\AppController::class,'ListProducts']);
+Route::get('myOrders/{id}', [\App\Http\Controllers\AppController::class,'MyOrders']);
