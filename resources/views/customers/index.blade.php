@@ -49,6 +49,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>{{ __('Name') }}</th>
+                                    <th>{{ __('Phone') }}</th>
                                     <th>{{ __('Email') }}</th>
                                     <th>{{ __('Date/Time Added') }} </th>
                                     <th width="200px">{{ __('Action') }}</th>
@@ -59,6 +60,8 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $customer->name }}</td>
+                                        <td>{{ $customer->phone_number }}</td>
+
                                         <td>{{ $customer->email }}</td>
                                         <td>{{ Auth::user()->datetimeFormat($customer->created_at) }}</td>
                                         <td class="Action">

@@ -47,6 +47,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th><?php echo e(__('Name')); ?></th>
+                                    <th><?php echo e(__('Phone')); ?></th>
                                     <th><?php echo e(__('Email')); ?></th>
                                     <th><?php echo e(__('Date/Time Added')); ?> </th>
                                     <th width="200px"><?php echo e(__('Action')); ?></th>
@@ -56,6 +57,7 @@
                                 <?php $__currentLoopData = $customers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $customer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
                                         <td><?php echo e($key + 1); ?></td>
+                                        <td><?php echo e($customer->phone_number); ?></td>
                                         <td><?php echo e($customer->name); ?></td>
                                         <td><?php echo e($customer->email); ?></td>
                                         <td><?php echo e(Auth::user()->datetimeFormat($customer->created_at)); ?></td>
