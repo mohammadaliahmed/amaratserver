@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\SelledItems;
+use App\Models\Sites;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -65,6 +66,13 @@ class AppController extends Controller
             }
         }
 
+    }
+
+    public function GetCustomer($id){
+        $customer = Customer::where('id',$id)->with('sites')->get();
+        return response()->json([
+            'code' => Response::HTTP_OK, 'message' => "", 'customer' => $customer
+        ], Response::HTTP_OK);
     }
 
     public function ListProducts()
@@ -134,5 +142,52 @@ class AppController extends Controller
         ], Response::HTTP_OK);
     }
 
+
+    public function AddSite(Request  $request){
+
+        Sites::create([
+            'name' => $request->name,
+            'address' => $request->address,
+            'city' => "",
+            'details' => $request->details,
+            'customer_id' => $request->userId,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+        ]);
+        return response()->json([
+            'code' => Response::HTTP_OK, 'message' => "success",
+        ], Response::HTTP_OK);
+
+
+
+    }
+    public function GetSites($id){
+       $sites= Sites::where('customer_id',$id)->get();
+        return response()->json([
+            'code' => Response::HTTP_OK, 'message' => "success",'sites'=>$sites
+        ], Response::HTTP_OK);
+    }
+
+    public function EditSite(Request $request){
+        $site=Sites::find($request->siteId);
+        $site->address=$request->address;
+        $site->details=$request->details;
+        $site->name=$request->name;
+        $site->latitude=$request->latitude;
+        $site->longitude=$request->longitude;
+
+        return response()->json([
+            'code' => Response::HTTP_OK, 'message' => "success",
+        ], Response::HTTP_OK);
+    }
+
+    public function DeleteSite(Request $request){
+        $site=Sites::find($request->siteId);
+        $site->delete();
+
+        return response()->json([
+            'code' => Response::HTTP_OK, 'message' => "success",
+        ], Response::HTTP_OK);
+    }
 
 }

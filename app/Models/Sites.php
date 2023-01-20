@@ -15,5 +15,7 @@ class Sites extends Model
         'address',
         'city',
         'details',
+        'latitude',
+        'longitude',
     ];
 }
