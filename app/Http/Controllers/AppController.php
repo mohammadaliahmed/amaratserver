@@ -181,8 +181,8 @@ class AppController extends Controller
         ], Response::HTTP_OK);
     }
 
-    public function DeleteSite(Request $request){
-        $site=Sites::find($request->siteId);
+    public function DeleteSite($id){
+        $site=Sites::find($id);
         $site->delete();
 
         return response()->json([
