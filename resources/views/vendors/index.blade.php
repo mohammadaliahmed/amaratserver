@@ -59,10 +59,11 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($vendors as $key => $vendor)
+
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $vendor->name }}</td>
-                                            <td>{{ $vendor->phone_number }}</td>
+                                            <td>{{ $vendor->phone_number}}</td>
                                             <td>{{ $vendor->email }}</td>
                                             <td>{{ Auth::user()->datetimeFormat($vendor->created_at) }}</td>
                                             <td class="Action">

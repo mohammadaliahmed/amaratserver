@@ -28,11 +28,11 @@
     <div class="card m-3 p-3">
         <div class="d-flex justify-content-between">
             <H2>Sites</H2>
-            <a href="#" data-ajax-popup="true" data-size="lg" data-bs-toggle="tooltip"
-               data-title="{{ __('Add New Customer Site') }}" title="{{ __(' New Customer Site') }}"
-               data-url="{{ route('customer.createSite',$customer->id) }}" class="btn btn-sm btn-primary btn-icon m-1">
-                <span class=""><i class="ti ti-plus text-white"></i></span>
-            </a>
+{{--            <a href="#" data-ajax-popup="true" data-size="lg" data-bs-toggle="tooltip"--}}
+{{--               data-title="{{ __('Add New Customer Site') }}" title="{{ __(' New Customer Site') }}"--}}
+{{--               data-url="{{ route('customer.createSite',$customer->id) }}" class="btn btn-sm btn-primary btn-icon m-1">--}}
+{{--                <span class=""><i class="ti ti-plus text-white"></i></span>--}}
+{{--            </a>--}}
         </div>
         <div class="row">
             <div class="col-xl-12">
