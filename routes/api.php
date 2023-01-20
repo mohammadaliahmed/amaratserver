@@ -27,4 +27,4 @@ Route::post('editSite', [\App\Http\Controllers\AppController::class,'EditSite'])
 Route::get('products', [\App\Http\Controllers\AppController::class,'ListProducts']);
 Route::get('myOrders/{id}', [\App\Http\Controllers\AppController::class,'MyOrders']);
 Route::get('orderItems/{id}', [\App\Http\Controllers\AppController::class,'OrderItems']);
-Route::get('git status/{id}', [\App\Http\Controllers\AppController::class,'GetCustomer']);
+Route::get('getCustomer/{id}', [\App\Http\Controllers\AppController::class,'GetCustomer']);
