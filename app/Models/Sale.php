@@ -15,7 +15,14 @@ class Sale extends Model
         'branch_id',
         'cash_register_id',
         'created_by',
+        'site_id'
     ];
+
+
+    public function site(){
+        return $this->hasOne('App\Models\Sites', 'id', 'site_id');
+
+    }
 
     public function items()
     {

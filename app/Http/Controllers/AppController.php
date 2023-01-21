@@ -105,6 +105,7 @@ class AppController extends Controller
         $sale->cash_register_id = 0;
         $sale->status = 0;
         $sale->created_by = 1;
+        $sale->site_id = $request->site_id;
         $sale->save();
 //
         foreach ($request->items as $key => $value) {
@@ -128,7 +129,7 @@ class AppController extends Controller
 
     public function MyOrders($id)
     {
-        $sales = Sale::where('customer_id',$id)->orderBy('id','desc')->with('items')->get();
+        $sales = Sale::where('customer_id',$id)->orderBy('id','desc')->with('site')->with('items')->get();
         return response()->json([
             'code' => Response::HTTP_OK, 'message' => "success", 'sales' => $sales
         ], Response::HTTP_OK);
