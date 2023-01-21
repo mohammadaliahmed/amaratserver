@@ -68,6 +68,13 @@ class AppController extends Controller
 
     }
 
+    public function GetCustomer($id){
+        $customer = Customer::where('id',$id)->with('sites')->get();
+        return response()->json([
+            'code' => Response::HTTP_OK, 'message' => "", 'customer' => $customer
+        ], Response::HTTP_OK);
+    }
+
     public function ListProducts()
     {
         $products = Product::all();
@@ -151,11 +158,35 @@ class AppController extends Controller
             'code' => Response::HTTP_OK, 'message' => "success",
         ], Response::HTTP_OK);
 
+
+
     }
     public function GetSites($id){
-       $sites= Sites::where('customer_id',$id)->get();
+        $sites= Sites::where('customer_id',$id)->get();
         return response()->json([
             'code' => Response::HTTP_OK, 'message' => "success",'sites'=>$sites
+        ], Response::HTTP_OK);
+    }
+
+    public function EditSite(Request $request){
+        $site=Sites::find($request->siteId);
+        $site->address=$request->address;
+        $site->details=$request->details;
+        $site->name=$request->name;
+        $site->latitude=$request->latitude;
+        $site->longitude=$request->longitude;
+
+        return response()->json([
+            'code' => Response::HTTP_OK, 'message' => "success",
+        ], Response::HTTP_OK);
+    }
+
+    public function DeleteSite($id){
+        $site=Sites::find($id);
+        $site->delete();
+
+        return response()->json([
+            'code' => Response::HTTP_OK, 'message' => "success",
         ], Response::HTTP_OK);
     }
 
