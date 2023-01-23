@@ -44,10 +44,11 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>{{ __('Name') }}</th>
+                                    <th>{{ __('House') }}</th>
+                                    <th>{{ __('Street') }}</th>
+                                    <th>{{ __('Sector') }}</th>
+                                    <th>{{ __('Near') }}</th>
                                     <th>{{ __('Address') }}</th>
-                                    <th>{{ __('City') }}</th>
-                                    <th>{{ __('Details') }}</th>
                                     <th>{{ __('Date/Time Added') }} </th>
 {{--                                    <th width="200px">{{ __('Action') }}</th>--}}
                                 </tr>
@@ -56,10 +57,11 @@
                                 @foreach ($customer->sites as $key => $site)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $site->name }}</td>
+                                        <td>{{ $site->house }}</td>
+                                        <td>{{ $site->street }}</td>
+                                        <td>{{ $site->sector }}</td>
+                                        <td>{{ $site->near }}</td>
                                         <td>{{ $site->address }}</td>
-                                        <td>{{ $site->city }}</td>
-                                        <td>{{ $site->details }}</td>
                                         <td>{{ Auth::user()->datetimeFormat($site->created_at) }}</td>
 {{--                                        <td class="Action">--}}
 {{--                                            <div class="action-btn btn-info ms-2">--}}

@@ -147,10 +147,11 @@ class AppController extends Controller
     public function AddSite(Request  $request){
 
         Sites::create([
-            'name' => $request->name,
+            'house' => $request->house,
             'address' => $request->address,
-            'city' => "",
-            'details' => $request->details,
+            'street' =>$request->street,
+            'sector' => $request->sector,
+            'near' => $request->near,
             'customer_id' => $request->userId,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,

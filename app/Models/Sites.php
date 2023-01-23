@@ -11,10 +11,11 @@ class Sites extends Model
     protected $table='sites';
     protected $fillable=[
         'customer_id',
-        'name',
+        'house',
         'address',
-        'city',
-        'details',
+        'street',
+        'sector',
+        'near',
         'latitude',
         'longitude',
     ];
