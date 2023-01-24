@@ -22,6 +22,8 @@
 @section('content')
     <div class="card m-3 p-3">
         <H2>Customer: {{$customer->name}}</H2>
+        <h4>CNIC: {{$customer->cnic}}</h4>
+        <h4>Near: {{$customer->famous}}</h4>
 
     </div>
 
