@@ -16,10 +16,7 @@ class CreateTableSites extends Migration
         Schema::create('sites', function (Blueprint $table) {
             $table->id();
             $table->integer('customer_id');
-            $table->string('name')->nullable();
-            $table->string('address')->nullable();
-            $table->string('city')->nullable();
-            $table->text('details')->nullable();
+            $table->text('address')->nullable();
             $table->timestamps();
         });
     }

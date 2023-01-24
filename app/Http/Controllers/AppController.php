@@ -41,6 +41,17 @@ class AppController extends Controller
         ], Response::HTTP_OK);
 
     }
+    public function UpdateProfile(Request $request){
+        $customer=Customer::find($request->userId);
+        $customer->phone_number=$request->phone;
+        $customer->name=$request->name;
+        $customer->cnic=$request->cnic;
+        $customer->famous=$request->famous;
+        $customer->update();
+        return response()->json([
+            'code' => Response::HTTP_OK, 'message' => "Saved", 'error' => "", "customer" => $customer
+        ], Response::HTTP_OK);
+    }
 
     public function Login(Request $request)
     {

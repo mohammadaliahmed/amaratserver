@@ -25,6 +25,7 @@ Route::post('placeOrder', [\App\Http\Controllers\AppController::class,'PlaceOrde
 Route::get('getSites/{id}', [\App\Http\Controllers\AppController::class,'GetSites']);
 Route::post('addSite', [\App\Http\Controllers\AppController::class,'AddSite']);
 Route::post('editSite', [\App\Http\Controllers\AppController::class,'EditSite']);
+Route::post('updateProfile', [\App\Http\Controllers\AppController::class,'UpdateProfile']);
 Route::get('deleteSite/{id}', [\App\Http\Controllers\AppController::class,'DeleteSite']);
 Route::get('products', [\App\Http\Controllers\AppController::class,'ListProducts']);
 Route::get('myOrders/{id}', [\App\Http\Controllers\AppController::class,'MyOrders']);

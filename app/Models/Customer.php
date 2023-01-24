@@ -20,6 +20,10 @@ class Customer extends Model
         'zipcode',
         'is_active',
         'created_by',
+        'famous',
+        'cnic',
+        'picture',
+        'fcm_key',
     ];
 
     public static function customer_id($customer_name)
