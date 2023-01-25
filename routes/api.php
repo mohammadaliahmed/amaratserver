@@ -31,3 +31,4 @@ Route::get('products', [\App\Http\Controllers\AppController::class,'ListProducts
 Route::get('myOrders/{id}', [\App\Http\Controllers\AppController::class,'MyOrders']);
 Route::get('orderItems/{id}', [\App\Http\Controllers\AppController::class,'OrderItems']);
 Route::get('getCustomer/{id}', [\App\Http\Controllers\AppController::class,'GetCustomer']);
+Route::get('category/{id}', [\App\Http\Controllers\AppController::class,'CategoryProducts']);

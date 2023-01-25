@@ -203,4 +203,20 @@ class AppController extends Controller
         ], Response::HTTP_OK);
     }
 
+    public function CategoryProducts($id){
+        $products=Product::where('category_id',$id)->get();
+        foreach ($products as $product) {
+            $unit = Unit::where('id', $product->unit_id)->pluck('shortname');
+            if (sizeof($unit) > 0) {
+                $product->unit = $unit[0];
+            } else {
+                $product->unit = "";
+            }
+
+        }
+        return response()->json([
+            'code' => Response::HTTP_OK, 'message' => "success",'products'=>$products
+        ], Response::HTTP_OK);
+    }
+
 }
