@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CustomerOrdersTimeline;
+use App\Models\Sites;
 use App\Models\VendorOrder;
 use App\Models\VendorOrdersTimeline;
 use Illuminate\Http\Request;
@@ -385,7 +386,12 @@ class ReportController extends Controller
                 $invoicearray[$key]['assign'] = '<a href="' . route('sale.assign', $invoice->id) . '" class="btn btn-primary">Assign</a>';
 
                 $invoicearray[$key]['id'] = $invoice->id;
-                $invoicearray[$key]['username'] = ucfirst($invoice->user->name);
+//                $invoicearray[$key]['username'] = ucfirst($invoice->user->name);
+                $site=Sites::find($invoice->site_id);
+
+
+                $invoicearray[$key]['site'] ='<a href="#"  class="m-2 btn btn-sm d-inline-flex align-items-center bg-primary" ><i class="ti ti-eye text-white"></i></a>'. 'H#'.$site->house. ", St#".$site->street.', Sec#'.$site->sector;
+
                 $invoicearray[$key]['created_at'] = Auth::user()->datetimeFormat($invoice->created_at);
                 $invoicearray[$key]['itemscount'] = $invoice->items->count();
                 $invoicearray[$key]['itemstotal'] = Auth::user()->priceFormat($invoice->getTotal());

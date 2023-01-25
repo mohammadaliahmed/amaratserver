@@ -107,9 +107,9 @@
                                 <tr role="row">
                                     <th style="width: 277px;"><?php echo e(__('Invoice ID')); ?></th>
                                     <th><?php echo e(__('Date')); ?></th>
-                                    <th><?php echo e(__('Sold By')); ?></th>
                                     <th><?php echo e(__('Sold To')); ?></th>
-                                    <th><?php echo e(__('Items Sold')); ?></th>
+                                    <th><?php echo e(__('Site')); ?></th>
+                                    <th><?php echo e(__('Items')); ?></th>
                                     <th><?php echo e(__('Total')); ?></th>
                                     <th><?php echo e(__('Payment Status')); ?></th>
                                     <th><?php echo e(__('Order Status')); ?></th>
@@ -230,11 +230,12 @@
                         {
                             "data": "created_at"
                         },
-                        {
-                            "data": "username"
-                        },
+
                         {
                             "data": "customername"
+                        },
+                        {
+                            "data": "site"
                         },
                         {
                             "data": "itemscount"

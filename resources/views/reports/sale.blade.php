@@ -104,9 +104,9 @@
                                 <tr role="row">
                                     <th style="width: 277px;">{{ __('Invoice ID') }}</th>
                                     <th>{{ __('Date') }}</th>
-                                    <th>{{ __('Sold By') }}</th>
                                     <th>{{ __('Sold To') }}</th>
-                                    <th>{{ __('Items Sold') }}</th>
+                                    <th>{{ __('Site') }}</th>
+                                    <th>{{ __('Items') }}</th>
                                     <th>{{ __('Total') }}</th>
                                     <th>{{ __('Payment Status') }}</th>
                                     <th>{{ __('Order Status') }}</th>
@@ -227,11 +227,12 @@
                         {
                             "data": "created_at"
                         },
-                        {
-                            "data": "username"
-                        },
+
                         {
                             "data": "customername"
+                        },
+                        {
+                            "data": "site"
                         },
                         {
                             "data": "itemscount"
