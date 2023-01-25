@@ -390,7 +390,9 @@ class ReportController extends Controller
                 $site=Sites::find($invoice->site_id);
 
 
-                $invoicearray[$key]['site'] ='<a href="#"  class="m-2 btn btn-sm d-inline-flex align-items-center bg-primary" ><i class="ti ti-eye text-white"></i></a>'. 'H#'.$site->house. ", St#".$site->street.', Sec#'.$site->sector;
+                $invoicearray[$key]['site'] =
+//                    '<a href="#"  class="m-2 btn btn-sm d-inline-flex align-items-center bg-primary" ><i class="ti ti-eye text-white"></i></a>'.
+                    'H#'.$site->house. ", St#".$site->street.', Sec#'.$site->sector;
 
                 $invoicearray[$key]['created_at'] = Auth::user()->datetimeFormat($invoice->created_at);
                 $invoicearray[$key]['itemscount'] = $invoice->items->count();
