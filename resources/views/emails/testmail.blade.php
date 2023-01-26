@@ -23,7 +23,7 @@
             <div class="d-flex justify-content-center">
 
                 <div class="col-12" style="width: 500px">
-                    <div class="p-1 m-3" style="background-color: #d5d5d5">
+                    <div class="p-1 m-3" style="background-color: #ffffff">
                         <div class="d-flex">
                             <img src="{{url('/')}}/storage/{{$item->product->image}}" width="100" height="100"/>
                             <div class="m-2 align-left">

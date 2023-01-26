@@ -15,15 +15,15 @@ class MailController extends Controller
 
         $sale=Sale::find($id);
 
-        return view('emails.testmail',compact('sale'));
-//        $subject = "Order Confirmation";
-//
-//        Mail::send('emails.testmail', compact('sale'), function ($message) use
-//        ($sale, $request, $subject) {
-//            $message->from('info@amaratmaterials.com', 'Amarat Materials');
-//            $message->subject($subject);
-//            $message->to('m.aliahmed000@gmail.com');
-//        });
+//        return view('emails.testmail',compact('sale'));
+        $subject = "Order Confirmation";
+
+        Mail::send('emails.testmail', compact('sale'), function ($message) use
+        ($sale, $subject) {
+            $message->from('info@amaratmaterials.com', 'Amarat Materials');
+            $message->subject($subject);
+            $message->to('m.aliahmed000@gmail.com');
+        });
 
     }
 }
