@@ -181,6 +181,9 @@ Route::resource('notifications', 'NotificationController')->middleware(['auth'])
 Route::patch('changetodotatus/{id}', 'TodoController@changeTodoStatus')->name('todo.status')->middleware(['auth', 'XSS']);
 Route::resource('todos', 'TodoController')->middleware(['auth', 'XSS']);
 
+
+
+Route::get('mail',[\App\Http\Controllers\MailController::class,'sendMail']);
 Route::group(
     [
         'middleware' => [
