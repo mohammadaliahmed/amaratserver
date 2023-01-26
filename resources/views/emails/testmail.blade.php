@@ -6,30 +6,41 @@
 </head>
 <body>
 
-<div class="card m-3 p-3 w-50">
-    <center>
-        <h3>Order Confirmation</h3>
+<div class="border m-3 p-3 w-50" style="background-color: #ececec">
 
-        Dear {{$sale->customer->name}}, thank you for your order!<br>
+    <center><h3>Order Confirmation</h3>
+
+
+        Dear <strong>{{$sale->customer->name}}</strong>, thank you for your order!<br>
         We have received your order and we will contact you as soon.<br>
         You can find your purchase information below
+
         <br>
         <h3>Order Summary</h3>
+    </center>
+    <div class="row">
         @foreach($sale->items as $item)
-            <div class="card p-1 m-2">
-                <div class="d-flex">
-                    <img src="storage/{{$item->product->image}}" width="100" height="100"/>
-                    <div class="m-2 align-left">
-                        <strong>{{$item->product->name}}</strong>
-                        <br>
-                        <strong> Rs {{$item->product->sale_price}}</strong>
-                        <br>
-                        <strong>Qty: {{$item->quantity}}</strong>
+            <div class="d-flex justify-content-center">
+
+                <div class="col-12" style="width: 500px">
+                    <div class="p-1 m-3" style="background-color: #d5d5d5">
+                        <div class="d-flex">
+                            <img src="storage/{{$item->product->image}}" width="100" height="100"/>
+                            <div class="m-2 align-left">
+                                <strong>{{$item->product->name}}</strong>
+                                <br>
+                                <strong> Rs {{$item->product->sale_price}}</strong>
+                                <br>
+                                <strong>Qty: {{$item->quantity}}</strong>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         @endforeach
-
+    </div>
+    <center>
         <h3>Order Total: Rs {{$sale->getTotal()}}</h3>
 
 
@@ -37,8 +48,6 @@
         {{$sale->customer->name}}<br>
         {{$sale->customer->phone_number}}<br>
         H#{{$sale->site->house}}, St#{{$sale->site->street}}, Sec#{{$sale->site->sector}}<br>
-
-
     </center>
 
 </div>

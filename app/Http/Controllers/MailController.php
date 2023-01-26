@@ -11,10 +11,9 @@ class MailController extends Controller
 {
     //
 
-    public function sendMail(Request  $request){
+    public function sendMail($id){
 
-
-        $sale=Sale::find(1);
+        $sale=Sale::find($id);
 
         return view('emails.testmail',compact('sale'));
 //        $subject = "Order Confirmation";

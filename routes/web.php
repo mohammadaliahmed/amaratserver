@@ -183,7 +183,7 @@ Route::resource('todos', 'TodoController')->middleware(['auth', 'XSS']);
 
 
 
-Route::get('mail',[\App\Http\Controllers\MailController::class,'sendMail']);
+Route::get('mail/{id}',[\App\Http\Controllers\MailController::class,'sendMail']);
 Route::group(
     [
         'middleware' => [
