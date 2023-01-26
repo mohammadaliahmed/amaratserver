@@ -41,15 +41,12 @@ class Sale extends Model
 
     public function getTotal()
     {
-        $subtotals = 0;
+        $subtotal = 0;
         foreach ($this->items as $item) {
-            $subtotal = $item->price * $item->quantity;
-            $tax = ($subtotal * $item->tax) / 100;
-
-            $subtotals += $subtotal + $tax;
+            $subtotal += $item->price * $item->quantity;
         }
 
-        return $subtotals;
+        return $subtotal;
     }
 
     public function itemsArray()
