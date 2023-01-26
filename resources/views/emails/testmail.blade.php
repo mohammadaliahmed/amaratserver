@@ -18,7 +18,7 @@
         @foreach($sale->items as $item)
             <div class="card p-1 m-2">
                 <div class="d-flex">
-                    <img src="{{$item->product->image}}" width="100" height="100"/>
+                    <img src="storage/{{$item->product->image}}" width="100" height="100"/>
                     <div class="m-2 align-left">
                         <strong>{{$item->product->name}}</strong>
                         <br>
