@@ -114,7 +114,6 @@
                                     <th><?php echo e(__('Payment Status')); ?></th>
                                     <th><?php echo e(__('Order Status')); ?></th>
                                     <th style="width: 180px;"><?php echo e(__('Action')); ?></th>
-                                    <th>Assign Order</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -252,9 +251,6 @@
 
                         {
                             "data": "action"
-                        },
-                        {
-                            "data": "assign"
                         }
                     ],
                 })

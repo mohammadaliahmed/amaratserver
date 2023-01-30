@@ -239,8 +239,17 @@ class ReportController extends Controller
             $details['user']['details'] = $userdetails;
 
             $sales = $sell->itemsArray();
+            if (isset($sell->site) && isset($sell->site->latitude)) {
 
-            return view('sales.show', compact('sales', 'details', 'sell'));
+
+                $googleMapUrl = "https://www.google.com/maps/search/?api=1&query=" . $sell->site->latitude . "," . $sell->site->longitude ;
+
+            }
+            else{
+                $googleMapUrl="";
+            }
+
+            return view('sales.show', compact('sales', 'details', 'sell', 'googleMapUrl'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
@@ -368,7 +377,7 @@ class ReportController extends Controller
                     <a href="#" data-ajax-popup="true" data-title="' . __('Sale Invoice') . '" data-size="lg" data-url="' . route('show.sell.invoice', $invoice->id) . '" class="mx-3 btn btn-sm d-inline-flex align-items-center" data-bs-toggle="tooltip"  data-title="' . __('Show') . '" title="' . __('Show') . '"><i class="ti ti-eye text-white"></i></a>
                     </div>
 
-                    <div class="action-btn bg-danger ms-2">
+                    <div class="action-btn bdocs.newg-danger ms-2">
                     <a href="#" class="mx-3 btn btn-sm d-inline-flex align-items-center delete-icon bs-pass-para" data-bs-toggle="tooltip"  data-title="' . __('Delete') . '"  title="' . __('Delete') . '" data-confirm="' . __("Are You Sure?") . '"data-text="' . __("This action can not be undone. Do you want to continue?") . '" data-confirm-yes=' . $model_delete_id . '>
                         <i class="ti ti-trash text-white"></i>
                     </a>
@@ -383,16 +392,18 @@ class ReportController extends Controller
                     </form>';
                     $invoicearray[$key]['customername'] = $invoice->customer != null ? ucfirst($invoice->customer->name) : __('Walk-in Customer');
                 }
-                $invoicearray[$key]['assign'] = '<a href="' . route('sale.assign', $invoice->id) . '" class="btn btn-primary">Assign</a>';
+//                $invoicearray[$key]['assign'] = '<a href="' . route('sale.assign', $invoice->id) . '" class="btn btn-primary">Assign</a>';
 
                 $invoicearray[$key]['id'] = $invoice->id;
 //                $invoicearray[$key]['username'] = ucfirst($invoice->user->name);
-                $site=Sites::find($invoice->site_id);
-
-
-                $invoicearray[$key]['site'] =
+                $site = Sites::find($invoice->site_id);
+                if (isset($site)) {
+                    $invoicearray[$key]['site'] =
 //                    '<a href="#"  class="m-2 btn btn-sm d-inline-flex align-items-center bg-primary" ><i class="ti ti-eye text-white"></i></a>'.
-                    'H#'.$site->house. ", St#".$site->street.', Sec#'.$site->sector;
+                        'H#' . $site->house . ", St#" . $site->street . ', Sec#' . $site->sector;
+                } else {
+                    $invoicearray[$key]['site'] = "";
+                }
 
                 $invoicearray[$key]['created_at'] = Auth::user()->datetimeFormat($invoice->created_at);
                 $invoicearray[$key]['itemscount'] = $invoice->items->count();
@@ -722,17 +733,18 @@ class ReportController extends Controller
 
         $display_status = '';
 
-        if (Auth::user()->isOwner()) {
+//        if (Auth::user()->isOwner()) {
 
             $cash_registers = ['-1' => __('All')];
             $branches = $cash_registers + Branch::where('created_by', Auth::user()->getCreatedBy())->pluck('name', 'id')->toArray();
-        } else if (Auth::user()->isUser()) {
-
-            $cash_registers = [Auth::user()->cash_register_id => __('Assigned Cash Register')];
-            $branches = [Auth::user()->branch_id => __('Assigned Branch')];
-
-            $display_status = 'd-none';
-        }
+//        }
+//        else if (Auth::user()->isUser()) {
+//
+//            $cash_registers = [Auth::user()->cash_register_id => __('Assigned Cash Register')];
+//            $branches = [Auth::user()->branch_id => __('Assigned Branch')];
+//
+//            $display_status = 'd-none';
+//        }
 
         $monthDates = Utility::getStartEndMonthDates();
         $start_date = $monthDates['start_date'];
@@ -1015,9 +1027,9 @@ class ReportController extends Controller
 
             $user = \Auth::user();
             CustomerOrdersTimeline::create([
-               'sale_id'=>$id,
-               'order_status'=>$status,
-               'updated_by'=>$user->id,
+                'sale_id' => $id,
+                'order_status' => $status,
+                'updated_by' => $user->id,
             ]);
         }
 
@@ -1038,9 +1050,9 @@ class ReportController extends Controller
         $response = true;
         $user = \Auth::user();
         VendorOrdersTimeline::create([
-            'order_id'=>$orderId,
-            'order_status'=>$status,
-            'updated_by'=>$user->id,
+            'order_id' => $orderId,
+            'order_status' => $status,
+            'updated_by' => $user->id,
         ]);
 
 

@@ -117,8 +117,7 @@ class HomeController extends Controller
                 'salesArray',
                 'totalSalesCount',
                 'monthlyOrders',
-                'todos',
-                'saletarget',
+
             ];
 
             return view('dashboard', compact($homes,'arrEvents'));

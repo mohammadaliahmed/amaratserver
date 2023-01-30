@@ -111,7 +111,6 @@
                                     <th>{{ __('Payment Status') }}</th>
                                     <th>{{ __('Order Status') }}</th>
                                     <th style="width: 180px;">{{ __('Action') }}</th>
-                                    <th>Assign Order</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -249,9 +248,6 @@
 
                         {
                             "data": "action"
-                        },
-                        {
-                            "data": "assign"
                         }
                     ],
                 })

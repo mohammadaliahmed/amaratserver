@@ -4,7 +4,45 @@
     </div>
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startSection('header-content'); ?>
+
+
+<?php $__env->startPush('old-datatable-css'); ?>
+    <link rel="stylesheet" href="<?php echo e(asset('custom/css/jquery.dataTables.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('custom/css/customdatatable.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('assets/css/plugins/flatpickr.min.css')); ?>">
+<?php $__env->stopPush(); ?>
+
+<?php $__env->startPush('stylesheets'); ?>
+    <link rel="stylesheet" href="<?php echo e(asset('css/fullcalendar.min.css')); ?>">
+<?php $__env->stopPush(); ?>
+
+<?php $__env->startPush('scripts'); ?>
+    <script src="<?php echo e(asset('assets/js/plugins/flatpickr.min.js')); ?>"></script>
+    <script>
+        // minimum setup
+        document.querySelector("#pc-daterangepicker-1").flatpickr({
+            mode: "range",
+            onChange: function (selectedDates, dateStr, instance) {
+                var dates = dateStr.split(" to ");
+                var start = moment(dates[0]).format('YYYY-MM-DD');
+                var end = moment(dates[0]).format('YYYY-MM-DD');
+                $('#start_date1').val(start);
+                $('end_date1').val(end);
+                if (dates.length == 1) {
+                    var end = moment(dates[1]).format('YYYY-MM-DD');
+                    $('end_date1').val(end);
+                    if (typeof ajax_invoice_filter == 'function') {
+                        ajax_invoice_filter();
+                    }
+                }
+            }
+        });
+    </script>
+<?php $__env->stopPush(); ?>
+
+
+
+<?php $__env->startSection('content'); ?>
     <div class="row">
         <?php if(count($lowstockproducts) > 0): ?>
             <div class="col-md-12">
@@ -19,16 +57,16 @@
         <?php endif; ?>
 
 
-        <?php if(isset($notifications) && !empty($notifications) && count($notifications) > 0): ?>
-            <div class="col-md-12">
-                <?php $__currentLoopData = $notifications; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notification): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <div class="alert alert-<?php echo e($notification->color); ?> alert-dismissible fade show" role="alert">
-                        <strong><?php echo $notification->description; ?></strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </div>
-        <?php endif; ?>
+
+
+
+
+
+
+
+
+
+
     </div>
 
     <?php if($branches == 0 || $cashregisters == 0 || $productscount == 0 || $customers == 0 || $vendors == 0): ?>
@@ -55,7 +93,7 @@
                             <span class="alert-icon"><i class="ti ti-alert-triangle"></i></span>
                             <strong><?php echo e($alert); ?></strong>
                             <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                aria-label="Close"></button>
+                                    aria-label="Close"></button>
                         </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 <?php endif; ?>
@@ -124,177 +162,432 @@
                     </div>
 
 
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                 </div>
-            </div>
-                <div class="">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="row ">
-                                <div class="col-6">
-                                    <h5><?php echo e(__('Report')); ?></h5>
-                                </div>
-                                <div class="col-6 text-end">
-                                    <h6><?php echo e(__('Last 10 Days')); ?></h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div id="traffic-chart"></div>
-                        </div>
-                    </div>
-                </div>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
 
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
 
+                
+                
+                
+                
+                
+                
+                
+                
+                
 
+                
 
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
 
-
-
-
-
-
-
-
-                <?php if(isset($saletarget) && !empty($saletarget) && count($saletarget) > 0): ?>
-                    <?php $__currentLoopData = $saletarget; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $target): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <div class="col-xxl-5">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5><?php echo e(__('Branches Target')); ?> (<small><?php echo e(__('This Month')); ?></small>)</h5>
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="">
-                                    <table class="table align-items-center mb-0 ">
-                                        <thead class="thead-light">
-                                            <tr class="border-top-0">
-                                                <th class="w-25"><?php echo e(__('Branch Name')); ?></th>
-                                                <th class="w-25"><?php echo e(__('Target')); ?></th>
-                                                <th class="w-25"><?php echo e(__('Sales')); ?></th>
-                                                <th class="w-25"><?php echo e(__('Progress')); ?></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="list">
-                                            <?php if(isset($target['branch']) && count($target['branch']) > 0): ?>
-                                                <?php for($i = 0; $i < count($target['branch']); $i++): ?>
-                                                    <tr>
-                                                        <th scope="row">
-                                                            <div class="media align-items-center">
-                                                                <div class="media-body">
-                                                                    <span
-                                                                        class="name mb-0 text-sm"><?php echo e($target['branch'][$i]); ?></span>
-                                                                </div>
-                                                            </div>
-                                                        </th>
-                                                        <td class="budget">
-                                                            <?php echo e($target['totaltarget'][$i]); ?>
-
-                                                        </td>
-                                                        <td>
-                                                            <?php echo e($target['totalselledprice'][$i]); ?>
-
-                                                        </td>
-                                                        <td class="circular-progressbar p-0">
-                                                            <?php
-                                                            $percentage = $target['percentage'][$i];
-
-                                                            $status = $percentage > 0 && $percentage <= 25 ? 'red' : ($percentage > 25 && $percentage <= 50 ? 'orange' : ($percentage > 50 && $percentage <= 75 ? 'blue' : ($percentage > 75 && $percentage <= 100 ? 'green' : '')));
-                                                            ?>
-                                                            <div class="flex-wrapper">
-                                                                <div class="single-chart">
-                                                                    <svg viewBox="0 0 36 36"
-                                                                        class="circular-chart <?php echo e($status); ?>">
-                                                                        <path class="circle-bg"
-                                                                            d="M18 2.0845
-                                                                                                          a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                          a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                                                        <path class="circle"
-                                                                            stroke-dasharray="<?php echo e($percentage); ?>, 100"
-                                                                            d="M18 2.0845
-                                                                                                          a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                          a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                                                        <text x="18" y="20.35"
-                                                                            class="percentage"><?php echo e($percentage); ?>%</text>
-                                                                    </svg>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                <?php endfor; ?>
-                                            <?php endif; ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                <?php else: ?>
-                <?php endif; ?>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
 
             </div>
         </div>
     </div>
 
+
+
+
+
+
+
+
+    <div class="row ">
+        <div class="col-12">
+            <h3>Orders</h3>
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="card table-card">
+                <div class="card-header card-body table-border-style">
+                    
+                    <div class="col-sm-12 table-responsive mt-3 table_over">
+                        <table class="table dataTable table-sm" id="myTable" role="grid">
+                            <thead class="thead-light">
+                            <tr role="row">
+                                <th style="width: 277px;"><?php echo e(__('Invoice ID')); ?></th>
+                                <th><?php echo e(__('Date')); ?></th>
+                                <th><?php echo e(__('Sold To')); ?></th>
+                                <th><?php echo e(__('Site')); ?></th>
+                                <th><?php echo e(__('Items')); ?></th>
+                                <th><?php echo e(__('Total')); ?></th>
+                                <th><?php echo e(__('Payment Status')); ?></th>
+                                <th><?php echo e(__('Order Status')); ?></th>
+                                <th style="width: 180px;"><?php echo e(__('Action')); ?></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td rowspan="1" colspan="1">
+                                    <h5 class="h6"><?php echo e(__('Grand Total')); ?></h5>
+                                </td>
+                                <td rowspan="1" colspan="1"></td>
+                                <td rowspan="1" colspan="1"></td>
+                                <td rowspan="1" colspan="1"></td>
+                                <td rowspan="1" colspan="1">
+                                    <h5 class="h6" id="totalitems"></h5>
+                                </td>
+                                <td rowspan="1" colspan="1">
+                                    <h5 class="h6" id="totalcounts"></h5>
+                                </td>
+                                <td rowspan="1" colspan="1"></td>
+                                <td rowspan="1" colspan="1"></td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startPush('stylesheets'); ?>
-    <link rel="stylesheet" href="<?php echo e(asset('css/fullcalendar.min.css')); ?>">
+<?php $__env->startPush('old-datatable-js'); ?>
+
+    <script src="<?php echo e(asset('custom/js/jquery.dataTables.min.js')); ?>"></script>
+    <script>
+        var dataTabelLang = {
+            paginate: {previous: "<i class='fas fa-angle-left'>", next: "<i class='fas fa-angle-right'>"},
+            lengthMenu: "<?php echo e(__('Show')); ?> _MENU_ <?php echo e(__('entries')); ?>",
+            zeroRecords: "<?php echo e(__('No data available in table.')); ?>",
+            info: "<?php echo e(__('Showing')); ?> _START_ <?php echo e(__('to')); ?> _END_ <?php echo e(__('of')); ?> _TOTAL_ <?php echo e(__('entries')); ?>",
+            infoEmpty: "<?php echo e(__('Showing 0 to 0 of 0 entries')); ?>",
+            infoFiltered: "<?php echo e(__('(filtered from _MAX_ total entries)')); ?>",
+            search: "<?php echo e(__('Search:')); ?>",
+            thousands: ",",
+            loadingRecords: "<?php echo e(__('Loading...')); ?>",
+            processing: "<?php echo e(__('Processing...')); ?>"
+        };
+
+        var site_currency_symbol_position = '<?php echo e(\App\Models\Utility::getValByName('site_currency_symbol_position')); ?>';
+        var site_currency_symbol = '<?php echo e(\App\Models\Utility::getValByName('site_currency_symbol')); ?>';
+    </script>
+
 <?php $__env->stopPush(); ?>
+
+<?php $__env->startPush('scripts'); ?>
+    <script src="<?php echo e(asset('js/bootstrap-datepicker.min.js')); ?>"></script>
+
+    <script>
+
+        $(document).on('click', '.copy_link_sale', function (e) {
+            e.preventDefault();
+            var copyText = $(this).attr('href');
+
+            document.addEventListener('copy', function (e) {
+                e.clipboardData.setData('text/plain', copyText);
+                e.preventDefault();
+            }, true);
+
+            document.execCommand('copy');
+            show_toastr('Success', 'Url copied to clipboard', 'success');
+        });
+    </script>
+
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            ajax_invoice_filter();
+        });
+
+        $(document).on('change', '#sell_to, #sell_by', function (e) {
+            ajax_invoice_filter();
+        });
+
+        function ajax_invoice_filter() {
+
+            var data = {
+                'url': '<?php echo e(route('invoice.filter')); ?>',
+                'start_date': $('#start_date1').val(),
+                'end_date': $('#end_date1').val(),
+                'customer_id': $('#sell_to').val(),
+                'user_id': $('#sell_by').val(),
+                'customers': 1,
+            }
+
+            $('#myTable').DataTable({
+                "processing": true,
+                "destroy": true,
+                "paging": true,
+                "pageLength": 10,
+                "ordering": false,
+                "language": dataTabelLang,
+                "ajax": {
+                    "type": "GET",
+                    "url": data.url,
+                    "data": data,
+                },
+                "columns": [{
+                    "data": "invoice_id"
+                },
+                    {
+                        "data": "created_at"
+                    },
+
+                    {
+                        "data": "customername"
+                    },
+                    {
+                        "data": "site"
+                    },
+                    {
+                        "data": "itemscount"
+                    },
+                    {
+                        "data": "itemstotal"
+                    }
+                    , {
+                        "data": "paymentstatus"
+                    },
+                    {
+                        "data": "order_status"
+                    },
+
+                    {
+                        "data": "action"
+                    }
+                ],
+            })
+                .on("xhr.dt", function (e, settings, json, xhr) {
+                    $('#totalitems').text(json.totalItemsCount);
+                    $('#totalcounts').text(json.totalCount);
+                    setTimeout(function () {
+                        loadConfirm();
+                    }, 1000);
+                });
+        }
+
+        $(document).on('click', '.payment-action', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+
+            var ele = $(this);
+
+            var id = ele.parent().attr('data-id');
+            var url = ele.parent().attr('data-url');
+            var status = ele.attr('data-status');
+
+            $.ajax({
+                url: url,
+                method: 'PATCH',
+                data: {
+                    status: status
+                },
+                success: function (response) {
+
+                    if (response) {
+                        location.reload();
+
+                        // $('[data-li-id="' + id + '"] .payment-action').removeClass('selected');
+                        //
+                        // if (ele.hasClass('selected')) {
+                        //
+                        //     ele.removeClass('selected');
+                        //
+                        // } else {
+                        //     ele.addClass('selected');
+                        // }
+                        //
+                        // var payment = $('[data-li-id="' + id + '"] .payment-actions').find('.selected')
+                        //     .text().trim();
+                        //
+                        // var payment_class = $('[data-li-id="' + id + '"] .payment-actions').find(
+                        //     '.selected').attr('data-class');
+                        // $('[data-li-id="' + id + '"] .payment-label').removeClass(
+                        //     'unpaid partially-paid paid').addClass(payment_class).text(payment);
+                    }
+                },
+                error: function (data) {
+                    data = data.responseJSON;
+                    show_toastr('<?php echo e(__('Error')); ?>', data.error, 'error');
+                }
+            });
+        });
+    </script>
+<?php $__env->stopPush(); ?>
+
 
 <?php $__env->startPush('scripts'); ?>
     <script src="<?php echo e(asset('assets/js/plugins/apexcharts.min.js')); ?>"></script>
     <script src="<?php echo e(asset('js/moment.min.js')); ?>"></script>
 
     <script>
-        (function() {
+        (function () {
             var options = {
                 chart: {
                     height: 325,
@@ -324,7 +617,7 @@
                         text: '<?php echo e(__('Days')); ?>'
                     }
                 },
-                colors: [ '#6fd943'],
+                colors: ['#6fd943'],
 
                 grid: {
                     strokeDashArray: 4,
@@ -352,12 +645,13 @@
         })();
 
 
-        $(document).on('click', '.custom-checkbox .custom-control-input', function(e) {
+        $(document).on('click', '.custom-checkbox .custom-control-input', function (e) {
             $.ajax({
                 url: $(this).data('url'),
                 method: 'PATCH',
-                success: function(response) {},
-                error: function(data) {
+                success: function (response) {
+                },
+                error: function (data) {
                     data = data.responseJSON;
                     show_toastr('<?php echo e(__('Error')); ?>', data.error, 'error')
                 }
@@ -372,7 +666,7 @@
 
 
     <script type="text/javascript">
-        (function() {
+        (function () {
             var etitle;
             var etype;
             var etypeclass;
@@ -386,7 +680,7 @@
                     timeGridDay: "<?php echo e(__('Day')); ?>",
                     timeGridWeek: "<?php echo e(__('Week')); ?>",
                     dayGridMonth: "<?php echo e(__('Month')); ?>"
-                    },
+                },
                 themeSystem: 'bootstrap',
 
                 slotDuration: '00:10:00',
@@ -400,8 +694,7 @@
                 events: <?php echo $arrEvents; ?>,
 
 
-
-                eventClick: function(e) {
+                eventClick: function (e) {
                     e.jsEvent.preventDefault();
                     var title = e.title;
                     var url = e.el.href;
@@ -411,20 +704,20 @@
                         $("#commonModal .modal-dialog").addClass('modal-md');
                         $("#commonModal").modal('show');
 
-                        $.get(url, {}, function(data) {
+                        $.get(url, {}, function (data) {
                             console.log(data);
                             $('#commonModal .body ').html(data);
 
                             if ($(".d_week").length > 0) {
-                                $($(".d_week")).each(function(index, element) {
+                                $($(".d_week")).each(function (index, element) {
                                     var id = $(element).attr('id');
 
-                                    (function() {
+                                    (function () {
                                         const d_week = new Datepicker(document
                                             .querySelector('#' + id), {
-                                                buttonClass: 'btn',
-                                                format: 'yyyy-mm-dd',
-                                            });
+                                            buttonClass: 'btn',
+                                            format: 'yyyy-mm-dd',
+                                        });
                                     })();
 
                                 });

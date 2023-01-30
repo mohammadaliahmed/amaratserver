@@ -69,7 +69,7 @@
                             <div class="col md-6">
                                     <div class="text-gray-light text-uppercase">{{ __('Invoice To:') }}</div>
                                     {!! $details['customer']['details']  !!}
-                                
+
                             </div>
                             <div class="col md-6 text-end">
                                 <div class="text-gray-light text-uppercase">{{ __('Invoice From:') }}</div>

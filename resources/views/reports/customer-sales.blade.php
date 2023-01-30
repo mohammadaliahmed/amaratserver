@@ -80,21 +80,21 @@
                                     {{ Form::select('customer_id', $customers, null, ['class' => 'form-control','id' => 'customer_id','data-toggle' => 'select']) }}
                                 </div>
                             </div>
-                            <div class="form-group col-md-3 mb-0 {{ $display_status }}">
-                                {{ Form::label('branch_id', __('Branch'), ['class' => 'col-form-label']) }}
-                                <div class="input-group">
-                                    {{ Form::select('branch_id', $branches, null, ['class' => 'form-control','id' => 'branch_id','data-toggle' => 'select']) }}
-                                </div>
-                            </div>
-                            <div class="form-group col-md-3 mb-0 {{ $display_status }}">
-                                {{ Form::label('cash_register_id', __('Cash Register'), ['class' => 'col-form-label']) }}
-                                <div class="input-group">
-                                    {{ Form::select('cash_register_id', $cash_registers, null, ['class' => 'form-control','id' => 'cash_register_id','data-toggle' => 'select']) }}
-                                </div>
-                            </div>
+{{--                            <div class="form-group col-md-3 mb-0 {{ $display_status }}">--}}
+{{--                                {{ Form::label('branch_id', __('Branch'), ['class' => 'col-form-label']) }}--}}
+{{--                                <div class="input-group">--}}
+{{--                                    {{ Form::select('branch_id', $branches, null, ['class' => 'form-control','id' => 'branch_id','data-toggle' => 'select']) }}--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group col-md-3 mb-0 {{ $display_status }}">--}}
+{{--                                {{ Form::label('cash_register_id', __('Cash Register'), ['class' => 'col-form-label']) }}--}}
+{{--                                <div class="input-group">--}}
+{{--                                    {{ Form::select('cash_register_id', $cash_registers, null, ['class' => 'form-control','id' => 'cash_register_id','data-toggle' => 'select']) }}--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                     </div>
-                </div> 
+                </div>
 
                 <div class="col-sm-12">
                     <div class="row">

@@ -46,13 +46,13 @@
 
 
 
-                            <li class="dash-item">
-                                <a href="{{ route('reports.sales') }}" class="dash-link"><span class="dash-micon"><i
-                                            class="ti ti-book"></i></span><span
-                                        class="dash-mtext">{{ __('Orders') }}</span><span class="dash-arrow"><i
-                                            data-feather="chevron-right"></i></span></a>
+{{--                            <li class="dash-item">--}}
+{{--                                <a href="{{ route('reports.sales') }}" class="dash-link"><span class="dash-micon"><i--}}
+{{--                                            class="ti ti-book"></i></span><span--}}
+{{--                                        class="dash-mtext">{{ __('Orders') }}</span><span class="dash-arrow"><i--}}
+{{--                                            data-feather="chevron-right"></i></span></a>--}}
 
-                            </li>
+{{--                            </li>--}}
                             @can('Manage Sales')
                                 <li class="dash-item">
                                     <a href="#" class="dash-link"><span class="dash-micon"><i
@@ -307,138 +307,138 @@
                                 </li>
                             @endcan
 
-                            {{--            @if (Gate::check('Manage Product') || Gate::check('Manage Category') || Gate::check('Manage Brand') || Gate::check('Manage Tax') || Gate::check('Manage Expense') || Gate::check('Manage Customer') || Gate::check('Manage Vendor') || Gate::check('Manage Purchases') || Gate::check('Manage Sales'))--}}
-                            {{--                <li--}}
-                            {{--                    class="  {{ Request::segment(1) == 'product-stock-analysis' ||--}}
-                            {{--                    Request::segment(1) == 'product-category-analysis' ||--}}
-                            {{--                    Request::segment(1) == 'product-brand-analysis' ||--}}
-                            {{--                    Request::segment(1) == 'product-tax-analysis' ||--}}
-                            {{--                    Request::segment(1) == 'expense-analysis' ||--}}
-                            {{--                    Request::segment(1) == 'customer-sales-analysis' ||--}}
-                            {{--                    Request::segment(1) == 'vendor-purchased-analysis' ||--}}
-                            {{--                    Request::segment(1) == 'purchased-daily-analysis' ||--}}
-                            {{--                    Request::segment(1) == 'purchased-monthly-analysis' ||--}}
-                            {{--                    Request::segment(1) == 'sold-daily-analysis' ||--}}
-                            {{--                    Request::segment(1) == 'sold-monthly-analysis'--}}
-                            {{--                        ? 'active dash-trigger'--}}
-                            {{--                        : '' }}">--}}
-                            {{--                    <a href="#" class="dash-link"><span class="dash-micon"><i--}}
-                            {{--                                class="ti ti-report"></i></span><span--}}
-                            {{--                            class="dash-mtext">{{ __('Reports') }}</span><span class="dash-arrow"><i--}}
-                            {{--                                data-feather="chevron-right"></i></span></a>--}}
+                                        @if (Gate::check('Manage Product') || Gate::check('Manage Category') || Gate::check('Manage Brand') || Gate::check('Manage Tax') || Gate::check('Manage Expense') || Gate::check('Manage Customer') || Gate::check('Manage Vendor') || Gate::check('Manage Purchases') || Gate::check('Manage Sales'))
+                                            <li
+                                                class="  {{ Request::segment(1) == 'product-stock-analysis' ||
+                                                Request::segment(1) == 'product-category-analysis' ||
+                                                Request::segment(1) == 'product-brand-analysis' ||
+                                                Request::segment(1) == 'product-tax-analysis' ||
+                                                Request::segment(1) == 'expense-analysis' ||
+                                                Request::segment(1) == 'customer-sales-analysis' ||
+                                                Request::segment(1) == 'vendor-purchased-analysis' ||
+                                                Request::segment(1) == 'purchased-daily-analysis' ||
+                                                Request::segment(1) == 'purchased-monthly-analysis' ||
+                                                Request::segment(1) == 'sold-daily-analysis' ||
+                                                Request::segment(1) == 'sold-monthly-analysis'
+                                                    ? 'active dash-trigger'
+                                                    : '' }}">
+                                                <a href="#" class="dash-link"><span class="dash-micon"><i
+                                                            class="ti ti-report"></i></span><span
+                                                        class="dash-mtext">{{ __('Reports') }}</span><span class="dash-arrow"><i
+                                                            data-feather="chevron-right"></i></span></a>
 
-                            {{--                    <ul class="dash-submenu">--}}
-
-
-                            {{--                        @can('Manage Product')--}}
-                            {{--                            <li class="">--}}
-                            {{--                                <a class="dash-link"--}}
-                            {{--                                    href="{{ route('product.stock.analysis') }}">{{ __('Stock Analysis') }}</a>--}}
-                            {{--                            </li>--}}
-                            {{--                        @endcan--}}
-
-                            {{--                        @can('Manage Category')--}}
-                            {{--                            <li class="">--}}
-                            {{--                                <a class="dash-link"--}}
-                            {{--                                    href="{{ route('product.category.analysis') }}">{{ __('Category Report') }}</a>--}}
-                            {{--                            </li>--}}
-                            {{--                        @endcan--}}
-
-                            {{--                        @can('Manage Brand')--}}
-                            {{--                            <li class="">--}}
-                            {{--                                <a class="dash-link"--}}
-                            {{--                                    href="{{ route('product.brand.analysis') }}">{{ __('Brand Report') }}</a>--}}
-                            {{--                            </li>--}}
-                            {{--                        @endcan--}}
-
-                            {{--                        @can('Manage Tax')--}}
-                            {{--                            <li class="">--}}
-                            {{--                                <a class="dash-link"--}}
-                            {{--                                    href="{{ route('product.tax.analysis') }}">{{ __('Tax Report') }}</a>--}}
-                            {{--                            </li>--}}
-                            {{--                        @endcan--}}
-
-                            {{--                        @can('Manage Expense')--}}
-                            {{--                            <li class="">--}}
-                            {{--                                <a class="dash-link"--}}
-                            {{--                                    href="{{ route('expense.analysis') }}">{{ __('Expense Report') }}</a>--}}
-                            {{--                            </li>--}}
-                            {{--                        @endcan--}}
-
-                            {{--                        @can('Manage Customer')--}}
-                            {{--                            <li class="">--}}
-                            {{--                                <a class="dash-link"--}}
-                            {{--                                    href="{{ route('customer.sales.analysis') }}">{{ __('Customer Report') }}</a>--}}
-                            {{--                            </li>--}}
-                            {{--                        @endcan--}}
-
-                            {{--                        @can('Manage Vendor')--}}
-                            {{--                            <li class="">--}}
-                            {{--                                <a class="dash-link"--}}
-                            {{--                                    href="{{ route('vendor.purchased.analysis') }}">{{ __('Vendor Report') }}</a>--}}
-                            {{--                            </li>--}}
-                            {{--                        @endcan--}}
-
-                            {{--                        @can('Manage Purchases')--}}
-                            {{--                            <li--}}
-                            {{--                                class=" {{ Request::segment(1) == 'purchased-daily-analysis' || Request::segment(1) == 'purchased-monthly-analysis' ? 'active' : '' }}">--}}
-                            {{--                                <a class="dash-link "--}}
-                            {{--                                    href="{{ route('purchased.daily.analysis') }}">{{ __('Purchase Daily/Monthly Report') }}</a>--}}
-                            {{--                            </li>--}}
-                            {{--                        @endcan--}}
-
-                            {{--                        @can('Manage Sales')--}}
-                            {{--                            <li--}}
-                            {{--                                class=" {{ Request::segment(1) == 'sold-daily-analysis' || Request::segment(1) == 'sold-monthly-analysis' ? 'active' : '' }}">--}}
-                            {{--                                <a class="dash-link "--}}
-                            {{--                                    href="{{ route('sold.daily.analysis') }}">{{ __('Sale Daily/Monthly Report') }}</a>--}}
-                            {{--                            </li>--}}
-                            {{--                        @endcan--}}
-                            {{--                    </ul>--}}
-                            {{--                </li>--}}
-                            {{--            @endif--}}
+                                                <ul class="dash-submenu">
 
 
+{{--                                                    @can('Manage Product')--}}
+{{--                                                        <li class="">--}}
+{{--                                                            <a class="dash-link"--}}
+{{--                                                                href="{{ route('product.stock.analysis') }}">{{ __('Stock Analysis') }}</a>--}}
+{{--                                                        </li>--}}
+{{--                                                    @endcan--}}
 
-                            {{--                            @if (Gate::check('Store Settings') || Gate::check('Manage Branch') || Gate::check('Manage Cash Register') || Gate::check('Manage Branch Sales Target'))--}}
-                            {{--                                <li class="">--}}
-                            {{--                                    <a href="#!" class="dash-link"><span class="dash-micon"><i--}}
-                            {{--                                                class="ti ti-settings"></i></span><span--}}
-                            {{--                                            class="dash-mtext">{{ __('Settings') }}</span><span class="dash-arrow"><i--}}
-                            {{--                                                data-feather="chevron-right"></i></span></a>--}}
-                            {{--                                    <ul class="dash-submenu">--}}
+{{--                                                    @can('Manage Category')--}}
+{{--                                                        <li class="">--}}
+{{--                                                            <a class="dash-link"--}}
+{{--                                                                href="{{ route('product.category.analysis') }}">{{ __('Category Report') }}</a>--}}
+{{--                                                        </li>--}}
+{{--                                                    @endcan--}}
 
-                            {{--                                        @can('Store Settings')--}}
-                            {{--                                            <li class="">--}}
-                            {{--                                                <a class="dash-link"--}}
-                            {{--                                                   href="{{ route('systems.index') }}">{{ __('Store Settings') }}</a>--}}
-                            {{--                                            </li>--}}
-                            {{--                                        @endcan--}}
+{{--                                                    @can('Manage Brand')--}}
+{{--                                                        <li class="">--}}
+{{--                                                            <a class="dash-link"--}}
+{{--                                                                href="{{ route('product.brand.analysis') }}">{{ __('Brand Report') }}</a>--}}
+{{--                                                        </li>--}}
+{{--                                                    @endcan--}}
 
-                            {{--                                        @can('Manage Branch')--}}
-                            {{--                                            <li class="">--}}
-                            {{--                                                <a class="dash-link"--}}
-                            {{--                                                   href="{{ route('branches.index') }}">{{ __('Branches') }}</a>--}}
-                            {{--                                            </li>--}}
-                            {{--                                        @endcan--}}
+{{--                                                    @can('Manage Tax')--}}
+{{--                                                        <li class="">--}}
+{{--                                                            <a class="dash-link"--}}
+{{--                                                                href="{{ route('product.tax.analysis') }}">{{ __('Tax Report') }}</a>--}}
+{{--                                                        </li>--}}
+{{--                                                    @endcan--}}
 
-                            {{--                                        @can('Manage Cash Register')--}}
-                            {{--                                            <li class="">--}}
-                            {{--                                                <a class="dash-link"--}}
-                            {{--                                                   href="{{ route('cashregisters.index') }}">{{ __('Cash Registers') }}</a>--}}
-                            {{--                                            </li>--}}
-                            {{--                                        @endcan--}}
+{{--                                                    @can('Manage Expense')--}}
+{{--                                                        <li class="">--}}
+{{--                                                            <a class="dash-link"--}}
+{{--                                                                href="{{ route('expense.analysis') }}">{{ __('Expense Report') }}</a>--}}
+{{--                                                        </li>--}}
+{{--                                                    @endcan--}}
 
-                            {{--                                        --}}{{--                        @can('Manage Branch Sales Target')--}}
-                            {{--                                        --}}{{--                            <li class="">--}}
-                            {{--                                        --}}{{--                                <a class="dash-link"--}}
-                            {{--                                        --}}{{--                                    href="{{ route('branchsalestargets.index') }}">{{ __('Branch Sales Target') }}</a>--}}
-                            {{--                                        --}}{{--                            </li>--}}
-                            {{--                                        --}}{{--                        @endcan--}}
+                                                    @can('Manage Customer')
+                                                        <li class="">
+                                                            <a class="dash-link"
+                                                                href="{{ route('customer.sales.analysis') }}">{{ __('Customer Report') }}</a>
+                                                        </li>
+                                                    @endcan
 
-                            {{--                                    </ul>--}}
-                            {{--                                </li>--}}
-                            {{--                            @endif--}}
+{{--                                                    @can('Manage Vendor')--}}
+{{--                                                        <li class="">--}}
+{{--                                                            <a class="dash-link"--}}
+{{--                                                                href="{{ route('vendor.purchased.analysis') }}">{{ __('Vendor Report') }}</a>--}}
+{{--                                                        </li>--}}
+{{--                                                    @endcan--}}
+
+{{--                                                    @can('Manage Purchases')--}}
+{{--                                                        <li--}}
+{{--                                                            class=" {{ Request::segment(1) == 'purchased-daily-analysis' || Request::segment(1) == 'purchased-monthly-analysis' ? 'active' : '' }}">--}}
+{{--                                                            <a class="dash-link "--}}
+{{--                                                                href="{{ route('purchased.daily.analysis') }}">{{ __('Purchase Daily/Monthly Report') }}</a>--}}
+{{--                                                        </li>--}}
+{{--                                                    @endcan--}}
+
+{{--                                                    @can('Manage Sales')--}}
+{{--                                                        <li--}}
+{{--                                                            class=" {{ Request::segment(1) == 'sold-daily-analysis' || Request::segment(1) == 'sold-monthly-analysis' ? 'active' : '' }}">--}}
+{{--                                                            <a class="dash-link "--}}
+{{--                                                                href="{{ route('sold.daily.analysis') }}">{{ __('Sale Daily/Monthly Report') }}</a>--}}
+{{--                                                        </li>--}}
+{{--                                                    @endcan--}}
+                                                </ul>
+                                            </li>
+                                        @endif
+
+
+
+                                                        @if (Gate::check('Store Settings') || Gate::check('Manage Branch') || Gate::check('Manage Cash Register') || Gate::check('Manage Branch Sales Target'))
+                                                            <li class="">
+                                                                <a href="#!" class="dash-link"><span class="dash-micon"><i
+                                                                            class="ti ti-settings"></i></span><span
+                                                                        class="dash-mtext">{{ __('Settings') }}</span><span class="dash-arrow"><i
+                                                                            data-feather="chevron-right"></i></span></a>
+                                                                <ul class="dash-submenu">
+
+                                                                    @can('Store Settings')
+                                                                        <li class="">
+                                                                            <a class="dash-link"
+                                                                               href="{{ route('systems.index') }}">{{ __('Store Settings') }}</a>
+                                                                        </li>
+                                                                    @endcan
+
+                                                                    @can('Manage Branch')
+                                                                        <li class="">
+                                                                            <a class="dash-link"
+                                                                               href="{{ route('branches.index') }}">{{ __('Branches') }}</a>
+                                                                        </li>
+                                                                    @endcan
+
+                                                                    @can('Manage Cash Register')
+                                                                        <li class="">
+                                                                            <a class="dash-link"
+                                                                               href="{{ route('cashregisters.index') }}">{{ __('Cash Registers') }}</a>
+                                                                        </li>
+                                                                    @endcan
+
+                                                                                            @can('Manage Branch Sales Target')
+                                                                                                <li class="">
+                                                                                                    <a class="dash-link"
+                                                                                                        href="{{ route('branchsalestargets.index') }}">{{ __('Branch Sales Target') }}</a>
+                                                                                                </li>
+                                                                                            @endcan
+
+                                                                </ul>
+                                                            </li>
+                                                        @endif
 
                         </ul>
                     </div>

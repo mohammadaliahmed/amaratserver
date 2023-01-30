@@ -46,13 +46,13 @@
 
 
 
-                            <li class="dash-item">
-                                <a href="<?php echo e(route('reports.sales')); ?>" class="dash-link"><span class="dash-micon"><i
-                                            class="ti ti-book"></i></span><span
-                                        class="dash-mtext"><?php echo e(__('Orders')); ?></span><span class="dash-arrow"><i
-                                            data-feather="chevron-right"></i></span></a>
 
-                            </li>
+
+
+
+
+
+
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Sales')): ?>
                                 <li class="dash-item">
                                     <a href="#" class="dash-link"><span class="dash-micon"><i
@@ -298,138 +298,138 @@
                                 </li>
                             <?php endif; ?>
 
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
+                                        <?php if(Gate::check('Manage Product') || Gate::check('Manage Category') || Gate::check('Manage Brand') || Gate::check('Manage Tax') || Gate::check('Manage Expense') || Gate::check('Manage Customer') || Gate::check('Manage Vendor') || Gate::check('Manage Purchases') || Gate::check('Manage Sales')): ?>
+                                            <li
+                                                class="  <?php echo e(Request::segment(1) == 'product-stock-analysis' ||
+                                                Request::segment(1) == 'product-category-analysis' ||
+                                                Request::segment(1) == 'product-brand-analysis' ||
+                                                Request::segment(1) == 'product-tax-analysis' ||
+                                                Request::segment(1) == 'expense-analysis' ||
+                                                Request::segment(1) == 'customer-sales-analysis' ||
+                                                Request::segment(1) == 'vendor-purchased-analysis' ||
+                                                Request::segment(1) == 'purchased-daily-analysis' ||
+                                                Request::segment(1) == 'purchased-monthly-analysis' ||
+                                                Request::segment(1) == 'sold-daily-analysis' ||
+                                                Request::segment(1) == 'sold-monthly-analysis'
+                                                    ? 'active dash-trigger'
+                                                    : ''); ?>">
+                                                <a href="#" class="dash-link"><span class="dash-micon"><i
+                                                            class="ti ti-report"></i></span><span
+                                                        class="dash-mtext"><?php echo e(__('Reports')); ?></span><span class="dash-arrow"><i
+                                                            data-feather="chevron-right"></i></span></a>
 
-                            
-
-
-                            
-                            
-                            
-                            
-                            
-                            
-
-                            
-                            
-                            
-                            
-                            
-                            
-
-                            
-                            
-                            
-                            
-                            
-                            
-
-                            
-                            
-                            
-                            
-                            
-                            
-
-                            
-                            
-                            
-                            
-                            
-                            
-
-                            
-                            
-                            
-                            
-                            
-                            
-
-                            
-                            
-                            
-                            
-                            
-                            
-
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
+                                                <ul class="dash-submenu">
 
 
 
-                            
-                            
-                            
-                            
-                            
-                            
-                            
 
-                            
-                            
-                            
-                            
-                            
-                            
 
-                            
-                            
-                            
-                            
-                            
-                            
 
-                            
-                            
-                            
-                            
-                            
-                            
 
-                            
-                            
-                            
-                            
-                            
-                            
 
-                            
-                            
-                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Customer')): ?>
+                                                        <li class="">
+                                                            <a class="dash-link"
+                                                                href="<?php echo e(route('customer.sales.analysis')); ?>"><?php echo e(__('Customer Report')); ?></a>
+                                                        </li>
+                                                    <?php endif; ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                </ul>
+                                            </li>
+                                        <?php endif; ?>
+
+
+
+                                                        <?php if(Gate::check('Store Settings') || Gate::check('Manage Branch') || Gate::check('Manage Cash Register') || Gate::check('Manage Branch Sales Target')): ?>
+                                                            <li class="">
+                                                                <a href="#!" class="dash-link"><span class="dash-micon"><i
+                                                                            class="ti ti-settings"></i></span><span
+                                                                        class="dash-mtext"><?php echo e(__('Settings')); ?></span><span class="dash-arrow"><i
+                                                                            data-feather="chevron-right"></i></span></a>
+                                                                <ul class="dash-submenu">
+
+                                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Store Settings')): ?>
+                                                                        <li class="">
+                                                                            <a class="dash-link"
+                                                                               href="<?php echo e(route('systems.index')); ?>"><?php echo e(__('Store Settings')); ?></a>
+                                                                        </li>
+                                                                    <?php endif; ?>
+
+                                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Branch')): ?>
+                                                                        <li class="">
+                                                                            <a class="dash-link"
+                                                                               href="<?php echo e(route('branches.index')); ?>"><?php echo e(__('Branches')); ?></a>
+                                                                        </li>
+                                                                    <?php endif; ?>
+
+                                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Cash Register')): ?>
+                                                                        <li class="">
+                                                                            <a class="dash-link"
+                                                                               href="<?php echo e(route('cashregisters.index')); ?>"><?php echo e(__('Cash Registers')); ?></a>
+                                                                        </li>
+                                                                    <?php endif; ?>
+
+                                                                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Branch Sales Target')): ?>
+                                                                                                <li class="">
+                                                                                                    <a class="dash-link"
+                                                                                                        href="<?php echo e(route('branchsalestargets.index')); ?>"><?php echo e(__('Branch Sales Target')); ?></a>
+                                                                                                </li>
+                                                                                            <?php endif; ?>
+
+                                                                </ul>
+                                                            </li>
+                                                        <?php endif; ?>
 
                         </ul>
                     </div>
