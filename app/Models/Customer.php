@@ -45,7 +45,7 @@ class Customer extends Model
         $authuser = Auth::user();
 
         $customers = Customer::where('name', 'like','%%');
-        $sold = Sale::where('created_by', $authuser->getCreatedBy());
+        $sold = Sale::where('id', 'like','%%');
 
         if ($data['customer_id'] != '-1') {
             $sold = $sold->where('customer_id', $data['customer_id']);
