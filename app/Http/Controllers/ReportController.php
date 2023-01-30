@@ -750,7 +750,7 @@ class ReportController extends Controller
         $start_date = $monthDates['start_date'];
         $end_date = $monthDates['end_date'];
 
-        $customers = ['-1' => __('All'), '0' => 'Walk-in Customers'] + Customer::where('created_by', $authuser->getCreatedBy())->pluck('name', 'id')->toArray();
+        $customers = ['-1' => __('All'), '0' => 'Walk-in Customers'] + Customer::get()->pluck('name', 'id')->toArray();
 
         return view('reports.customer-sales', compact('branches', 'cash_registers', 'customers', 'start_date', 'end_date', 'display_status'));
     }
