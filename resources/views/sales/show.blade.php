@@ -14,14 +14,16 @@
             <div class="col invoice-details text-end">
                 <h1 class="invoice-id h4">{{ $details['invoice_id'] }}</h1>
                 <div class="date mb-3">{{ __('Date of Invoice') }}: {{ $details['date'] }}</div>
-                <a target="_blank" class="btn btn-primary btn-sm m-2" href="{{route('sale.assign', $sell->id)}}">
-                    Assign order
-                </a>
-               <br>
-                @if($googleMapUrl!="")
-                    <a target="_blank" class="btn btn-primary btn-sm m-2" href="{{$googleMapUrl}}">
-                        View Location on Google map
+                @if(isset($sell))
+                    <a target="_blank" class="btn btn-primary btn-sm m-2" href="{{route('sale.assign', $sell->id)}}">
+                        Assign order
                     </a>
+                    <br>
+                    @if($googleMapUrl!="")
+                        <a target="_blank" class="btn btn-primary btn-sm m-2" href="{{$googleMapUrl}}">
+                            View Location on Google map
+                        </a>
+                    @endif
                 @endif
 
 
