@@ -79,6 +79,7 @@ return array(
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
     'App\\Http\\Controllers\\LandingPageSectionController' => $baseDir . '/app/Http/Controllers/LandingPageSectionController.php',
     'App\\Http\\Controllers\\LanguageController' => $baseDir . '/app/Http/Controllers/LanguageController.php',
+    'App\\Http\\Controllers\\MailController' => $baseDir . '/app/Http/Controllers/MailController.php',
     'App\\Http\\Controllers\\NotificationController' => $baseDir . '/app/Http/Controllers/NotificationController.php',
     'App\\Http\\Controllers\\PermissionController' => $baseDir . '/app/Http/Controllers/PermissionController.php',
     'App\\Http\\Controllers\\ProductController' => $baseDir . '/app/Http/Controllers/ProductController.php',

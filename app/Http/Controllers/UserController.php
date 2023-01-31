@@ -53,19 +53,19 @@ class UserController extends Controller
                 'password' => 'required|min:4|confirmed',
             ];
 
-            if (Auth::user()->isOwner() || Auth::user()->isUser()) {
-                $validatorArray['branch_id'] = 'required';
-                $validatorArray['cash_register_id'] = 'required';
-            }
+//            if (Auth::user()->isOwner() || Auth::user()->isUser()) {
+//                $validatorArray['branch_id'] = 'required';
+//                $validatorArray['cash_register_id'] = 'required';
+//            }
 
-            $validator = Validator::make(
-                $request->all(),
-                $validatorArray
-            );
+//            $validator = Validator::make(
+//                $request->all(),
+//                $validatorArray
+//            );
 
-            if ($validator->fails()) {
-                return redirect()->back()->with('error', $validator->errors()->first());
-            }
+//            if ($validator->fails()) {
+//                return redirect()->back()->with('error', $validator->errors()->first());
+//            }
 
             $settings = Utility::settings();
             if (!empty(env('DEFAULT_LANG'))) {
@@ -75,22 +75,22 @@ class UserController extends Controller
             }
             // $default_language = env('DEFAULT_LANG');
 
-            $userpassword             = $request->input('password');
-            $userrequest['name']      = $request->input('name');
-            $userrequest['email']     = $request->input('email');
-            $userrequest['address']   = $request->input('address');
-            $userrequest['password']  = $userpassword;
+            $userpassword = $request->input('password');
+            $userrequest['name'] = $request->input('name');
+            $userrequest['email'] = $request->input('email');
+            $userrequest['address'] = $request->input('address');
+            $userrequest['password'] = $userpassword;
             $userrequest['parent_id'] = \Auth::user()->getCreatedBy();
 
 //            if (!empty($request->input('branch_id'))) {
 //                $userrequest['branch_id'] = $request->input('branch_id');
-                $userrequest['branch_id'] = 1;
+            $userrequest['branch_id'] = 1;
 //            }
 //            if (!empty($request->input('cash_register_id'))) {
 //                $userrequest['cash_register_id'] = $request->input('cash_register_id');
-                $userrequest['cash_register_id'] = 1;
+            $userrequest['cash_register_id'] = 1;
 //            }
-            $userrequest['lang']      = $default_language;
+            $userrequest['lang'] = $default_language;
             $userrequest['is_active'] = 1;
 
             $user = User::create($userrequest);
@@ -107,20 +107,20 @@ class UserController extends Controller
                 $user->userpassword = $userpassword;
 
                 $uArr = [
-                    'app_name'  =>env('APP_NAME'),
-                    'app_url'=> env('APP_URL'),
+                    'app_name' => env('APP_NAME'),
+                    'app_url' => env('APP_URL'),
                     'user_name' => $request->name,
                     'user_email' => $request->email,
                     'user_password' => $userpassword,
 
-                  ];
+                ];
 
-                  $resp = Utility::sendEmailTemplate('user_create', [$user->id => $user->email], $uArr);
+                $resp = Utility::sendEmailTemplate('user_create', [$user->id => $user->email], $uArr);
 
 
                 // Mail::to($user->email)->send(new UserCreate($user));
             } catch (\Exception $e) {
-                  dd($e);
+                dd($e);
                 $smtp_error = "<br><span class='text-danger'>" . __('E-Mail has been not sent due to SMTP configuration') . '</span>';
             }
 
@@ -176,15 +176,15 @@ class UserController extends Controller
                 return redirect()->back()->with('error', $validator->errors()->first());
             }
 
-            $user->name     = $request->name;
-            $user->email    = $request->email;
-            $user->address  = $request->address;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->address = $request->address;
             $user->password = $request->password;
 //            if (!empty($request->input('branch_id'))) {
-                $user->branch_id = 1;
+            $user->branch_id = 1;
 //            }
 //            if (!empty($request->input('cash_register_id'))) {
-                $user->cash_register_id = 1;
+            $user->cash_register_id = 1;
 //            }
             $user->save();
 
@@ -205,7 +205,7 @@ class UserController extends Controller
     public function changeUserStatus($id)
     {
         if (Auth::user()->can('Manage User')) {
-            $user   = User::find($id);
+            $user = User::find($id);
             $status = '';
             if ($user) {
                 User::where('id', $id)->update(['is_active' => (int)!$user->is_active]);
@@ -231,7 +231,7 @@ class UserController extends Controller
 
     public function userPassword($id)
     {
-        $eId        = \Crypt::decrypt($id);
+        $eId = \Crypt::decrypt($id);
 
         $user = User::find($eId);
 
@@ -257,7 +257,7 @@ class UserController extends Controller
         }
 
 
-        $user                 = User::where('id', $id)->first();
+        $user = User::where('id', $id)->first();
         $user->password = $request->password;
         $user->save();
 
@@ -329,59 +329,55 @@ class UserController extends Controller
     {
 
         $userDetail = \Auth::user();
-        $user       = User::findOrFail($userDetail['id']);
+        $user = User::findOrFail($userDetail['id']);
         $this->validate(
             $request, [
-                        'name' => 'required|max:120',
-                        'email' => 'required|email|unique:users,email,' . $userDetail['id'],
-                    ]
+                'name' => 'required|max:120',
+                'email' => 'required|email|unique:users,email,' . $userDetail['id'],
+            ]
         );
-        if($request->hasFile('profile'))
-        {
+        if ($request->hasFile('profile')) {
             $filenameWithExt = $request->file('profile')->getClientOriginalName();
-            $filename        = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            $extension       = $request->file('profile')->getClientOriginalExtension();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('profile')->getClientOriginalExtension();
             $fileNameToStore = $filename . '_' . time() . '.' . $extension;
             $settings = Utility::Settings();
 
-            if($settings['storage_setting']=='local'){
-                $dir        = 'uploads/avatar/';
+            if ($settings['storage_setting'] == 'local') {
+                $dir = 'uploads/avatar/';
+            } else {
+                $dir = 'uploads/avatar';
             }
-            else{
-                    $dir        = 'uploads/avatar';
-                }
             $image_path = $dir . $userDetail['avatar'];
 
-            if(\File::exists($image_path))
-            {
+            if (\File::exists($image_path)) {
                 File::delete($image_path);
             }
 
-                // if(!file_exists($dir))
-                // {
-                //     mkdir($dir, 0777, true);
-                // }
+            // if(!file_exists($dir))
+            // {
+            //     mkdir($dir, 0777, true);
+            // }
             $url = '';
             // $path = $request->file('profile')->storeAs('uploads/avatar/', $fileNameToStore);
             // dd($path);
-            $path = Utility::upload_file($request,'profile',$filenameWithExt,$dir,[]);
+            $path = Utility::upload_file($request, 'profile', $filenameWithExt, $dir, []);
 
-            if($path['flag'] == 1){
+            if ($path['flag'] == 1) {
                 $url = $path['url'];
-            }else{
+            } else {
                 return redirect()->route('profile', \Auth::user()->id)->with('error', __($path['msg']));
             }
 
-        // dd($path);
+            // dd($path);
             // $path = $request->file('profile')->storeAs('uploads/avatar/', $fileNameToStore);
 
         }
 
-        if(!empty($request->profile))
-        {
-            $user['avatar'] =  $url;
+        if (!empty($request->profile)) {
+            $user['avatar'] = $url;
         }
-        $user['name']  = $request['name'];
+        $user['name'] = $request['name'];
         $user['email'] = $request['email'];
         $user->save();
         // CustomField::saveData($user, $request->customField);
@@ -412,8 +408,8 @@ class UserController extends Controller
                 'confirm_password' => 'required|same:password',
             ]
         );
-        $objUser          = Auth::user();
-        $request_data     = $request->all();
+        $objUser = Auth::user();
+        $request_data = $request->all();
         $current_password = $objUser->password;
 
         if (Hash::check($request_data['current_password'], $current_password)) {
@@ -434,10 +430,10 @@ class UserController extends Controller
 
         if (!empty($user) && count($user) > 0) {
             $user[0]['isOwner'] = Auth::user()->isOwner();
-            $user[0]['isUser']  = Auth::user()->isUser();
+            $user[0]['isUser'] = Auth::user()->isUser();
             if (Auth::user()->isUser()) {
-                $user[0]['branch_id']        = Auth::user()->branch->id;
-                $user[0]['branchname']       = Auth::user()->branch->name;
+                $user[0]['branch_id'] = Auth::user()->branch->id;
+                $user[0]['branchname'] = Auth::user()->branch->name;
                 $user[0]['cash_register_id'] = Auth::user()->cashregister->id;
                 $user[0]['cashregistername'] = Auth::user()->cashregister->name;
             }

@@ -11,6 +11,7 @@ class Category extends Model
         'name',
         'slug',
         'created_by',
+        'image',
     ];
 
     public static function getProductCategoryAnalysis(array $data)
@@ -131,7 +132,7 @@ class Category extends Model
     public static function getallCategories()
     {
         $cat = Category::select('categories.*', \DB::raw("COUNT(pu.category_id) products"))->leftjoin('products as pu','categories.id' ,'=','pu.category_id')->where('categories.created_by', '=', Auth::user()->getCreatedBy())->orderBy('categories.id', 'DESC')->groupBy('categories.id')->get();
-        
+
         return $cat;
     }
 }

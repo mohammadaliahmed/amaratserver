@@ -780,6 +780,7 @@ class ComposerStaticInit18632b51084993db56d30a964de44ab9
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\LandingPageSectionController' => __DIR__ . '/../..' . '/app/Http/Controllers/LandingPageSectionController.php',
         'App\\Http\\Controllers\\LanguageController' => __DIR__ . '/../..' . '/app/Http/Controllers/LanguageController.php',
+        'App\\Http\\Controllers\\MailController' => __DIR__ . '/../..' . '/app/Http/Controllers/MailController.php',
         'App\\Http\\Controllers\\NotificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/NotificationController.php',
         'App\\Http\\Controllers\\PermissionController' => __DIR__ . '/../..' . '/app/Http/Controllers/PermissionController.php',
         'App\\Http\\Controllers\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductController.php',

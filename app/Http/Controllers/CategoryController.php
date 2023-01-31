@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Utility;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -58,6 +60,30 @@ class CategoryController extends Controller
             $category->name       = $request->name;
             $category->slug       = Str::slug($request->name, '-');
             $category->created_by = Auth::user()->getCreatedBy();
+            if ($request->hasFile('image')) {
+                $validator = Validator::make(
+                    $request->all(),
+                    [
+                        'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:20480',
+                    ]
+                );
+
+                if ($validator->fails()) {
+                    return redirect()->back()->with('error', $validator->errors()->first());
+                }
+
+                $filenameWithExt = $request->file('image')->getClientOriginalName();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('image')->getClientOriginalExtension();
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                $filepath = $request->file('image')->storeAs('productimages', $fileNameToStore);
+                // $product->image  = $filepath;
+                $dir = 'productimages/';
+                $path = Utility::upload_file($request, 'image', $filenameWithExt, $dir, []);
+
+
+                $category->image = $path['url'];
+            }
             $category->save();
 
             return redirect()->route('categories.index')->with('success', __('Category added successfully.'));
@@ -101,6 +127,42 @@ class CategoryController extends Controller
             }
             $category->name = $request->name;
             $category->slug = Str::slug($request->name, '-');
+            $oldfilepath = $category->image;
+
+            if ($request->imgstatus == 1) {
+                if (asset(Storage::exists($oldfilepath))) {
+                    $category->image = '';
+                    asset(Storage::delete($oldfilepath));
+                }
+            }
+            if ($request->hasFile('image')) {
+                $validator = Validator::make(
+                    $request->all(),
+                    [
+                        'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:20480',
+                    ]
+                );
+
+                if ($validator->fails()) {
+                    return redirect()->back()->with('error', $validator->errors()->first());
+                }
+
+                if (asset(Storage::exists($oldfilepath))) {
+                    asset(Storage::delete($oldfilepath));
+                }
+
+                $filenameWithExt = $request->file('image')->getClientOriginalName();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('image')->getClientOriginalExtension();
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                $filepath = $request->file('image')->storeAs('productimages', $fileNameToStore);
+                // $product->image  = $filepath;
+                $dir = 'productimages/';
+                $path = Utility::upload_file($request, 'image', $filenameWithExt, $dir, []);
+
+
+                $category->image = $path['url'];
+            }
             $category->save();
 
             return redirect()->route('categories.index')->with('success', __('Category updated successfully.'));
@@ -159,5 +221,5 @@ class CategoryController extends Controller
                        </div>';
         }
         return Response($html);
-    }   
+    }
 }
