@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sale;
@@ -219,4 +220,11 @@ class AppController extends Controller
         ], Response::HTTP_OK);
     }
 
+
+    public function Categories(){
+        $categories=Category::all();
+        return response()->json([
+            'code' => Response::HTTP_OK, 'message' => "success",'categories'=>$categories
+        ], Response::HTTP_OK);
+    }
 }
