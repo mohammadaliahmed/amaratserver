@@ -99,8 +99,9 @@ class AppController extends Controller
             }
 
         }
+        $categories=Category::all();
         return response()->json([
-            'code' => Response::HTTP_OK, 'message' => "", 'products' => $products
+            'code' => Response::HTTP_OK, 'message' => "", 'products' => $products, 'categories' => $categories
         ], Response::HTTP_OK);
     }
 
