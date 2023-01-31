@@ -43,7 +43,7 @@
                                     @foreach ($categories as $key => $category)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-                                            <td><img src="{{url('/').'/storage/'.$category->image}}}" width="100" height="100"></td>
+                                            <td ><img class="bg-secondary p-1" src="{{ asset(Storage::url($category->image)) }}" width="100" height="100"></td>
                                             <td>{{ $category->name }}</td>
                                             <td class="Action">
                                                 @can('Edit Category')
