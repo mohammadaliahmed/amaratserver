@@ -147,7 +147,7 @@ class AppController extends Controller
             $message->to($customer->email);
         });
         return response()->json([
-            'code' => Response::HTTP_OK, 'message' => "success"
+            'code' => Response::HTTP_OK, 'message' => "success",'sale'=>$sale
         ], Response::HTTP_OK);
 
     }
