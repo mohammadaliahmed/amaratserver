@@ -400,45 +400,45 @@
 
 
 
-                                                        @if (Gate::check('Store Settings') || Gate::check('Manage Branch') || Gate::check('Manage Cash Register') || Gate::check('Manage Branch Sales Target'))
-                                                            <li class="">
-                                                                <a href="#!" class="dash-link"><span class="dash-micon"><i
-                                                                            class="ti ti-settings"></i></span><span
-                                                                        class="dash-mtext">{{ __('Settings') }}</span><span class="dash-arrow"><i
-                                                                            data-feather="chevron-right"></i></span></a>
-                                                                <ul class="dash-submenu">
+{{--                                                        @if (Gate::check('Store Settings') || Gate::check('Manage Branch') || Gate::check('Manage Cash Register') || Gate::check('Manage Branch Sales Target'))--}}
+{{--                                                            <li class="">--}}
+{{--                                                                <a href="#!" class="dash-link"><span class="dash-micon"><i--}}
+{{--                                                                            class="ti ti-settings"></i></span><span--}}
+{{--                                                                        class="dash-mtext">{{ __('Settings') }}</span><span class="dash-arrow"><i--}}
+{{--                                                                            data-feather="chevron-right"></i></span></a>--}}
+{{--                                                                <ul class="dash-submenu">--}}
 
-                                                                    @can('Store Settings')
-                                                                        <li class="">
-                                                                            <a class="dash-link"
-                                                                               href="{{ route('systems.index') }}">{{ __('Store Settings') }}</a>
-                                                                        </li>
-                                                                    @endcan
+{{--                                                                    @can('Store Settings')--}}
+{{--                                                                        <li class="">--}}
+{{--                                                                            <a class="dash-link"--}}
+{{--                                                                               href="{{ route('systems.index') }}">{{ __('Store Settings') }}</a>--}}
+{{--                                                                        </li>--}}
+{{--                                                                    @endcan--}}
 
-                                                                    @can('Manage Branch')
-                                                                        <li class="">
-                                                                            <a class="dash-link"
-                                                                               href="{{ route('branches.index') }}">{{ __('Branches') }}</a>
-                                                                        </li>
-                                                                    @endcan
+{{--                                                                    @can('Manage Branch')--}}
+{{--                                                                        <li class="">--}}
+{{--                                                                            <a class="dash-link"--}}
+{{--                                                                               href="{{ route('branches.index') }}">{{ __('Branches') }}</a>--}}
+{{--                                                                        </li>--}}
+{{--                                                                    @endcan--}}
 
-                                                                    @can('Manage Cash Register')
-                                                                        <li class="">
-                                                                            <a class="dash-link"
-                                                                               href="{{ route('cashregisters.index') }}">{{ __('Cash Registers') }}</a>
-                                                                        </li>
-                                                                    @endcan
+{{--                                                                    @can('Manage Cash Register')--}}
+{{--                                                                        <li class="">--}}
+{{--                                                                            <a class="dash-link"--}}
+{{--                                                                               href="{{ route('cashregisters.index') }}">{{ __('Cash Registers') }}</a>--}}
+{{--                                                                        </li>--}}
+{{--                                                                    @endcan--}}
 
-                                                                                            @can('Manage Branch Sales Target')
-                                                                                                <li class="">
-                                                                                                    <a class="dash-link"
-                                                                                                        href="{{ route('branchsalestargets.index') }}">{{ __('Branch Sales Target') }}</a>
-                                                                                                </li>
-                                                                                            @endcan
+{{--                                                                                            @can('Manage Branch Sales Target')--}}
+{{--                                                                                                <li class="">--}}
+{{--                                                                                                    <a class="dash-link"--}}
+{{--                                                                                                        href="{{ route('branchsalestargets.index') }}">{{ __('Branch Sales Target') }}</a>--}}
+{{--                                                                                                </li>--}}
+{{--                                                                                            @endcan--}}
 
-                                                                </ul>
-                                                            </li>
-                                                        @endif
+{{--                                                                </ul>--}}
+{{--                                                            </li>--}}
+{{--                                                        @endif--}}
 
                         </ul>
                     </div>

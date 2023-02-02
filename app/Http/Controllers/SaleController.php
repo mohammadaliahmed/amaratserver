@@ -155,6 +155,7 @@ class SaleController extends Controller
                         $selleditems->quantity = $value['quantity'];
                         $selleditems->tax_id = $tax_id;
                         $selleditems->tax = $value['tax'];
+                        $selleditems->status=0;
 
                         $selleditems->save();
                     }
