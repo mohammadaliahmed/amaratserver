@@ -11,6 +11,7 @@ use App\Models\Sites;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
 
@@ -134,6 +135,17 @@ class AppController extends Controller
 
             $selleditems->save();
         }
+
+        $subject = "Order Confirmation";
+        $customer=Customer::find($request->userId);
+
+        Mail::send('emails.testmail', compact('sale'), function ($message) use
+        (
+            $customer, $sale, $subject) {
+            $message->from('info@amaratmaterials.com', 'Amarat Materials');
+            $message->subject($subject);
+            $message->to($customer->email);
+        });
         return response()->json([
             'code' => Response::HTTP_OK, 'message' => "success"
         ], Response::HTTP_OK);
