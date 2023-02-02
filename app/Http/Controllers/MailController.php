@@ -22,7 +22,7 @@ class MailController extends Controller
         ($sale, $subject) {
             $message->from('info@amaratmaterials.com', 'Amarat Materials');
             $message->subject($subject);
-            $message->to('m.aliahmed000@gmail.com');
+            $message->to('mohammadaliahmed01@gmail.com');
         });
 
     }
