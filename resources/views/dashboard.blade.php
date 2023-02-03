@@ -555,7 +555,7 @@
 
                     if (response) {
 
-                        // location.reload();
+                        location.reload();
 
                         // $('[data-li-id="' + id + '"] .payment-action').removeClass('selected');
                         //
