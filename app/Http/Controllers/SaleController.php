@@ -549,4 +549,12 @@ class SaleController extends Controller
         return view('sales.orderdetails', compact('sale'));
     }
 
+    public function UpdateProductStatus(Request $request,$id){
+
+       $sellItem=SelledItems::find($id);
+       $sellItem->status=$request->status;
+       $sellItem->update();
+       return true;
+    }
+
 }

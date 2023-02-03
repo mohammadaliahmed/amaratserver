@@ -51,23 +51,32 @@
                         </a>
                     </td>
                     <td>
-                        <li class="nav-item dropdown display-payment" data-li-id=" $invoice->id">
+                        @php
+                            $statusClass="unpaid";
+                            $statusText="In-Bound";
+                             if($item->status=='1'){
+                                 $statusClass="partially-paid";
+                                 $statusText="Ready for delivery";
+
+                            }else if($item->status=='2'){
+                               $statusClass="paid";
+                               $statusText="Delivered";
+                            }
+                        @endphp
+                        <li class="nav-item dropdown display-payment" data-li-id="{{$sale->id}}">
                             <span data-bs-toggle="dropdown"
-                                  class="badge payment-label badge-lg p-2  ' . $payment_class . '">' . $payment_status . '</span>
+                                  class="badge payment-label badge-lg p-2  {{$statusClass}}">{{$statusText}}</span>
                             <div class="dropdown-menu dropdown-list payment-status dropdown-menu-right">
-                                <div class="dropdown-list-content payment-actions" data-id="' . $invoice->id . '"
-                                     data-url="' . route('update.payment.status', ['slug' => ($data['vendors'] == 1 ? 'purchase' : ($data['customers'] == 1 ? 'sale' : '')), 'id' => $invoice->id]) . '">
+                                <div class="dropdown-list-content payment-actions" data-id="{{$item->id}}"
+                                     data-url="{{route('update.product.status', ['id' => $item->id])}}">
                                     <a href="#" data-status="0" data-class="unpaid"
-                                       class="dropdown-item payment-action ' . ($invoice->status == 0 ? 'selected' : '') . '">'
-                                        . __('Unpaid') . '
+                                       class="dropdown-item payment-action ' . ($invoice->status == 0 ? 'selected' : '') . '">In-Bound
                                     </a>
                                     <a href="#" data-status="1" data-class="partially-paid"
-                                       class="dropdown-item payment-action ' . ($invoice->status == 1 ? 'selected' : '') . '">'
-                                        . __('Partially Paid') . '
+                                       class="dropdown-item payment-action ' . ($invoice->status == 1 ? 'selected' : '') . '">Ready for delivery
                                     </a>
                                     <a href="#" data-status="2" data-class="paid"
-                                       class="dropdown-item payment-action ' . ($invoice->status == 2 ? 'selected' : '') . '">'
-                                        . __('Paid') . '
+                                       class="dropdown-item payment-action ' . ($invoice->status == 2 ? 'selected' : '') . '">Delivered
                                     </a>
                                 </div>
                             </div>
@@ -102,7 +111,7 @@
                     status: status
                 },
                 success: function (response) {
-
+                    console.log(response)
                     if (response) {
 
                         location.reload();
