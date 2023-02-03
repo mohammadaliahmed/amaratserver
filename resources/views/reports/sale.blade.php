@@ -261,6 +261,7 @@
             }
 
             $(document).on('click', '.payment-action', function (e) {
+                console.log("here")
                 e.stopPropagation();
                 e.preventDefault();
 

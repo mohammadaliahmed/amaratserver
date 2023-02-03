@@ -535,6 +535,7 @@
         }
 
         $(document).on('click', '.payment-action', function (e) {
+
             e.stopPropagation();
             e.preventDefault();
 
@@ -553,7 +554,8 @@
                 success: function (response) {
 
                     if (response) {
-                        location.reload();
+
+                        // location.reload();
 
                         // $('[data-li-id="' + id + '"] .payment-action').removeClass('selected');
                         //

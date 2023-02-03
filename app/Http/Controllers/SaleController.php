@@ -155,7 +155,7 @@ class SaleController extends Controller
                         $selleditems->quantity = $value['quantity'];
                         $selleditems->tax_id = $tax_id;
                         $selleditems->tax = $value['tax'];
-                        $selleditems->status=0;
+                        $selleditems->status = 0;
 
                         $selleditems->save();
                     }
@@ -460,6 +460,7 @@ class SaleController extends Controller
             return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
+
     public function previewSelledInvoice($template, $color)
     {
         $settings = Utility::settings();
@@ -535,4 +536,17 @@ class SaleController extends Controller
             return view('sales.assign', compact('sale'));
         }
     }
+
+    public function OrderDetail(Request $request, $id)
+    {
+        $sale = Sale::find($id);
+
+        foreach ($sale->items as $item) {
+            $item->product = Product::find($item->product_id);
+            $item->product->assigned = VendorOrder::where('sale_id', $id)->where('product_id', $item->product_id)
+                ->first();
+        }
+        return view('sales.orderdetails', compact('sale'));
+    }
+
 }

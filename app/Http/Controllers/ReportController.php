@@ -374,7 +374,7 @@ class ReportController extends Controller
 
 
                     <div class="action-btn btn-warning ms-2">
-                    <a href="#" data-ajax-popup="true" data-title="' . __('Sale Invoice') . '" data-size="lg" data-url="' . route('show.sell.invoice', $invoice->id) . '" class="mx-3 btn btn-sm d-inline-flex align-items-center" data-bs-toggle="tooltip"  data-title="' . __('Show') . '" title="' . __('Show') . '"><i class="ti ti-eye text-white"></i></a>
+                    <a href="' . route('sale.orderDetail', $invoice->id) . '"><i class="ti ti-eye text-white"></i></a>
                     </div>
 
                     <div class="action-btn bdocs.newg-danger ms-2">

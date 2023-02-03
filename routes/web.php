@@ -107,6 +107,7 @@ Route::resource('quotations', 'QuotationController')->middleware(['auth', 'XSS']
 
 Route::get('invoice-filter', 'ReportController@invoiceFilter')->name('invoice.filter')->middleware(['auth', 'XSS']);
 Route::get('assign-order/{id}', 'SaleController@AssignOrder')->name('sale.assign')->middleware(['auth', 'XSS']);
+Route::get('orderDetail/{id}', 'SaleController@OrderDetail')->name('sale.orderDetail')->middleware(['auth', 'XSS']);
 Route::post('assign-order/{id}', 'SaleController@AssignOrder')->middleware(['auth', 'XSS']);
 
 

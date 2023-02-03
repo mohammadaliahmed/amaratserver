@@ -240,4 +240,14 @@ class AppController extends Controller
             'code' => Response::HTTP_OK, 'message' => "success",'categories'=>$categories
         ], Response::HTTP_OK);
     }
+
+
+    public function SearchProduct( Request  $request){
+        $products=Product::where('name', 'LIKE', '%'.$request->search.'%')
+            ->where('description', 'LIKE', '%'.$request->search.'%')
+            ->get();
+        return response()->json([
+            'code' => Response::HTTP_OK, 'message' => "success",'products'=>$products
+        ], Response::HTTP_OK);
+    }
 }
