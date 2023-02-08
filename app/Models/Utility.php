@@ -91,7 +91,7 @@ class Utility extends Model
             "s3_secret" => "",
             "s3_region" => "",
             "s3_bucket" => "",
-            "s3_url"    => "",
+            "s3_url" => "",
             "s3_endpoint" => "",
             "s3_max_upload_size" => "",
             "s3_storage_validation" => "",
@@ -114,8 +114,8 @@ class Utility extends Model
 
     public static function languages()
     {
-        $dir     = base_path() . '/resources/lang/';
-        $glob    = glob($dir . "*", GLOB_ONLYDIR);
+        $dir = base_path() . '/resources/lang/';
+        $glob = glob($dir . "*", GLOB_ONLYDIR);
         $arrLang = array_map(
             function ($value) use ($dir) {
                 return str_replace($dir, '', $value);
@@ -173,10 +173,11 @@ class Utility extends Model
         //return implode(",", $rgb); // returns the rgb values separated by commas
         return $rgb; // returns an array with the rgb values
     }
+
     public static function getFontColor($color_code)
     {
         $rgb = self::hex2rgb($color_code);
-        $R   = $G = $B = $C = $L = $color = '';
+        $R = $G = $B = $C = $L = $color = '';
         $R = (floor($rgb[0]));
         $G = (floor($rgb[1]));
         $B = (floor($rgb[2]));
@@ -225,12 +226,12 @@ class Utility extends Model
     public static function setEnvironmentValue(array $values)
     {
         $envFile = app()->environmentFilePath();
-        $str     = file_get_contents($envFile);
+        $str = file_get_contents($envFile);
         if (count($values) > 0) {
             foreach ($values as $envKey => $envValue) {
-                $keyPosition       = strpos($str, "{$envKey}=");
+                $keyPosition = strpos($str, "{$envKey}=");
                 $endOfLinePosition = strpos($str, "\n", $keyPosition);
-                $oldLine           = substr($str, $keyPosition, $endOfLinePosition - $keyPosition);
+                $oldLine = substr($str, $keyPosition, $endOfLinePosition - $keyPosition);
 
                 // If key does not exist, add it
                 if (!$keyPosition || !$endOfLinePosition || !$oldLine) {
@@ -254,7 +255,7 @@ class Utility extends Model
     public static function templateData()
     {
         $array = [];
-        $array['colors']    = [
+        $array['colors'] = [
             '003580',
             '666666',
             '5e72e4',
@@ -315,7 +316,6 @@ class Utility extends Model
     }
 
 
-
     public static function getselectedThemeColor()
     {
         $color = env('THEME_COLOR');
@@ -354,6 +354,7 @@ class Utility extends Model
             return 'logo-dark.png';
         }
     }
+
     public static function get_company_logo()
     {
 
@@ -378,21 +379,18 @@ class Utility extends Model
 
         $mailTo = array_values($mailTo);
 
-        if($usr->type != 'super admin')
-        {
+        if ($usr->type != 'super admin') {
 
             // find template is exist or not in our record
             $template = EmailTemplate::where('slug', $emailTemplate)->first();
             // dd($template,$emailTemplate);
 
-            if(isset($template) && !empty($template))
-            {
+            if (isset($template) && !empty($template)) {
 
                 // check template is active or not by company
                 $is_active = UserEmailTemplate::where('template_id', '=', $template->id)->where('user_id', '=', $usr->creatorId())->first();
                 //  dd($is_active);
-                if($is_active->is_active == 1)
-                {
+                if ($is_active->is_active == 1) {
 
                     $settings = self::settings();
 
@@ -401,8 +399,7 @@ class Utility extends Model
 
                     $content->from = $template->from;
 
-                    if(!empty($content->content))
-                    {
+                    if (!empty($content->content)) {
                         //    dd($content);
                         $content->content = self::replaceVariable($content->content, $obj);
 
@@ -421,23 +418,18 @@ class Utility extends Model
 //                            $error = __('E-Mail has been not sent due to SMTP configuration');
 //                        }
 
-                        if(isset($error))
-                        {
+                        if (isset($error)) {
                             $arReturn = [
                                 'is_success' => false,
                                 'error' => $error,
                             ];
-                        }
-                        else
-                        {
+                        } else {
                             $arReturn = [
                                 'is_success' => true,
                                 'error' => false,
                             ];
                         }
-                    }
-                    else
-                    {
+                    } else {
                         $arReturn = [
                             'is_success' => false,
                             'error' => __('Mail not send, email is empty'),
@@ -445,17 +437,13 @@ class Utility extends Model
                     }
 
                     return $arReturn;
-                }
-                else
-                {
+                } else {
                     return [
                         'is_success' => true,
                         'error' => false,
                     ];
                 }
-            }
-            else
-            {
+            } else {
                 return [
                     'is_success' => false,
                     'error' => __('Mail not send, email not found'),
@@ -463,6 +451,7 @@ class Utility extends Model
             }
         }
     }
+
     public static function defaultEmail()
     {
         // Email Template
@@ -1012,7 +1001,7 @@ class Utility extends Model
             '{email}',
             '{password}',
         ];
-        $arrValue    = [
+        $arrValue = [
             'user_name' => '-',
             'user_email' => '-',
             'user_password' => '-',
@@ -1041,31 +1030,30 @@ class Utility extends Model
             'password' => '-',
         ];
 
-        foreach($obj as $key => $val)
-        {
+        foreach ($obj as $key => $val) {
             $arrValue[$key] = $val;
         }
 
         $settings = Utility::settings();
         $company_name = $settings['company_name'];
 
-        $arrValue['app_name']     =  $company_name;
+        $arrValue['app_name'] = $company_name;
         $arrValue['company_name'] = self::settings()['company_name'];
-        $arrValue['app_url']      = '<a href="' . env('APP_URL') . '" target="_blank">' . env('APP_URL') . '</a>';
+        $arrValue['app_url'] = '<a href="' . env('APP_URL') . '" target="_blank">' . env('APP_URL') . '</a>';
 
         return str_replace($arrVariable, array_values($arrValue), $content);
     }
 
 
+    public static function upload_file($request, $key_name, $name, $path, $custom_validation = [])
+    {
 
-    public static function upload_file($request,$key_name,$name,$path,$custom_validation =[]){
 
-
-        try{
+        try {
             $settings = Utility::settings();
             // dd($settings);
-            if(!empty($settings['storage_setting'])){
-                if($settings['storage_setting'] == 'wasabi'){
+            if (!empty($settings['storage_setting'])) {
+                if ($settings['storage_setting'] == 'wasabi') {
 
                     config(
                         [
@@ -1073,14 +1061,14 @@ class Utility extends Model
                             'filesystems.disks.wasabi.secret' => $settings['wasabi_secret'],
                             'filesystems.disks.wasabi.region' => $settings['wasabi_region'],
                             'filesystems.disks.wasabi.bucket' => $settings['wasabi_bucket'],
-                            'filesystems.disks.wasabi.endpoint' => 'https://s3.'.$settings['wasabi_region'].'.wasabisys.com'
+                            'filesystems.disks.wasabi.endpoint' => 'https://s3.' . $settings['wasabi_region'] . '.wasabisys.com'
                         ]
                     );
 
-                    $max_size = !empty($settings['wasabi_max_upload_size'])? $settings['wasabi_max_upload_size']:'2048';
-                    $mimes =  !empty($settings['wasabi_storage_validation'])? $settings['wasabi_storage_validation']:'';
+                    $max_size = !empty($settings['wasabi_max_upload_size']) ? $settings['wasabi_max_upload_size'] : '2048';
+                    $mimes = !empty($settings['wasabi_storage_validation']) ? $settings['wasabi_storage_validation'] : '';
 
-                }else if($settings['storage_setting'] == 's3'){
+                } else if ($settings['storage_setting'] == 's3') {
                     config(
                         [
                             'filesystems.disks.s3.key' => $settings['s3_key'],
@@ -1090,34 +1078,34 @@ class Utility extends Model
                             'filesystems.disks.s3.use_path_style_endpoint' => false,
                         ]
                     );
-                    $max_size = !empty($settings['s3_max_upload_size'])? $settings['s3_max_upload_size']:'2048';
-                    $mimes =  !empty($settings['s3_storage_validation'])? $settings['s3_storage_validation']:'';
+                    $max_size = !empty($settings['s3_max_upload_size']) ? $settings['s3_max_upload_size'] : '2048';
+                    $mimes = !empty($settings['s3_storage_validation']) ? $settings['s3_storage_validation'] : '';
 
-                }else{
-                    $max_size = !empty($settings['local_storage_max_upload_size'])? $settings['local_storage_max_upload_size']:'2048';
+                } else {
+                    $max_size = !empty($settings['local_storage_max_upload_size']) ? $settings['local_storage_max_upload_size'] : '2048';
 
-                    $mimes =  !empty($settings['local_storage_validation'])? $settings['local_storage_validation']:'';
+                    $mimes = !empty($settings['local_storage_validation']) ? $settings['local_storage_validation'] : '';
                 }
 
 
                 $file = $request->$key_name;
 
 
-                if(count($custom_validation) > 0){
-                    $validation =$custom_validation;
-                }else{
+                if (count($custom_validation) > 0) {
+                    $validation = $custom_validation;
+                } else {
 
-                    $validation =[
-                        'mimes:'.$mimes,
-                        'max:'.$max_size,
+                    $validation = [
+                        'mimes:' . $mimes,
+                        'max:' . $max_size,
                     ];
 
                 }
                 $validator = \Validator::make($request->all(), [
-                    $key_name =>$validation
+                    $key_name => $validation
                 ]);
 
-                if($validator->fails()){
+                if ($validator->fails()) {
                     $res = [
                         'flag' => 0,
                         'msg' => $validator->messages()->first(),
@@ -1127,21 +1115,21 @@ class Utility extends Model
 
                     $name = $name;
 
-                    if($settings['storage_setting']=='local'){
+                    if ($settings['storage_setting'] == 'local') {
 
 //                        \Storage::disk()->putFileAs(
 //                            $path,
 //                            $request->file($key_name),
 //                            $name
 //                        );
-                        $nam= substr(str_shuffle(str_repeat($x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(15 / strlen($x)))), 1, 15);
-                        $imageName =$nam . ".jpg";
+                        $nam = substr(str_shuffle(str_repeat($x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(15 / strlen($x)))), 1, 15);
+                        $imageName = $nam . ".jpg";
                         $uploadPath = 'productimages/';
                         $imageUrl = $uploadPath . $imageName;
-                        $file->move('storage/'.$uploadPath, $imageName);
+                        $file->move('storage/' . $uploadPath, $imageName);
 
                         $path = $imageUrl;
-                    }else if($settings['storage_setting'] == 'wasabi'){
+                    } else if ($settings['storage_setting'] == 'wasabi') {
 
                         $path = \Storage::disk('wasabi')->putFileAs(
                             $path,
@@ -1151,7 +1139,7 @@ class Utility extends Model
 
                         // $path = $path.$name;
 
-                    }else if($settings['storage_setting'] == 's3'){
+                    } else if ($settings['storage_setting'] == 's3') {
 
                         $path = \Storage::disk('s3')->putFileAs(
                             $path,
@@ -1165,13 +1153,13 @@ class Utility extends Model
 
                     $res = [
                         'flag' => 1,
-                        'msg'  =>'success',
-                        'url'  => $path
+                        'msg' => 'success',
+                        'url' => $path
                     ];
                     return $res;
                 }
 
-            }else{
+            } else {
                 $res = [
                     'flag' => 0,
                     'msg' => __('Please set proper configuration for storage.'),
@@ -1179,7 +1167,7 @@ class Utility extends Model
                 return $res;
             }
 
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             $res = [
                 'flag' => 0,
                 'msg' => $e->getMessage(),
@@ -1190,21 +1178,22 @@ class Utility extends Model
     }
 
 
-    public static function get_file($path){
+    public static function get_file($path)
+    {
         $settings = Utility::settings();
 
         try {
-            if($settings['storage_setting'] == 'wasabi'){
+            if ($settings['storage_setting'] == 'wasabi') {
                 config(
                     [
                         'filesystems.disks.wasabi.key' => $settings['wasabi_key'],
                         'filesystems.disks.wasabi.secret' => $settings['wasabi_secret'],
                         'filesystems.disks.wasabi.region' => $settings['wasabi_region'],
                         'filesystems.disks.wasabi.bucket' => $settings['wasabi_bucket'],
-                        'filesystems.disks.wasabi.endpoint' => 'https://s3.'.$settings['wasabi_region'].'.wasabisys.com'
+                        'filesystems.disks.wasabi.endpoint' => 'https://s3.' . $settings['wasabi_region'] . '.wasabisys.com'
                     ]
                 );
-            }elseif($settings['storage_setting'] == 's3'){
+            } elseif ($settings['storage_setting'] == 's3') {
                 config(
                     [
                         'filesystems.disks.s3.key' => $settings['s3_key'],
@@ -1222,8 +1211,17 @@ class Utility extends Model
         }
     }
 
+    public static function RandomString($length = 10)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
+        return $randomString;
 
-
+    }
 
 
 }

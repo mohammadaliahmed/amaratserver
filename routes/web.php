@@ -276,6 +276,10 @@ Route::post('user-reset-password/{id}', 'UserController@userPasswordReset')->nam
 // copy link for purchase/sale
 Route::get('/purchase/invoice/{id}/', 'ReportController@purchaseLink')->name('purchase.link.copy');
 Route::get('/sale/invoice/{id}/', 'ReportController@saleLink')->name('sale.link.copy');
+Route::get('/reset/{id}/', 'AppController@ResetPassword');
+Route::post('/reset/{id}/', 'AppController@ResetPassword');
+
+
 
 
 // Email Templates
