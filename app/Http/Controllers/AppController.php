@@ -297,7 +297,7 @@ class AppController extends Controller
         $customer = Customer::where('reset_token', $id)->first();
         if ($request->isMethod('post')) {
             $customer->reset_token="";
-            $customer->password=$request->password;
+            $customer->password=md5($request->password);
             $customer->update();
             $msg="Please go back to app and use new password to login";
             return view('customers.noUserResetPassword',compact('msg'));
