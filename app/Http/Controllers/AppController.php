@@ -267,12 +267,13 @@ class AppController extends Controller
         $email=$request->email;
 //        $email = "m.aliahmed0@gmail.com";
         $customer = Customer::where('email', $email)->first();
-        $randomId = Utility::RandomString(100);
-        $customer->reset_token = $randomId;
-        $customer->update();
+
 
 //        return view('emails.forgotpassword', compact('customer'));
-        if(isset($customer) && sizeof($customer)>0){
+        if(isset($customer)){
+            $randomId = Utility::RandomString(100);
+            $customer->reset_token = $randomId;
+            $customer->update();
             $subject = "Reset Password";
 
             Mail::send('emails.forgotpassword', compact('customer'), function ($message) use
@@ -281,9 +282,12 @@ class AppController extends Controller
                 $message->subject($subject);
                 $message->to($customer->email);
             });
+            return response()->json([
+                'code' => Response::HTTP_OK, 'message' => "Email sent. Please check mail box"
+            ], Response::HTTP_OK);
         }else{
             return response()->json([
-                'code' => Response::HTTP_NOT_FOUND, 'message' => "not found"
+                'code' => Response::HTTP_NOT_FOUND, 'message' => "No customer found with email"
             ], Response::HTTP_NOT_FOUND);
         }
     }
