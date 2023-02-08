@@ -34,4 +34,4 @@ Route::get('getCustomer/{id}', [\App\Http\Controllers\AppController::class,'GetC
 Route::get('category/{id}', [\App\Http\Controllers\AppController::class,'CategoryProducts']);
 Route::get('categories/', [\App\Http\Controllers\AppController::class,'Categories']);
 Route::post('searchProduct/', [\App\Http\Controllers\AppController::class,'SearchProduct']);
-Route::get('forgotPassword/', [\App\Http\Controllers\AppController::class,'ForgotPassword']);
+Route::post('forgotPassword/', [\App\Http\Controllers\AppController::class,'ForgotPassword']);
