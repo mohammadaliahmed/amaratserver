@@ -33,7 +33,7 @@ class AppController extends Controller
         $customer = Customer::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => md5($request->password),
+            'password' => $request->password.'z1x2c3',
             'phone_number' => $request->phone_number,
             'address' => $request->address,
             'city' => $request->city,
@@ -68,7 +68,7 @@ class AppController extends Controller
                 ], Response::HTTP_FORBIDDEN);
             } else {
                 $customer = Customer::where('email', $request->email)
-                    ->where('password', md5($request->password))->first();
+                    ->where('password', $request->password.'z1x2c3')->first();
                 if (!isset($customer)) {
                     return response()->json([
                         'code' => Response::HTTP_FORBIDDEN, 'message' => "Wrong password"
@@ -297,7 +297,7 @@ class AppController extends Controller
         $customer = Customer::where('reset_token', $id)->first();
         if ($request->isMethod('post')) {
             $customer->reset_token="";
-            $customer->password=md5($request->password);
+            $customer->password=$request->password.'z1x2c3';
             $customer->update();
             $msg="Please go back to app and use new password to login";
             return view('customers.noUserResetPassword',compact('msg'));
