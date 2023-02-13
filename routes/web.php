@@ -257,7 +257,7 @@ Route::get('export/vender', 'VendorController@export')->name('vendors.export');
 Route::get('import/vender/file', 'VendorController@importFile')->name('vendors.file.import');
 Route::post('import/vender', 'VendorController@import')->name('vendors.import');
 Route::get('vendors-assigned-orders', 'VendorController@AssignedOrders')->name('vendors.orders');
-Route::get('vendor-assigned-orders/{id}', 'VendorController@AssignedOrders')->name('vendor.orders.view');
+Route::get('vendor-assigned-orders/{id}', 'VendorController@ViewAssignedOrder')->name('vendor.orders.view');
 
 Route::get('export/Quotation', 'QuotationController@export')->name('Quotation.export');
 Route::get('export/ProductsReturn', 'ProductsReturnController@export')->name('productsreturns.export');

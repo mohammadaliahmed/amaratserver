@@ -228,54 +228,54 @@
                     });
             }
 
-            // $(function() {
-            //     function cb(start, end) {
-            //         $("#customer-analysis-duration").val(start.format('MMM D, YYYY') + ' - ' + end.format(
-            //             'MMM D, YYYY'));
-            //         $('input[name="start_date1"]').val(start.format('YYYY-MM-DD'));
-            //         $('input[name="due_date1"]').val(end.format('YYYY-MM-DD'));
-            //         ajax_product_customer_analysis_filter();
-            //     }
+            $(function() {
+                function cb(start, end) {
+                    $("#customer-analysis-duration").val(start.format('MMM D, YYYY') + ' - ' + end.format(
+                        'MMM D, YYYY'));
+                    $('input[name="start_date1"]').val(start.format('YYYY-MM-DD'));
+                    $('input[name="due_date1"]').val(end.format('YYYY-MM-DD'));
+                    ajax_product_customer_analysis_filter();
+                }
 
-            //     $('#customer-analysis-duration').daterangepicker({
-            //         // timePicker: true,
-            //         autoApply: true,
-            //         autoclose: true,
-            //         autoUpdateInput: false,
-            //         // startDate: start,
-            //         // endDate: end,
-            //         locale: {
-            //             format: 'MMM D, YY hh:mm A',
-            //             applyLabel: "Apply",
-            //             cancelLabel: "Cancel",
-            //             fromLabel: "From",
-            //             toLabel: "To",
-            //             daysOfWeek: [
-            //                 '{{ __('Sun') }}',
-            //                 '{{ __('Mon') }}',
-            //                 '{{ __('Tue') }}',
-            //                 '{{ __('Wed') }}',
-            //                 '{{ __('Thu') }}',
-            //                 '{{ __('Fri') }}',
-            //                 '{{ __('Sat') }}',
-            //             ],
-            //             monthNames: [
-            //                 '{{ __('January') }}',
-            //                 '{{ __('February') }}',
-            //                 '{{ __('March') }}',
-            //                 '{{ __('April') }}',
-            //                 '{{ __('May') }}',
-            //                 '{{ __('June') }}',
-            //                 '{{ __('July') }}',
-            //                 '{{ __('August') }}',
-            //                 '{{ __('September') }}',
-            //                 '{{ __('October') }}',
-            //                 '{{ __('November') }}',
-            //                 '{{ __('December') }}'
-            //             ],
-            //         }
-            //     }, cb);
-            // });
+                $('#customer-analysis-duration').daterangepicker({
+                    timePicker: true,
+                    autoApply: true,
+                    autoclose: true,
+                    autoUpdateInput: false,
+                    startDate: start,
+                    endDate: end,
+                    locale: {
+                        format: 'MMM D, YY hh:mm A',
+                        applyLabel: "Apply",
+                        cancelLabel: "Cancel",
+                        fromLabel: "From",
+                        toLabel: "To",
+                        daysOfWeek: [
+                            '{{ __('Sun') }}',
+                            '{{ __('Mon') }}',
+                            '{{ __('Tue') }}',
+                            '{{ __('Wed') }}',
+                            '{{ __('Thu') }}',
+                            '{{ __('Fri') }}',
+                            '{{ __('Sat') }}',
+                        ],
+                        monthNames: [
+                            '{{ __('January') }}',
+                            '{{ __('February') }}',
+                            '{{ __('March') }}',
+                            '{{ __('April') }}',
+                            '{{ __('May') }}',
+                            '{{ __('June') }}',
+                            '{{ __('July') }}',
+                            '{{ __('August') }}',
+                            '{{ __('September') }}',
+                            '{{ __('October') }}',
+                            '{{ __('November') }}',
+                            '{{ __('December') }}'
+                        ],
+                    }
+                }, cb);
+            });
 
 
             $(document).ready(function() {

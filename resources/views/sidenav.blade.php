@@ -370,6 +370,10 @@
                                                             <a class="dash-link"
                                                                 href="{{ route('customer.sales.analysis') }}">{{ __('Customer Report') }}</a>
                                                         </li>
+                                                        <li class="">
+                                                            <a class="dash-link"
+                                                                href="{{ route('reports.sales') }}">{{ __('Sale Report') }}</a>
+                                                        </li>
                                                     @endcan
 
 {{--                                                    @can('Manage Vendor')--}}
