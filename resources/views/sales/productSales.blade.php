@@ -97,7 +97,11 @@
 
                     <td><img src="{{url('/').$item->product->image}}" width="100" height="100"/></td>
                     <td>{{$item->product->name}}</td>
-                    <td>{{$item->product->unit_value.' '.$item->product->unit->shortname}}</td>
+
+                    <td>@isset($item->product->unit)
+                            {{$item->product->unit_value.' '.$item->product->unit->shortname}}
+                        @endisset
+                    </td>
                     <td>{{$item->total_quantity}}</td>
                     <td>Rs {{$item->price}}</td>
                     <td>Rs {{$item->total_quantity*$item->price}}</td>
