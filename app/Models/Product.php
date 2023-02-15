@@ -130,16 +130,10 @@ class Product extends Model
 
         return $totalquantity;
     }
-    public static function unit($unit)
+    public  function unit()
     {
-        $categoryArr  = explode(',', $unit);
-        $unitRate = 0;
-        foreach ($categoryArr as $unit) {
-            $unit    = Unit::find($unit);
-            $unitRate        =  isset($unit) ? $unit->name : '';
-        }
+        return $this->hasOne('App\Models\Unit', 'id', 'unit_id');
 
-        return $unitRate;
     }
 
     public static function Category($category)

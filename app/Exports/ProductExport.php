@@ -17,9 +17,9 @@ class ProductExport implements FromCollection, WithHeadings
         $data = Product::get();
 
         foreach ($data as $k => $Product) {
-            
+
             $taxe  = Product::Taxe($Product->tax_id);
-            $unit  = Product::unit($Product->unit_id);
+            $unit  = "";
             $category  = Product::Category($Product->category_id);
             $brand  = Product::Brand($Product->brand_id);
 

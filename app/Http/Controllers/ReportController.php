@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CustomerOrdersTimeline;
+use App\Models\SelledItems;
 use App\Models\Sites;
 use App\Models\VendorOrder;
 use App\Models\VendorOrdersTimeline;
@@ -25,6 +26,7 @@ use App\Models\Tax;
 use App\Models\Expense;
 use App\Models\ExpenseCategory;
 use \Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -169,6 +171,8 @@ class ReportController extends Controller
         }
     }
 
+
+
     public function reportsSales()
     {
         if (Auth::user()->can('Manage Sales')) {
@@ -191,6 +195,27 @@ class ReportController extends Controller
             return view('reports.sale', compact('customers', 'users', 'start_date', 'end_date'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
+        }
+    }
+    public function productSales()
+    {
+        if (Auth::user()->can('Manage Sales')) {
+            $products=Product::all()->pluck('name', 'id');
+            $products->prepend(__('All'), '');
+
+            $soldItems=SelledItems::select('product_id','price', DB::raw('SUM(quantity) AS total_quantity'))
+                ->groupBy('product_id')
+                ->get();
+            $first_day_of_current_month = Carbon::now()->startOfMonth()->subMonth(0)->toDateString();
+            $first_day_of_next_month = Carbon::now()->startOfMonth()->subMonth(-1)->toDateString();
+
+            $start_date = $first_day_of_current_month;
+            $end_date = $first_day_of_next_month;
+
+            return view('sales.productSales', compact('products','soldItems', 'start_date', 'end_date'));
+        } else {
+            return redirect()->back()->with('error', __('Permission denied.'));
+
         }
     }
 
@@ -242,11 +267,10 @@ class ReportController extends Controller
             if (isset($sell->site) && isset($sell->site->latitude)) {
 
 
-                $googleMapUrl = "https://www.google.com/maps/search/?api=1&query=" . $sell->site->latitude . "," . $sell->site->longitude ;
+                $googleMapUrl = "https://www.google.com/maps/search/?api=1&query=" . $sell->site->latitude . "," . $sell->site->longitude;
 
-            }
-            else{
-                $googleMapUrl="";
+            } else {
+                $googleMapUrl = "";
             }
 
             return view('sales.show', compact('sales', 'details', 'sell', 'googleMapUrl'));
@@ -735,8 +759,8 @@ class ReportController extends Controller
 
 //        if (Auth::user()->isOwner()) {
 
-            $cash_registers = ['-1' => __('All')];
-            $branches = $cash_registers + Branch::where('created_by', Auth::user()->getCreatedBy())->pluck('name', 'id')->toArray();
+        $cash_registers = ['-1' => __('All')];
+        $branches = $cash_registers + Branch::where('created_by', Auth::user()->getCreatedBy())->pluck('name', 'id')->toArray();
 //        }
 //        else if (Auth::user()->isUser()) {
 //
