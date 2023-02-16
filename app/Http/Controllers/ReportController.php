@@ -172,7 +172,6 @@ class ReportController extends Controller
     }
 
 
-
     public function reportsSales()
     {
         if (Auth::user()->can('Manage Sales')) {
@@ -197,22 +196,115 @@ class ReportController extends Controller
             return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
-    public function productSales()
+
+    public function productSales(Request $request)
     {
         if (Auth::user()->can('Manage Sales')) {
-            $products=Product::all()->pluck('name', 'id');
-            $products->prepend(__('All'), '');
+            if ($request->isMethod('post')) {
+                $products = Product::all()->pluck('name', 'id');
+                $products->prepend(__('All'), '');
 
-            $soldItems=SelledItems::select('product_id','price', DB::raw('SUM(quantity) AS total_quantity'))
-                ->groupBy('product_id')
-                ->get();
-            $first_day_of_current_month = Carbon::now()->startOfMonth()->subMonth(0)->toDateString();
-            $first_day_of_next_month = Carbon::now()->startOfMonth()->subMonth(-1)->toDateString();
+//                dd($request->all());
+                $start_date = Carbon::now()->startOfMonth()->toDateString();
+                $end_date = Carbon::now()->endOfMonth()->toDateString();
+                $soldItems = SelledItems::select('product_id', 'price',
+                    DB::raw('SUM(quantity) AS total_quantity'));
 
-            $start_date = $first_day_of_current_month;
-            $end_date = $first_day_of_next_month;
+                if ($request->date != "") {
+                    $start_date= explode (" to ", $request->date)[0];
+                    $end_date= explode (" to ", $request->date)[1];
+                    $soldItems=$soldItems->where('created_at', '>=', $start_date)
+                        ->where('created_at', '<=', $end_date);
+                }
+                if ($request->productId != "") {
+                    $soldItems=$soldItems->where('product_id', $request->productId);
 
-            return view('sales.productSales', compact('products','soldItems', 'start_date', 'end_date'));
+                }
+
+                $soldItems=$soldItems->groupBy('product_id')
+                    ->get();
+                return view('reports.productSales', compact('products', 'soldItems',
+                    'start_date', 'end_date'));
+
+
+            } else {
+                $products = Product::all()->pluck('name', 'id');
+                $products->prepend(__('All'), '');
+
+
+                $first_day_of_current_month = Carbon::now()->startOfMonth()->toDateString();
+                $endOfMonth = Carbon::now()->endOfMonth()->toDateString();
+
+                $soldItems = SelledItems::select('product_id', 'price', DB::raw('SUM(quantity) AS total_quantity'))
+                    ->where('created_at', '>=', $first_day_of_current_month)
+                    ->where('created_at', '<=', $endOfMonth)
+                    ->groupBy('product_id')
+                    ->get();
+
+                $start_date = $first_day_of_current_month;
+                $end_date = $endOfMonth;
+
+                return view('reports.productSales', compact('products', 'soldItems', 'start_date', 'end_date'));
+
+            }
+        } else {
+            return redirect()->back()->with('error', __('Permission denied.'));
+
+        }
+    }
+
+    public function vendorReport(Request $request)
+    {
+        if (Auth::user()->can('Manage Sales')) {
+            if ($request->isMethod('post')) {
+                $vendors = Vendor::all()->pluck('name', 'id');
+                $vendors->prepend(__('All'), '');
+
+//                dd($request->all());
+                $start_date = Carbon::now()->startOfMonth()->toDateString();
+                $end_date = Carbon::now()->endOfMonth()->toDateString();
+                $vendorOrders = VendorOrder::select('vendor_id',
+                    DB::raw('SUM(quantity) AS total_quantity'));
+
+                if ($request->date != "") {
+                    $start_date= explode (" to ", $request->date)[0];
+                    $end_date= explode (" to ", $request->date)[1];
+                    $vendorOrders=$vendorOrders->where('created_at', '>=', $start_date)
+                        ->where('created_at', '<=', $end_date);
+                }
+                if ($request->vendorId != "") {
+                    $vendorOrders=$vendorOrders->where('vendor_id', $request->vendorId);
+                }
+
+                $vendorOrders=$vendorOrders->groupBy('vendor_id')
+                    ->get();
+
+                return view('reports.vendorReport', compact('vendors',
+                    'vendorOrders', 'start_date', 'end_date'));
+
+
+            } else {
+                $vendors = Vendor::all()->pluck('name', 'id');
+                $vendors->prepend(__('All'), '');
+
+
+                $start_date = Carbon::now()->startOfMonth()->toDateString();
+                $end_date = Carbon::now()->endOfMonth()->toDateString();
+
+                $vendorOrders = VendorOrder::select('vendor_id',
+                    DB::raw('SUM(quantity) AS total_quantity'))
+                    ->where('created_at', '>=', $start_date)
+                    ->where('created_at', '<=', $end_date)
+                    ->groupBy('vendor_id')
+                    ->get();
+
+
+
+
+                return view('reports.vendorReport', compact('vendors',
+                    'vendorOrders', 'start_date', 'end_date'));
+
+            }
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
 

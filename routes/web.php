@@ -120,6 +120,9 @@ Route::get('show-sell-invoice/{id}', 'ReportController@showSellInvoice')->name('
 Route::get('sale-invoice/{id}/edit', 'ReportController@editSaleInvoice')->name('edit.sale.invoice')->middleware(['auth', 'XSS']);
 Route::get('reports/sales', 'ReportController@reportsSales')->name('reports.sales')->middleware(['auth', 'XSS']);
 Route::get('reports/product', 'ReportController@productSales')->name('reports.product')->middleware(['auth', 'XSS']);
+Route::post('reports/product', 'ReportController@productSales')->name('reports.product')->middleware(['auth', 'XSS']);
+Route::get('reports/vendor', 'ReportController@vendorReport')->name('reports.vendor')->middleware(['auth', 'XSS']);
+Route::post('reports/vendor', 'ReportController@vendorReport')->name('reports.vendor')->middleware(['auth', 'XSS']);
 
 
 Route::get('product-stock-analysis', 'ReportController@productStockAnalysisView')->name('product.stock.analysis')->middleware(['auth', 'XSS']);
