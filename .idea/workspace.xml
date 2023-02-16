@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c010f89-02af-402d-986d-2779b509d98a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReportController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/sales/productSales.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/reports/productSales.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/sidenav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/sidenav.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
-    </list>
+    <list default="true" id="8c010f89-02af-402d-986d-2779b509d98a" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -230,7 +223,7 @@
       <workItem from="1675834023663" duration="5577000" />
       <workItem from="1676024050379" duration="3899000" />
       <workItem from="1676268354333" duration="722000" />
-      <workItem from="1676273077922" duration="19230000" />
+      <workItem from="1676273077922" duration="19967000" />
     </task>
     <servers />
   </component>

@@ -99,7 +99,7 @@
                 <tr>
                     <th scope="row">{{$key + 1}}</th>
 
-                    <td><img src="{{url('/').$item->product->image}}" width="100" height="100"/>
+                    <td><img src="{{url('/').'storage/'.$item->product->image}}" width="100" height="100"/>
                     </td>
                     <td>{{$item->product->name}}</td>
 
