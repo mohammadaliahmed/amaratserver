@@ -20,6 +20,7 @@ require __DIR__ . '/auth.php';
 
 
 Route::get('/', 'HomeController@index')->name('home')->middleware(['XSS']);
+Route::get('/privacy', 'HomeController@privacy');
 
 Route::get('/change/mode', ['as' => 'change.mode', 'uses' => 'HomeController@changeMode']);
 
