@@ -16,7 +16,7 @@ class AlterTableProductsAddUrdu extends Migration
         Schema::table('products', function (Blueprint $table) {
             //
             $table->string('urdu_title')->nullable();
-            $table->string('urdu_description')->nullable();
+            $table->text('urdu_description')->nullable();
         });
     }
 
