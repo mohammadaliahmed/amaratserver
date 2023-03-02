@@ -11,6 +11,8 @@ class Brand extends Model
         'name',
         'slug',
         'created_by',
+        'urdu'
+
     ];
 
     public static function getProductBrandAnalysis(array $data)

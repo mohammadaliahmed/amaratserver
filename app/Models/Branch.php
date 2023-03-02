@@ -12,5 +12,6 @@ class Branch extends Model
         'branch_manager',
         'tax',
         'created_by',
+        'urdu'
     ];
 }

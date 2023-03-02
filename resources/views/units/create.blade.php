@@ -6,6 +6,10 @@
 </div>
 
 <div class="form-group">
+    {{ Form::label('urdu', __('Urdu'), ['class' => 'col-form-label']) }}
+    {{ Form::text('urdu', null, ['class' => 'form-control', 'placeholder' => __('Enter Unit in Urdu')]) }}
+</div>
+    <div class="form-group">
     {{ Form::label('shortname', __('Short Name'), ['class' => 'col-form-label']) }}
     {{ Form::text('shortname', null, ['class' => 'form-control', 'placeholder' => __('Enter Unit Short Name')]) }}
 </div>

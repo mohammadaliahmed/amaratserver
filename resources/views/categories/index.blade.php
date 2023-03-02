@@ -34,8 +34,10 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>{{ __('Category Name') }}</th>
                                         <th>{{ __('Category Image') }}</th>
+                                        <th>{{ __('Category Name') }}</th>
+                                        <th>{{ __('Category In Urdu') }}</th>
+
                                         <th width="200px">{{ __('Action') }}</th>
                                     </tr>
                                 </thead>
@@ -45,6 +47,7 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td ><img class="bg-secondary p-1" src="{{ asset(Storage::url($category->image)) }}" width="100" height="100"></td>
                                             <td>{{ $category->name }}</td>
+                                            <td>{{ $category->urdu }}</td>
                                             <td class="Action">
                                                 @can('Edit Category')
                                                     <div class="action-btn btn-info ms-2">

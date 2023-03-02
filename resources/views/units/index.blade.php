@@ -37,6 +37,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>{{ __('Unit Name') }}</th>
+                                        <th>{{ __('Unit in Urdu') }}</th>
                                         <th>{{ __('Short Name') }}</th>
                                         <th width="200px">{{ __('Action') }}</th>
                                     </tr>
@@ -47,6 +48,7 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $unit->name }}</td>
+                                            <td>{{ $unit->urdu }}</td>
                                             <td>{{ $unit->shortname }}</td>
                                             <td class="Action">
                                                 @can('Edit Unit')

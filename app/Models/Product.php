@@ -26,6 +26,9 @@ class Product extends Model
         'moq',
         'unit_value',
         'created_by',
+        'urdu_title',
+        'urdu_description'
+
     ];
 
     public function taxes()

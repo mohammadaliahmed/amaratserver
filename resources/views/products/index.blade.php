@@ -42,6 +42,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th class="w-25">{{ __('Name') }}</th>
+                                        <th >{{ __('Urdu Title') }}</th>
                                         <th>{{ __('Price') }}</th>
                                         <th>{{ __('Brand') }}</th>
                                         <th>{{ __('Category') }}</th>
@@ -54,6 +55,7 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td><span class="break-all">{{ $product->name }}</span></td>
+                                            <td>{{ $product->urdu_title }}</td>
                                             <td>Rs {{ $product->sale_price }}</td>
                                             <td>{{ $product->brandname }}</td>
                                             <td>{{ $product->categoryname }}</td>

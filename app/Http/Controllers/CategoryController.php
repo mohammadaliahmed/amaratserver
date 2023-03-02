@@ -57,6 +57,7 @@ class CategoryController extends Controller
             }
 
             $category             = new Category();
+            $category->urdu       = $request->urdu;
             $category->name       = $request->name;
             $category->slug       = Str::slug($request->name, '-');
             $category->created_by = Auth::user()->getCreatedBy();
@@ -125,6 +126,7 @@ class CategoryController extends Controller
             {
                 return redirect()->back()->with('error', $validator->errors()->first());
             }
+            $category->urdu = $request->urdu;
             $category->name = $request->name;
             $category->slug = Str::slug($request->name, '-');
             $oldfilepath = $category->image;

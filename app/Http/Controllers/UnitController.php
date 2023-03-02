@@ -56,6 +56,7 @@ class UnitController extends Controller
             $unit             = new Unit();
             $unit->name       = $request->name;
             $unit->shortname  = $request->shortname;
+            $unit->urdu  = $request->urdu;
             $unit->created_by = Auth::user()->getCreatedBy();
             $unit->save();
 

@@ -12,6 +12,8 @@ class Category extends Model
         'slug',
         'created_by',
         'image',
+        'urdu'
+
     ];
 
     public static function getProductCategoryAnalysis(array $data)

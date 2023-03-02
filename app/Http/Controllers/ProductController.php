@@ -80,6 +80,8 @@ class ProductController extends Controller
 
             $product = new Product();
             $product->name = $request->name;
+            $product->urdu_title = $request->urdu_title;
+            $product->urdu_description = $request->urdu_description;
             $product->quantity = 9999;
             $product->purchase_price = (float)$request->purchase_price;
             $product->sale_price = (float)$request->sale_price;
@@ -193,7 +195,8 @@ class ProductController extends Controller
             if ($validator->fails()) {
                 return redirect()->back()->with('error', $validator->errors()->first());
             }
-
+            $product->urdu_title = $request->urdu_title;
+            $product->urdu_description = $request->urdu_description;
             $product->name = $request->name;
             $product->purchase_price = $request->purchase_price;
             $product->sale_price = $request->sale_price;

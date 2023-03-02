@@ -4,7 +4,10 @@
     <div class="form-group">
         {{ Form::label('name', __('Category Name'), ['class' => 'col-form-label']) }}
         {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => __('Enter new Category Name')]) }}
-
+        <div class="form-group">
+            {{ Form::label('urdu', __('Category in Urdu'), ['class' => 'col-form-label']) }}
+            {{ Form::text('urdu', null, ['class' => 'form-control', 'placeholder' => __('Enter Category in urdu')]) }}
+        </div>
         <div class="mb-4 col-md-6">
             <div class="choose-files mt-3">
                 <label for="image">
