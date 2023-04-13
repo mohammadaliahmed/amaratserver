@@ -18,7 +18,10 @@ class Sale extends Model
         'site_id'
     ];
 
-
+    public function customerOrdersTimeline()
+    {
+        return $this->hasMany('App\Models\CustomerOrdersTimeline', 'sale_id', 'id');
+    }
     public function site(){
         return $this->hasOne('App\Models\Sites', 'id', 'site_id');
 

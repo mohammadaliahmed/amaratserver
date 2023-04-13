@@ -33,7 +33,7 @@ class AppController extends Controller
         $customer = Customer::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password.'z1x2c3',
+            'password' => $request->password . 'z1x2c3',
             'phone_number' => $request->phone_number,
             'address' => $request->address,
             'city' => $request->city,
@@ -68,7 +68,7 @@ class AppController extends Controller
                 ], Response::HTTP_FORBIDDEN);
             } else {
                 $customer = Customer::where('email', $request->email)
-                    ->where('password', $request->password.'z1x2c3')->first();
+                    ->where('password', $request->password . 'z1x2c3')->first();
                 if (!isset($customer)) {
                     return response()->json([
                         'code' => Response::HTTP_FORBIDDEN, 'message' => "Wrong password"
@@ -158,7 +158,9 @@ class AppController extends Controller
 
     public function MyOrders($id)
     {
-        $sales = Sale::where('customer_id', $id)->orderBy('id', 'desc')->with('site')->with('items')->get();
+        $sales = Sale::where('customer_id', $id)->orderBy('id', 'desc')->with('site')->with('items')
+            ->with('customerOrdersTimeline')
+            ->get();
         return response()->json([
             'code' => Response::HTTP_OK, 'message' => "success", 'sales' => $sales
         ], Response::HTTP_OK);
@@ -166,7 +168,9 @@ class AppController extends Controller
 
     public function OrderItems($id)
     {
-        $sellItems = SelledItems::where('sell_id', $id)->with('product')->get();
+        $sellItems = SelledItems::where('sell_id', $id)->with('product')
+            ->with('customerOrderedProductTimeLine')
+            ->get();
         return response()->json([
             'code' => Response::HTTP_OK, 'message' => "success", 'sellItems' => $sellItems
         ], Response::HTTP_OK);
@@ -264,20 +268,19 @@ class AppController extends Controller
 
     public function ForgotPassword(Request $request)
     {
-        $email=$request->email;
+        $email = $request->email;
 //        $email = "m.aliahmed0@gmail.com";
         $customer = Customer::where('email', $email)->first();
 
 
 //        return view('emails.forgotpassword', compact('customer'));
-        if(isset($customer)){
+        if (isset($customer)) {
             $randomId = Utility::RandomString(100);
             $customer->reset_token = $randomId;
             $customer->update();
             $subject = "Reset Password";
 
-            Mail::send('emails.forgotpassword', compact('customer'), function ($message) use
-            ($customer, $subject) {
+            Mail::send('emails.forgotpassword', compact('customer'), function ($message) use ($customer, $subject) {
                 $message->from('info@amaratmaterials.com', 'Amarat Materials');
                 $message->subject($subject);
                 $message->to($customer->email);
@@ -285,7 +288,7 @@ class AppController extends Controller
             return response()->json([
                 'code' => Response::HTTP_OK, 'message' => "Email sent. Please check mail box"
             ], Response::HTTP_OK);
-        }else{
+        } else {
             return response()->json([
                 'code' => Response::HTTP_NOT_FOUND, 'message' => "No customer found with email"
             ], Response::HTTP_NOT_FOUND);
@@ -296,11 +299,11 @@ class AppController extends Controller
     {
         $customer = Customer::where('reset_token', $id)->first();
         if ($request->isMethod('post')) {
-            $customer->reset_token="";
-            $customer->password=$request->password.'z1x2c3';
+            $customer->reset_token = "";
+            $customer->password = $request->password . 'z1x2c3';
             $customer->update();
-            $msg="Please go back to app and use new password to login";
-            return view('customers.noUserResetPassword',compact('msg'));
+            $msg = "Please go back to app and use new password to login";
+            return view('customers.noUserResetPassword', compact('msg'));
 
 
         } else {
@@ -309,9 +312,9 @@ class AppController extends Controller
                 return view('customers.resetPassword', compact('customer'));
 
             } else {
-                $msg="Wrong or expired reset token";
+                $msg = "Wrong or expired reset token";
 
-                return view('customers.noUserResetPassword',compact('msg'));
+                return view('customers.noUserResetPassword', compact('msg'));
             }
         }
     }

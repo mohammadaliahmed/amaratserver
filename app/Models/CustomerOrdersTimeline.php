@@ -13,4 +13,6 @@ class CustomerOrdersTimeline extends Model
     protected $fillable=[
         'sale_id','order_status','updated_by'
     ];
+
+
 }

@@ -19,4 +19,8 @@ class SelledItems extends Model
     public function product(){
         return $this->hasOne('App\Models\Product', 'id', 'product_id');
     }
+    public function customerOrderedProductTimeLine()
+    {
+        return $this->hasMany('App\Models\CustomerOrderedProductTimeLine', 'selled_item_id', 'id');
+    }
 }

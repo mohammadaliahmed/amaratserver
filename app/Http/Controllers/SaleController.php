@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomerOrderedProductTimeLine;
+use App\Models\CustomerOrdersTimeline;
 use App\Models\Vendor;
 use App\Models\VendorOrder;
 use Illuminate\Http\Request;
@@ -131,6 +133,11 @@ class SaleController extends Controller
                     $sale->created_by = $user_id;
 
                     $sale->save();
+                    CustomerOrdersTimeline::create([
+                        'sale_id' => $sale->id,
+                        'order_status' => 0,
+                        'updated_by' =>  $user_id,
+                    ]);
 
                     foreach ($sales as $key => $value) {
                         $product_id = $value['id'];
@@ -158,6 +165,12 @@ class SaleController extends Controller
                         $selleditems->status = 0;
 
                         $selleditems->save();
+                        CustomerOrderedProductTimeLine::create([
+                            'selled_item_id' => $selleditems->id,
+                            'status' => 0,
+                            'product_id' => $product_id,
+                            'updated_by' => $user_id,
+                        ]);
                     }
 
                     session()->forget('sales');
@@ -554,6 +567,13 @@ class SaleController extends Controller
        $sellItem=SelledItems::find($id);
        $sellItem->status=$request->status;
        $sellItem->update();
+        $user = \Auth::user();
+        CustomerOrderedProductTimeLine::create([
+            'selled_item_id' => $sellItem->id,
+            'status' => $request->status,
+            'product_id' => $sellItem->product_id,
+            'updated_by' => $user->id,
+        ]);
        return true;
     }
 
