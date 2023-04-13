@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Customer;
+use App\Models\CustomerOrderedProductTimeLine;
+use App\Models\CustomerOrdersTimeline;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\SelledItems;
@@ -125,6 +127,11 @@ class AppController extends Controller
         $sale->created_by = 1;
         $sale->site_id = $request->site_id;
         $sale->save();
+        CustomerOrdersTimeline::create([
+            'sale_id' => $sale->id,
+            'order_status' => 0,
+            'updated_by' =>  1,
+        ]);
 //
         foreach ($request->items as $key => $value) {
             $product = Product::find($key);
@@ -138,6 +145,12 @@ class AppController extends Controller
             $selleditems->tax = 0;
 
             $selleditems->save();
+            CustomerOrderedProductTimeLine::create([
+                'selled_item_id' => $selleditems->id,
+                'status' => 0,
+                'product_id' => $product_id,
+                'updated_by' => 1,
+            ]);
         }
 
         $subject = "Order Confirmation";
