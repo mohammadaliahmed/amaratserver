@@ -15,6 +15,7 @@ use App\Models\Todo;
 use App\Models\Utility;
 use App\Models\Vendor;
 use App\Models\Calendar;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -100,6 +101,10 @@ class HomeController extends Controller
             $todos = Todo::where('created_by', '=', Auth::user()->id)->orderBy('id', 'DESC')->get();
 
             $saletarget = BranchSalesTarget::getBranchTargets(true);
+            $currentDate = Carbon::now()->format('Y-m-d');
+            $yesterdayDate = Carbon::yesterday()->format('Y-m-d');
+//            dd($yesterdayDate);
+
 
             $homes = [
                 'branches',
@@ -117,6 +122,8 @@ class HomeController extends Controller
                 'salesArray',
                 'totalSalesCount',
                 'monthlyOrders',
+                'currentDate',
+                'yesterdayDate'
 
             ];
 
