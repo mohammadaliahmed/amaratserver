@@ -534,7 +534,7 @@
                                                     {{ $detail }} <br>
                                                 @endforeach
                                                 <strong>Site</strong>
-                                                {{$sale->site}}
+                                                H# {{$sale->site->house}}, St# {{$sale->site->street}}, Sec# {{$sale->site->sector}}
                                             @else
                                                 <p> - </p>
                                             @endif
