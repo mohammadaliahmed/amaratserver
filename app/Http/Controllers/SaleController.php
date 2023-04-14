@@ -519,7 +519,7 @@ class SaleController extends Controller
         //Set your logo
         $logo = \App\Models\Utility::get_file('uploads/logo/');
         $company_logo = \App\Models\Utility::get_superadmin_logo();
-        $img = asset($logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png'));
+        $img = asset($logo . 'logo-black.png'));
 
         return view('sales.templates.' . $template, compact('sale', 'preview', 'color', 'font_color', 'settings', 'user', 'customerdetails', 'img'));
     }
@@ -537,12 +537,12 @@ class SaleController extends Controller
     {
         $sale = Sale::find($id);
         if ($request->isMethod('post')) {
-            $vendorOrder=new VendorOrder();
-            $vendorOrder->vendor_id=$request->vendorId;
-            $vendorOrder->quantity=$request->quantity;
-            $vendorOrder->product_id=$request->productId;
-            $vendorOrder->sale_id=$id;
-            $vendorOrder->status="assigned";
+            $vendorOrder = new VendorOrder();
+            $vendorOrder->vendor_id = $request->vendorId;
+            $vendorOrder->quantity = $request->quantity;
+            $vendorOrder->product_id = $request->productId;
+            $vendorOrder->sale_id = $id;
+            $vendorOrder->status = "assigned";
             $vendorOrder->save();
 
             $vendor_id = $request->vendorId;
