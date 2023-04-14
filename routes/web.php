@@ -188,6 +188,9 @@ Route::resource('notifications', 'NotificationController')->middleware(['auth'])
 Route::patch('changetodotatus/{id}', 'TodoController@changeTodoStatus')->name('todo.status')->middleware(['auth', 'XSS']);
 Route::resource('todos', 'TodoController')->middleware(['auth', 'XSS']);
 
+Route::get('locations/', 'LocationController@index')->name('locations')->middleware(['auth', 'XSS']);
+Route::get('locations/{id}', 'LocationController@index')->name('locations')->middleware(['auth', 'XSS']);
+Route::get('locations/{location_id}/{id}', 'LocationController@index')->name('locations')->middleware(['auth', 'XSS']);
 
 
 Route::get('mail/{id}',[\App\Http\Controllers\MailController::class,'sendMail']);
