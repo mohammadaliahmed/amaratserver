@@ -431,6 +431,7 @@ class SaleController extends Controller
             $sale->items = $items;
             $sale->subtotal = $user->priceFormat($total);
             $settings = Utility::settings($user->id);
+
             $settings['company_telephone'] = $settings['company_telephone'] != '' ? ", " . $settings['company_telephone'] : '';
             $settings['company_state'] = $settings['company_state'] != '' ? ", " . $settings['company_state'] : '';
             $userdetails = [
@@ -442,6 +443,7 @@ class SaleController extends Controller
                 $settings['company_zipcode'],
             ];
             $customer = $sale->customer;
+
             if ($customer != null) {
                 $customer->state = $customer->state != '' ? ", " . $customer->state : '';
                 $customerdetails = [
@@ -452,6 +454,7 @@ class SaleController extends Controller
                     $customer->country,
                     $customer->zipcode,
                 ];
+
             } else {
                 $customerdetails = [
                     __('Walk-in Vendor'),
@@ -466,9 +469,10 @@ class SaleController extends Controller
             //Set your logo
             $logo = \App\Models\Utility::get_file('uploads/logo/');
             $company_logo = \App\Models\Utility::get_superadmin_logo();
-            $img = asset($logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png'));
+            $img = asset($logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo_black.png'));
             $font_color = Utility::getFontColor($color);
-            return view('sales.templates.' . $settings['sale_invoice_template'], compact('sale', 'color', 'font_color', 'settings', 'user', 'userdetails', 'customerdetails', 'img'));
+            return view('sales.templates.' . $settings['sale_invoice_template'], compact('sale', 'color', 'font_color', 'settings', 'user',
+                'userdetails', 'customerdetails', 'img','sale'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }

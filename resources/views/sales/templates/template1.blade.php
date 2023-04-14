@@ -493,7 +493,7 @@
         .overflow-hidden {
             overflow: hidden;
         }
-        
+
     </style>
     @if(env('SITE_RTL')=='on')
         <link rel="stylesheet" href="{{ asset('css/bootstrap-rtl.css') }}">
@@ -523,10 +523,9 @@
                                             @if($settings['company_zipcode']) <br>{{$settings['company_zipcode']}}@endif
                                             <br> @if(!empty($settings['tax_type']) && !empty($settings['vat_number'])){{$settings['tax_type'].' '. __('Number')}} : {{$settings['vat_number']}} <br>@endif
                                         </p>
-                                        <p>{!! DNS2D::getBarcodeHTML(route('sale.link.copy',\Illuminate\Support\Facades\Crypt::encrypt($sale->id)),'QRCODE',2,2) !!}</p>
                                     </div>
-                                    
-                                    
+
+
                                     <div data-v-f2a183a6="" class="d-header-50 d-right">
                                         <div data-v-f2a183a6="" class="d-title">{{__('INVOICE')}}</div>
                                         <table data-v-f2a183a6="" class="summary-table">
@@ -547,7 +546,7 @@
                                                 <td>{{__('Status')}}:</td>
                                                 <td>{{ ($sale->status == 1) ? __('Partially Paid') : (($sale->status == 2) ? __('Paid') : __('Unpaid')) }}</td>
                                             </tr>
-                                            
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -654,8 +653,8 @@
         </div>
     </div>
 </div>
-@if(!isset($preview))
-    @include('sales.script');
-@endif
+{{--@if(!isset($preview))--}}
+{{--    @include('sales.script');--}}
+{{--@endif--}}
 </body>
 </html>

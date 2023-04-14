@@ -60,7 +60,6 @@
                     <h1 class="invoice-id h4">{{ $details['invoice_id'] }}</h1>
                     <div class="date mb-3">{{ __('Date of Invoice') }}: {{ $details['date'] }}</div>
                     {{-- <div class="date mb-3 float-right">{!! DNS2D::getBarcodeHTML($details['invoice_id'], 'QRCODE', 5, 5) !!}</div> --}}
-                    <div class="date mb-3 float-right">{!! DNS2D::getBarcodeHTML(route('sale.link.copy',\Illuminate\Support\Facades\Crypt::encrypt($sell->id)),'QRCODE',2,2) !!}</div>
 
                     <span class="clearfix" style="clear: both; display: block;"></span>
                 </div>
