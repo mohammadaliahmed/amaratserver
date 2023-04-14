@@ -493,7 +493,7 @@
             overflow: hidden;
         }
 
-</style>
+    </style>
     @if(env('SITE_RTL')=='on')
         <link rel="stylesheet" href="{{ asset('css/bootstrap-rtl.css') }}">
     @endif
@@ -506,35 +506,64 @@
             <div class="invoice-preview-inner">
                 <div class="editor-content">
                     <div class="preview-main client-preview">
-                        <div data-v-7d9d14b5="" class="d" style="width:750px;margin-left: 30px;margin-right: auto;" id="boxes">
-                            <div data-v-7d9d14b5="" class="d-inner" >
+                        <div data-v-7d9d14b5="" class="d" style="width:750px;margin-left: 30px;margin-right: auto;"
+                             id="boxes">
+                            <div data-v-7d9d14b5="" class="d-inner">
                                 <div data-v-7d9d14b5="" class="row">
-                                    <div data-v-7d9d14b5="" class="col-3"><h1 data-v-7d9d14b5="" class="fancy-title tu mb5" style="color: {{($color == '#ffffff') ? 'black': $color}};">{{__('INVOICE')}}</h1>
+                                    <div data-v-7d9d14b5="" class="col-3"><h1 data-v-7d9d14b5=""
+                                                                              class="fancy-title tu mb5"
+                                                                              style="color: {{($color == '#ffffff') ? 'black': $color}};">{{__('INVOICE')}}</h1>
                                         <h3 data-v-7d9d14b5="">{{$user->sellInvoiceNumberFormat($sale->invoice_id)}}</h3>
                                         <h3 data-v-7d9d14b5="">www.amaratmaterials.com</h3>
                                     </div>
-                                    <div data-v-7d9d14b5="" class="col-1"><img data-v-7d9d14b5="" class="d-logo" src="{{$img}}" style="max-width: 150px;"></div>
+                                    <div data-v-7d9d14b5="" class="col-1"><img data-v-7d9d14b5="" class="d-logo"
+                                                                               src="{{$img}}" style="max-width: 150px;">
+                                    </div>
                                 </div>
                                 <div data-v-7d9d14b5="" class="break-50"></div>
                                 <div data-v-7d9d14b5="" class="row">
                                     <div data-v-7d9d14b5="" class="col-33">
                                         <strong data-v-7d9d14b5="" class="mb5">{{__('From')}}:</strong>
 
-                                        <h3 data-v-7d9d14b5="" class="sub-title">@if($settings['company_name']){{$settings['company_name']}}@endif</h3>
-                                        <pre data-v-7d9d14b5="">@if($settings['company_address']){{$settings['company_address']}}@endif</pre>
-                                        <p data-v-7d9d14b5="">@if($settings['company_city']) {{$settings['company_city']}}, @endif @if($settings['company_state']){{$settings['company_state']}}@endif @if($settings['company_zipcode']) - {{$settings['company_zipcode']}}@endif</p>
-                                        <p data-v-7d9d14b5="">@if($settings['company_country']) {{$settings['company_country']}}@endif</p>
-                                        <p data-v-7d9d14b5="">@if($settings['company_zipcode']) {{$settings['company_zipcode']}}@endif</p>
-                                        <p data-v-e95a8a8c=""> @if(!empty($settings['tax_type']) && !empty($settings['vat_number'])){{$settings['tax_type'].' '. __('Number')}} : {{$settings['vat_number']}} <br>@endif </p>
+                                        <h3 data-v-7d9d14b5="" class="sub-title">@if($settings['company_name'])
+                                                {{$settings['company_name']}}
+                                            @endif</h3>
+                                        <pre data-v-7d9d14b5="">@if($settings['company_address'])
+                                                {{$settings['company_address']}}
+                                            @endif</pre>
+                                        <p data-v-7d9d14b5="">@if($settings['company_city'])
+                                                {{$settings['company_city']}},
+                                            @endif @if($settings['company_state'])
+                                                {{$settings['company_state']}}
+                                            @endif @if($settings['company_zipcode'])
+                                                - {{$settings['company_zipcode']}}
+                                            @endif</p>
+                                        <p data-v-7d9d14b5="">@if($settings['company_country'])
+                                                {{$settings['company_country']}}
+                                            @endif</p>
+                                        <p data-v-7d9d14b5="">@if($settings['company_zipcode'])
+                                                {{$settings['company_zipcode']}}
+                                            @endif</p>
+                                        <p data-v-e95a8a8c=""> @if(!empty($settings['tax_type']) && !empty($settings['vat_number']))
+                                                {{$settings['tax_type'].' '. __('Number')}}: {{$settings['vat_number']}}
+                                                <br>
+                                            @endif </p>
                                     </div>
                                     <div data-v-7d9d14b5="" class="col-33">
-                                        <div data-v-7d9d14b5="" class="padd"><strong data-v-7d9d14b5="" class="mb5">{{__('To')}}:</strong>
+                                        <div data-v-7d9d14b5="" class="padd"><strong data-v-7d9d14b5=""
+                                                                                     class="mb5">{{__('To')}}:</strong>
                                             @if(isset($customerdetails) && !empty($customerdetails))
                                                 @foreach($customerdetails as $key => $detail)
                                                     {{ $detail }} <br>
                                                 @endforeach
-                                                <strong>Site</strong>
-                                                H# {{$sale->site->house}}, St# {{$sale->site->street}}, Sec# {{$sale->site->sector}}
+                                                @if(isset($sale->site))
+                                                    <strong>Site</strong>
+
+
+                                                    H# {{$sale->site->house}}, St# {{$sale->site->street}},
+                                                    Sec# {{$sale->site->sector}}
+
+                                                @endif
                                             @else
                                                 <p> - </p>
                                             @endif
@@ -545,15 +574,18 @@
                                             <tbody data-v-7d9d14b5="" style="position: relative">
                                             <tr data-v-37eeda86="">
                                                 <td data-v-37eeda86="" class="tu">{{__('Billing Date')}}:</td>
-                                                <td data-v-37eeda86="" class="text-right">{{$user->dateFormat($sale->created_at)}}</td>
+                                                <td data-v-37eeda86=""
+                                                    class="text-right">{{$user->dateFormat($sale->created_at)}}</td>
                                             </tr>
                                             <tr data-v-37eeda86="">
                                                 <td data-v-37eeda86="" class="tu">{{__('Billing Time')}}:</td>
-                                                <td data-v-37eeda86="" class="text-right">{{$user->timeFormat($sale->created_at)}}</td>
+                                                <td data-v-37eeda86=""
+                                                    class="text-right">{{$user->timeFormat($sale->created_at)}}</td>
                                             </tr>
                                             <tr data-v-37eeda86="">
                                                 <td data-v-37eeda86="" class="tu">{{__('Status')}}:</td>
-                                                <td data-v-37eeda86="" class="text-right">{{ ($sale->status == 1) ? __('Partially Paid') : (($sale->status == 2) ? __('Paid') : __('Unpaid')) }}</td>
+                                                <td data-v-37eeda86=""
+                                                    class="text-right">{{ ($sale->status == 1) ? __('Partially Paid') : (($sale->status == 2) ? __('Paid') : __('Unpaid')) }}</td>
                                             </tr>
                                             <tr class="ml-8">
                                                 <td class="">
@@ -567,7 +599,8 @@
                                 <div data-v-7d9d14b5="" class="break-50"></div>
                                 <div data-v-7d9d14b5="" class="d-table">
                                     <div data-v-e95a8a8c="" class="d-table">
-                                        <div data-v-e95a8a8c="" class="tu d-table-tr" style="color: {{($color == '#ffffff') ? 'black': $color}}; border-bottom: 1px solid {{($color == '#ffffff') ? 'black': $color}}; border-top: 1px solid {{($color == '#ffffff') ? 'black': $color}};">
+                                        <div data-v-e95a8a8c="" class="tu d-table-tr"
+                                             style="color: {{($color == '#ffffff') ? 'black': $color}}; border-bottom: 1px solid {{($color == '#ffffff') ? 'black': $color}}; border-top: 1px solid {{($color == '#ffffff') ? 'black': $color}};">
                                             <div class="d-table-th w-2">{{__('#')}}</div>
                                             <div class="d-table-th w-8">{{__('Product')}}</div>
                                             <div class="d-table-th w-3">{{__('Qty')}}</div>
@@ -578,7 +611,8 @@
                                         <div data-v-e95a8a8c="" class="d-table-body">
                                             @if(isset($sale->items) && count($sale->items) > 0)
                                                 @foreach($sale->items as $key => $item)
-                                                    <div class="d-table-tr" style="border-bottom:1px solid {{($color == '#ffffff') ? 'black': $color}};">
+                                                    <div class="d-table-tr"
+                                                         style="border-bottom:1px solid {{($color == '#ffffff') ? 'black': $color}};">
                                                         <div class="d-table-td w-2"><span>{{ $key+1 }}</span></div>
                                                         <div class="d-table-td w-8">
                                                             <span data-v-f2a183a6="">{{ $item->name }}</span>
@@ -598,7 +632,8 @@
                                                     </div>
                                                 @endforeach
                                             @else
-                                                <div class="d-table-tr" style="border-bottom:1px solid {{($color == '#ffffff') ? 'black': $color}};">
+                                                <div class="d-table-tr"
+                                                     style="border-bottom:1px solid {{($color == '#ffffff') ? 'black': $color}};">
                                                     <div class="d-table-td w-2"><span>-</span></div>
                                                     <div class="d-table-td w-8">
                                                         <span data-v-f2a183a6="">-</span>
@@ -624,9 +659,12 @@
                                         <div data-v-f2a183a6="" class="d-table-footer">
                                             <div data-v-f2a183a6="" class="d-table-controls"></div>
                                             <div data-v-f2a183a6="" class="d-table-summary">
-                                                <div data-v-f2a183a6="" class="d-table-summary-item" style="border-top: 1px solid {{($color == '#ffffff') ? 'black': $color}}; border-bottom: 1px solid {{($color == '#ffffff') ? 'black': $color}};">
-                                                    <div data-v-f2a183a6="" class="d-table-label">{{ __('Total') }}:</div>
-                                                    <div data-v-f2a183a6="" class="d-table-value">{{ $sale->subtotal }}</div>
+                                                <div data-v-f2a183a6="" class="d-table-summary-item"
+                                                     style="border-top: 1px solid {{($color == '#ffffff') ? 'black': $color}}; border-bottom: 1px solid {{($color == '#ffffff') ? 'black': $color}};">
+                                                    <div data-v-f2a183a6="" class="d-table-label">{{ __('Total') }}:
+                                                    </div>
+                                                    <div data-v-f2a183a6=""
+                                                         class="d-table-value">{{ $sale->subtotal }}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -634,7 +672,9 @@
                                 </div>
                                 <div data-v-7d9d14b5="" class="break-25"></div>
                                 <div data-v-7d9d14b5="" class="break-25"></div>
-                                <div data-v-7d9d14b5=""><h1 data-v-7d9d14b5="" style="color: {{($color == '#ffffff') ? 'black': $color}};">{{__('Thank you!')}}</h1></div>
+                                <div data-v-7d9d14b5=""><h1 data-v-7d9d14b5=""
+                                                            style="color: {{($color == '#ffffff') ? 'black': $color}};">{{__('Thank you!')}}</h1>
+                                </div>
                                 <div data-v-f2a183a6="" class="d-header-50">
                                     <p data-v-f2a183a6="">
                                         @if($settings['invoice_footer_title'] != '' || $settings['invoice_footer_notes'] != '')
