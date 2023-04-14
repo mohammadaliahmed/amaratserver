@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\CustomerOrderedProductTimeLine;
 use App\Models\CustomerOrdersTimeline;
+use App\Models\Purchase;
+use App\Models\PurchasedItems;
 use App\Models\Vendor;
 use App\Models\VendorOrder;
 use Illuminate\Http\Request;
@@ -136,7 +138,7 @@ class SaleController extends Controller
                     CustomerOrdersTimeline::create([
                         'sale_id' => $sale->id,
                         'order_status' => 0,
-                        'updated_by' =>  $user_id,
+                        'updated_by' => $user_id,
                     ]);
 
                     foreach ($sales as $key => $value) {
@@ -472,7 +474,7 @@ class SaleController extends Controller
             $img = asset($logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo_black.png'));
             $font_color = Utility::getFontColor($color);
             return view('sales.templates.' . $settings['sale_invoice_template'], compact('sale', 'color', 'font_color', 'settings', 'user',
-                'userdetails', 'customerdetails', 'img','sale'));
+                'userdetails', 'customerdetails', 'img', 'sale'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
@@ -535,22 +537,72 @@ class SaleController extends Controller
     {
         $sale = Sale::find($id);
         if ($request->isMethod('post')) {
+            $vendorOrder=new VendorOrder();
+            $vendorOrder->vendor_id=$request->vendorId;
+            $vendorOrder->quantity=$request->quantity;
+            $vendorOrder->product_id=$request->productId;
+            $vendorOrder->sale_id=$id;
+            $vendorOrder->status="assigned";
+            $vendorOrder->save();
 
-            VendorOrder::create([
-                'vendor_id' => $request->vendorId,
-                'quantity' => $request->quantity,
-                'product_id' => $request->productId,
-                'sale_id' => $id,
-                'status' => 'assigned',
-            ]);
+            $vendor_id = $request->vendorId;
+            $branch_id = 0;
+            $cash_register_id = 0;
+            $invoice_id = $this->invoicePurchaseNumber();
+
+            $purchase = new Purchase();
+            $user = \Auth::user();
+            $purchase->invoice_id = $invoice_id;
+            $purchase->vendor_order_id = $vendorOrder->id;
+            $purchase->vendor_id = $vendor_id;
+            $purchase->branch_id = $branch_id;
+            $purchase->cash_register_id = $cash_register_id;
+            $purchase->created_by = $user->id;
+
+            $purchase->save();
+
+
+            $product_id = $request->productId;
+            $product = Product::find($product_id);
+
+
+            $purchaseditems = new PurchasedItems();
+
+            $purchaseditems->purchase_id = $purchase->id;
+            $purchaseditems->product_id = $product_id;
+            $purchaseditems->price = $product->sale_price;
+            $purchaseditems->quantity = $request->quantity;
+            $purchaseditems->tax_id = 0;
+            $purchaseditems->tax = 0;
+            $purchaseditems->save();
+
+
             return redirect()->to($request->url())->with('success', "Order Assigned");
         } else {
             foreach ($sale->items as $item) {
                 $item->product = Product::find($item->product_id);
-                $item->product->assigned = VendorOrder::where('sale_id', $id)->where('product_id', $item->product_id)
+                $vendor = VendorOrder::where('sale_id', $id)->where('product_id', $item->product_id)
                     ->first();
+                if (isset($vendor)) {
+                    $item->assigendTo = Vendor::find($vendor->vendor_id);
+
+                }
+
+
             }
+
             return view('sales.assign', compact('sale'));
+        }
+    }
+
+    function invoicePurchaseNumber()
+    {
+        if (Auth::user()->can('Manage Purchases')) {
+            $latest = Purchase::where('created_by', '=', Auth::user()->getCreatedBy())->latest()->first();
+
+            return $latest ? $latest->invoice_id + 1 : 1;
+        } else {
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
 
@@ -566,11 +618,12 @@ class SaleController extends Controller
         return view('sales.orderdetails', compact('sale'));
     }
 
-    public function UpdateProductStatus(Request $request,$id){
+    public function UpdateProductStatus(Request $request, $id)
+    {
 
-       $sellItem=SelledItems::find($id);
-       $sellItem->status=$request->status;
-       $sellItem->update();
+        $sellItem = SelledItems::find($id);
+        $sellItem->status = $request->status;
+        $sellItem->update();
         $user = \Auth::user();
         CustomerOrderedProductTimeLine::create([
             'selled_item_id' => $sellItem->id,
@@ -578,7 +631,7 @@ class SaleController extends Controller
             'product_id' => $sellItem->product_id,
             'updated_by' => $user->id,
         ]);
-       return true;
+        return true;
     }
 
 }

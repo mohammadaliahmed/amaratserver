@@ -487,7 +487,7 @@
         .d-table-summary[data-v-b8f60a0c] {
             -webkit-box-flex: 4;
             flex: 4;
-        } 
+        }
 
         .overflow-hidden {
             overflow: hidden;
@@ -507,10 +507,11 @@
                 <div class="editor-content">
                     <div class="preview-main client-preview">
                         <div data-v-7d9d14b5="" class="d" style="width:750px;margin-left: 30px;margin-right: auto;" id="boxes">
-                            <div data-v-7d9d14b5="" class="d-inner" style="border-right: 50px solid {{($color == '#ffffff') ? 'black': $color}};">
+                            <div data-v-7d9d14b5="" class="d-inner" >
                                 <div data-v-7d9d14b5="" class="row">
-                                    <div data-v-7d9d14b5="" class="col-3"><h1 data-v-7d9d14b5="" class="fancy-title tu mb5" style="color: {{($color == '#ffffff') ? 'black': $color}};">{{__('INVOICE')}}</h1>
+                                    <div data-v-7d9d14b5="" class="col-3"><h1 data-v-7d9d14b5="" class="fancy-title tu mb5" style="color: {{($color == '#ffffff') ? 'black': $color}};">{{__('PURCHASE INVOICE')}}</h1>
                                         <h3 data-v-7d9d14b5="">{{$user->purchaseInvoiceNumberFormat($purchase->invoice_id)}}</h3>
+                                        <h3 data-v-7d9d14b5="">www.amaratmaterials.com</h3>
                                     </div>
                                     <div data-v-7d9d14b5="" class="col-1"><img data-v-7d9d14b5="" class="d-logo" src="{{$img}}" style="max-width: 150px;"></div>
                                 </div>
@@ -548,15 +549,10 @@
                                                 <td data-v-37eeda86="" class="tu">{{__('Billing Time')}}:</td>
                                                 <td data-v-37eeda86="" class="text-right">{{$user->timeFormat($purchase->created_at)}}</td>
                                             </tr>
-                                            <tr data-v-37eeda86="">
-                                                <td data-v-37eeda86="" class="tu">{{__('Status')}}:</td>
-                                                <td data-v-37eeda86="" class="text-right">{{ ($purchase->status == 1) ? __('Partially Paid') : (($purchase->status == 2) ? __('Paid') : __('Unpaid')) }}</td>
-                                            </tr>
+
                                             <tr class="ml-8">
                                                 <td class="">
-                                                    <p> {!! DNS2D::getBarcodeHTML(route('purchase.link.copy',\Illuminate\Support\Facades\Crypt::encrypt($purchase->id)),'QRCODE',2,2) !!}</p>
 
-                                                    {{-- <p>{!! DNS2D::getBarcodeHTML($user->purchaseInvoiceNumberFormat($purchase->invoice_id), "QRCODE",5,5) !!}</p> --}}
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -569,10 +565,9 @@
                                         <div data-v-e95a8a8c="" class="tu d-table-tr" style="color: {{($color == '#ffffff') ? 'black': $color}}; border-bottom: 1px solid {{($color == '#ffffff') ? 'black': $color}}; border-top: 1px solid {{($color == '#ffffff') ? 'black': $color}};">
                                             <div class="d-table-th w-2">{{__('#')}}</div>
                                             <div class="d-table-th w-8">{{__('Product')}}</div>
-                                            <div class="d-table-th w-2">{{__('Qty')}}</div>
-                                            <div class="d-table-th w-3">{{__('Price')}}</div>
-                                            <div class="d-table-th w-2">{{__('Tax')}}</div>
-                                            <div class="d-table-th w-4">{{__('Tax Amount')}}</div>
+                                            <div class="d-table-th w-3">{{__('Qty')}}</div>
+                                            <div class="d-table-th w-4">{{__('Price')}}</div>
+                                            <div class="d-table-th w-4">{{__('')}}</div>
                                             <div class="d-table-th w-3">{{__('Total')}}</div>
                                         </div>
                                         <div data-v-e95a8a8c="" class="d-table-body">
@@ -583,17 +578,14 @@
                                                         <div class="d-table-td w-8">
                                                             <span data-v-f2a183a6="">{{ $item->name }}</span>
                                                         </div>
-                                                        <div class="d-table-td w-2">
+                                                        <div class="d-table-td w-3">
                                                             <span data-v-f2a183a6="">{{ $item->quantity }}</span>
                                                         </div>
-                                                        <div class="d-table-td w-3">
+                                                        <div class="d-table-td w-4">
                                                             <span data-v-f2a183a6="">{{ $item->price }}</span>
                                                         </div>
-                                                        <div class="d-table-td w-2">
-                                                            <span data-v-f2a183a6="">{{ $item->tax }}</span>
-                                                        </div>
+
                                                         <div class="d-table-td w-4">
-                                                            <span data-v-f2a183a6="">{{ $item->tax_amount }}</span>
                                                         </div>
                                                         <div class="d-table-td w-3">
                                                             <span data-v-f2a183a6="">{{ $item->subtotal }}</span>
@@ -654,8 +646,6 @@
         </div>
     </div>
 </div>
-@if(!isset($preview))
-    @include('purchases.script');
-@endif
+
 </body>
 </html>

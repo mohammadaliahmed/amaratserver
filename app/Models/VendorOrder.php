@@ -12,6 +12,10 @@ class VendorOrder extends Model
     protected $fillable=[
       'vendor_id','product_id','sale_id','quantity','status'
     ];
+    public function purchase()
+    {
+        return $this->hasOne('App\Models\Purchase', 'vendor_order_id', 'id');
+    }
 
     public function vendor(){
         return $this->hasOne('App\Models\Vendor','id','vendor_id');

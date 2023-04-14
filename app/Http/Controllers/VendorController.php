@@ -281,9 +281,10 @@ class VendorController extends Controller
         $vendors = Vendor::all()->pluck('name', 'id');
         $vendors->prepend("Select Vendor", '');
 
-        $orders=VendorOrder::where('vendor_id',$id)->get();
+        $orders=VendorOrder::where('vendor_id',$id)->orderBy('id','desc')->get();
 
         $vendor=Vendor::find($id);
+
 
         return view('vendors.assignedOrders', compact('vendors','vendor',
             'orders'));

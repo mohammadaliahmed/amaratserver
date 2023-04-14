@@ -15,6 +15,7 @@ class Purchase extends Model
         'branch_id',
         'cash_register_id',
         'created_by',
+        'vendor_order_id'
     ];
 
     public function items()
@@ -26,6 +27,8 @@ class Purchase extends Model
     {
         return $this->hasOne('App\Models\User', 'id', 'created_by');
     }
+
+
 
     public function vendor()
     {
@@ -51,11 +54,11 @@ class Purchase extends Model
         $items = [];
         if(\Auth::check())
         {
-            
+
             $user=\Auth::user();
         }
         else{
-            
+
            $user=User::where('id',$this->created_by)->first();
         }
         foreach ($this->items as $key => $item) {
@@ -237,7 +240,7 @@ class Purchase extends Model
 
     public static function vendors($venders)
     {
-       
+
         $categoryArr  = explode(',', $venders);
         $unitRate = 0;
         foreach ($categoryArr as $venders) {
