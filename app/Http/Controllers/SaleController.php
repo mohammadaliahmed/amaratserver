@@ -471,7 +471,7 @@ class SaleController extends Controller
             //Set your logo
             $logo = \App\Models\Utility::get_file('uploads/logo/');
             $company_logo = \App\Models\Utility::get_superadmin_logo();
-            $img = asset($logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo_black.png'));
+            $img = asset($logo .  'logo-black.png');
             $font_color = Utility::getFontColor($color);
             return view('sales.templates.' . $settings['sale_invoice_template'], compact('sale', 'color', 'font_color', 'settings', 'user',
                 'userdetails', 'customerdetails', 'img', 'sale'));
